@@ -1,4 +1,4 @@
-package com.example.addressbook;
+package com.example.addressbook.SQL;
 
 import java.util.List;
 

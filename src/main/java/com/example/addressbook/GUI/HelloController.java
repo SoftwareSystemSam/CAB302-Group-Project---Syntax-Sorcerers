@@ -1,5 +1,6 @@
-package com.example.addressbook;
+package com.example.addressbook.GUI;
 
+import com.example.addressbook.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
