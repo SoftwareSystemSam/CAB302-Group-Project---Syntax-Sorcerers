@@ -16,7 +16,7 @@ public class BarChartGUI extends HBox {
 
         var root = new HBox();
 
-        var scene = new Scene(root, 480, 330);
+        var scene = new Scene(root, 450, 450);
         var xAxis = new CategoryAxis();
 
         var yAxis = new NumberAxis();

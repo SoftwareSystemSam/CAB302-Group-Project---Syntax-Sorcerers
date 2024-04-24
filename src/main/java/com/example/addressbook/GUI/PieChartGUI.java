@@ -13,7 +13,7 @@ public class PieChartGUI extends HBox {
 
         var root = new HBox();
 
-        var scene = new Scene(root, 450, 330);
+        var scene = new Scene(root, 450, 450);
 
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(

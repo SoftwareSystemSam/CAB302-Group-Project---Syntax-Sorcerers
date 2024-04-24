@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.geometry.Pos;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+
 public class MyHubController extends Application {
     @Override
     public void start(Stage stage) {
@@ -27,17 +29,21 @@ public class MyHubController extends Application {
     }
 
     private void initUI(Stage stage) {
-        var root = new HBox();
-        var scene = new Scene(root, 950, 330);
+        // Create a navigation bar
+        Navigation navigationBar = new Navigation();
 
         // Instantiate BarChartPane and PieChartPane
         var barChart = new BarChartGUI();
         var pieChart = new PieChartGUI();
 
-        // Adding both chart panes to the HBox
-        root.getChildren().addAll(barChart, pieChart);
+        // Create a VBox to hold the navigation bar and graphs
+        var vbox = new VBox();
+        var scene = new Scene(vbox, 950, 500);
 
-        stage.setTitle("Combined Charts");
+        // Add the navigation bar and graphs to the VBox
+        vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart));
+
+        stage.setTitle("Combined Charts with Navigation Bar");
         stage.setScene(scene);
         stage.show();
     }
