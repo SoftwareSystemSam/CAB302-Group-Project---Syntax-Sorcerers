@@ -1,20 +1,33 @@
-package com.example.addressbook.ScreenTimeTracking;
+package com.example.addressbook.SQL;
 
-import com.example.addressbook.SQL.IScreenTimeEntryDAO;
-import com.example.addressbook.SQL.SqliteScreenTimeEntryDAO;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-private IScreenTimeEntryDAO screenTimeEntryDAO = new SqliteScreenTimeEntryDAO();
+
 
 public class ActiveWindowTracker {
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+    private User32 user32;
+    private User currentUser;
 
-    private User32 user32 = User32.INSTANCE;
+    // Use this user when tracking active window
+    public ActiveWindowTracker(User currentUser){
+        this.screenTimeEntryDAO = new SqliteScreenTimeEntryDAO();
+        this.user32 = User32.INSTANCE;
+        this.currentUser = currentUser;
+    }
 
     // https://stackoverflow.com/questions/5767104/using-jna-to-get-getforegroundwindow
-    public void trackActiveWindow() {
+    public void trackActiveWindow() throws SQLException {
+
+        // Need to check if user is logged in, otherwise SQL database won't know where to put data in tables.
+        if(currentUser == null){
+            throw new IllegalStateException("No user is currently logged in");
+        }
         HWND hwnd = user32.GetForegroundWindow(); // Get the active window handle
         char[] windowText = new char[512];
         user32.GetWindowText(hwnd, windowText, 512);
@@ -40,17 +53,16 @@ public class ActiveWindowTracker {
 
 
     // Create new function to handle logging screen time tracking to appropriate user
-    private void logWindowTime(String applicationName, long durationInSeconds, LocalDateTime startTime) {
-        // Implement database logging here
-        // This might involve creating a new `ScreenTimeEntry` object and saving it using a DAO or repository
-         ScreenTimeEntry entry = new ScreenTimeEntry();
+    private void logWindowTime(String applicationName, long durationInSeconds, LocalDateTime startTime) throws SQLException {
 
-         entry.setUser(currentUser);
-         entry.setApplicationName(applicationName);
-         entry.setDuration(durationInSeconds);
-         entry.setStartTime(startTime);
+        ScreenTimeEntry entry = new ScreenTimeEntry();
 
-         // Uses DAO to add entry to database
-         screenTimeEntryDAO.addScreenTimeEntry(entry);
+        entry.setUser(currentUser);
+        entry.setApplicationName(applicationName);
+        entry.setDuration(durationInSeconds);
+        entry.setStartTime(startTime);
+
+        // Uses DAO to add entry to database
+        screenTimeEntryDAO.addScreenTimeEntry(entry);
     }
 }

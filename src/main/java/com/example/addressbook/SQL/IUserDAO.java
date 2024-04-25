@@ -1,8 +1,8 @@
 package com.example.addressbook.SQL;
 
 /**
- * Interface for the Contact Data Access Object that handles
- * the CRUD operations for the Contact class with the database.
+ * Interface for the User Data Access Object that handles
+ * the CRUD operations for the User class with the database.
  */
 public interface IUserDAO {
     /**
@@ -25,7 +25,9 @@ public interface IUserDAO {
 
     public User getUser(int id);
 
-    User validateUser(String email, String password);
+    public User getUserByEmail(String email);
 
-    User GetUser(int id);
+    // Shouldn't be needed but leaving here just in case
+    //User validateUser(String email, String password);
+
 }

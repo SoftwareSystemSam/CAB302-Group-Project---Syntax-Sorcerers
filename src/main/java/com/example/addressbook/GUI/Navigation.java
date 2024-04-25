@@ -26,69 +26,69 @@ public class Navigation extends HBox {
     public Navigation() {
         // Create navigation buttons
         Button MyGoals = new Button("My Goals");
-
-        @FXML
-        protected void MyGoalsButtonClick() throws IOException {
-            try {
-                Stage stage = (Stage) nextButton.getScene().getWindow();
-                MyGoals MyGoalsWindow = new MyGoals();
-                MyGoalsWindow.start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//
+//        @FXML
+//        protected void MyGoalsButtonClick() throws IOException {
+//            try {
+//                Stage stage = (Stage) nextButton.getScene().getWindow();
+//                MyGoals MyGoalsWindow = new MyGoals();
+//                MyGoalsWindow.start(stage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         Button MyStats = new Button("My Stats");
 
-        @FXML
-        protected void MyStatsButtonClick() throws IOException {
-            try {
-                Stage stage = (Stage) nextButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController();
-                graphsWindow.start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        @FXML
+//        protected void MyStatsButtonClick() throws IOException {
+//            try {
+//                Stage stage = (Stage) nextButton.getScene().getWindow();
+//                MyHubController graphsWindow = new MyHubController();
+//                graphsWindow.start(stage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         Button MyNotifications = new Button("My Notifications");
 
-        @FXML
-        protected void MyNotificationsButtonClick() throws IOException {
-            try {
-                Stage stage = (Stage) nextButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController();
-                graphsWindow.start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        @FXML
+//        protected void MyNotificationsButtonClick() throws IOException {
+//            try {
+//                Stage stage = (Stage) nextButton.getScene().getWindow();
+//                MyHubController graphsWindow = new MyHubController();
+//                graphsWindow.start(stage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         Button MyHealth = new Button("My Health");
 
-        @FXML
-        protected void MyHealthButtonClick() throws IOException {
-            try {
-                Stage stage = (Stage) nextButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController();
-                graphsWindow.start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        @FXML
+//        protected void MyHealthButtonClick() throws IOException {
+//            try {
+//                Stage stage = (Stage) nextButton.getScene().getWindow();
+//                MyHubController graphsWindow = new MyHubController();
+//                graphsWindow.start(stage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         Button MyData = new Button("My Data");
 
-        @FXML
-        protected void MyDataButtonClick() throws IOException {
-            try {
-                Stage stage = (Stage) nextButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController();
-                graphsWindow.start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        @FXML
+//        protected void MyDataButtonClick() throws IOException {
+//            try {
+//                Stage stage = (Stage) nextButton.getScene().getWindow();
+//                MyHubController graphsWindow = new MyHubController();
+//                graphsWindow.start(stage);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         // Add buttons to the navigation bar
         this.getChildren().addAll(MyGoals, MyStats, MyNotifications, MyHealth, MyData);

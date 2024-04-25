@@ -1,13 +1,9 @@
 package com.example.addressbook.SQL;
 
-import com.example.addressbook.SQL.SqliteConnection;
-import com.example.addressbook.ScreenTimeTracking.ScreenTimeEntry;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.format.DateTimeFormatter;
 
 public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     // Database connection and table
@@ -17,8 +13,6 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     public SqliteScreenTimeEntryDAO() {
         connection = SqliteConnection.getInstance();
         createTable();
-//        // Used for testing, to be removed later
-//        insertSampleData();
     }
 
     private void createTable() {
@@ -41,18 +35,15 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
 
     public void addScreenTimeEntry(ScreenTimeEntry entry) throws SQLException {
         // TODO add logic to implement screen time entry into database.
-       Statement insertStatement = connection.createStatement();
+        Statement insertStatement = connection.createStatement();
         try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO screen_time (user_id, application_name, duration, start_time) VALUES (?, ?, ?, ?)")) {
             pstmt.setInt(1, entry.getUser().getId());
             pstmt.setString(2, entry.getApplicationName());
             pstmt.setLong(3, entry.getDuration());
             pstmt.setString(4, entry.getStartTime().toString()); //  Correct formatting? TODO check date time formatting
             pstmt.executeUpdate();
-        } catch(SQLException e) {
-        e.printStackTrace();
-    }
-}
-
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.addressbook.ScreenTimeTracking;
+package com.example.addressbook.SQL;
 
 import com.example.addressbook.SQL.User;
 

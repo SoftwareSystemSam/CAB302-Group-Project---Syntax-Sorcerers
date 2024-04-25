@@ -59,7 +59,7 @@ public class SqliteUserDAO implements IUserDAO {
 
 
 
-    @Override
+    @java.lang.Override
     public User getUser(int id) {
         try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?")) {
             statement.setInt(1, id);
@@ -79,17 +79,17 @@ public class SqliteUserDAO implements IUserDAO {
         return null;
     }
 
-    public User validateUser(String email, String password) {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")) {
+    @Override
+    public User getUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
-            statement.setString(2, password); // Keeps password as plaintext which is sussy
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new User(
                         resultSet.getInt("id"),
                         resultSet.getString("email"),
-                        resultSet.getString("password")
-
+                        resultSet.getString("password") // Ideally should be a hashed password
                 );
             }
         } catch (SQLException e) {
@@ -97,5 +97,26 @@ public class SqliteUserDAO implements IUserDAO {
         }
         return null;
     }
+
+    // The below code shouldn't be needed because the User data will be yoinked via the getUserByEmail, then you can compare user.password to inputPassword
+
+//    public User validateUser(String email, String password) {
+//        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")) {
+//            statement.setString(1, email);
+//            statement.setString(2, password); // Keeps password as plaintext which is sussy
+//            ResultSet resultSet = statement.executeQuery();
+//            if (resultSet.next()) {
+//                return new User(
+//                        resultSet.getInt("id"),
+//                        resultSet.getString("email"),
+//                        resultSet.getString("password")
+//
+//                );
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }
 
