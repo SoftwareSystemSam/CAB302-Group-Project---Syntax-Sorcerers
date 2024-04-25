@@ -5,11 +5,19 @@ public class User {
     private String email;
     private String password;
 
-    public Contact(String firstName, String lastName, String email, String phone) {
+
+    // When creating new user, you won't know the id
+    public User(String password, String email) {
+
+        this.email = email;
+        this.password = password;
+    }
+
+    // Overload constructor: when retrieving from database you will have id
+    public User(int id, String password, String email) {
         this.id = id;
         this.email = email;
         this.password = password;
-
     }
 
     public int getId() {
@@ -29,4 +37,11 @@ public class User {
         this.email = email;
     }
 
-    public void setPassword(Stirng password) {this.password = password;}
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}

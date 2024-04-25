@@ -1,7 +1,13 @@
+package com.example.addressbook.ScreenTimeTracking;
+
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.SqliteScreenTimeEntryDAO;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import java.time.LocalDateTime;
+
+private IScreenTimeEntryDAO screenTimeEntryDAO = new SqliteScreenTimeEntryDAO();
 
 public class ActiveWindowTracker {
 
@@ -37,5 +43,14 @@ public class ActiveWindowTracker {
     private void logWindowTime(String applicationName, long durationInSeconds, LocalDateTime startTime) {
         // Implement database logging here
         // This might involve creating a new `ScreenTimeEntry` object and saving it using a DAO or repository
+         ScreenTimeEntry entry = new ScreenTimeEntry();
+
+         entry.setUser(currentUser);
+         entry.setApplicationName(applicationName);
+         entry.setDuration(durationInSeconds);
+         entry.setStartTime(startTime);
+
+         // Uses DAO to add entry to database
+         screenTimeEntryDAO.addScreenTimeEntry(entry);
     }
 }
