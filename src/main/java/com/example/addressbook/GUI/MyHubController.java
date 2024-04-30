@@ -19,8 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 
-import java.util.List;
-
 
 public class MyHubController extends Application {
     @Override
