@@ -14,7 +14,7 @@ public class SqliteUserDAO implements IUserDAO {
 
 
 
-    private void createTable() {
+    public void createTable() {
         // Create table if not exists
         try {
             Statement statement = connection.createStatement();
