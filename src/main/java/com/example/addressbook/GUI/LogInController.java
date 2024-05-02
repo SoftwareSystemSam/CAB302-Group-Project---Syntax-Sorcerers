@@ -32,7 +32,7 @@ WELCOME TO THE SCREEN TRACKER APPLICATION. TICK THE BOX TO LOG IN AND MOVE ON.""
     protected void onNextButtonClick() throws IOException {
         try {
             Stage stage = (Stage) nextButton.getScene().getWindow();
-            MyHubController graphsWindow = new MyHubController();
+            LogIn graphsWindow = new LogIn();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();

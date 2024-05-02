@@ -1,8 +1,4 @@
 package com.example.addressbook.GUI;
-
-import com.example.addressbook.SQL.User;
-import com.example.addressbook.SQL.IUserDAO;
-import com.example.addressbook.SQL.SqliteUserDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -50,7 +46,6 @@ public class Navigation extends HBox {
 //                e.printStackTrace();
 //            }
 //        }
-
         Button MyNotifications = new Button("My Notifications");
 
 //        @FXML
