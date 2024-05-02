@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SingIn{
+public class SignIn{
     @FXML
     private Button loginnButton;
     @FXML

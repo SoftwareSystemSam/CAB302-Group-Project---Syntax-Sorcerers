@@ -43,7 +43,7 @@ public class LogInRegister{
     protected void onSignUpButtonClick() {
         try {
             Stage stage = (Stage) signupButton.getScene().getWindow();
-            SingIn graphsWindow = new SingIn();
+            SignIn graphsWindow = new SignIn();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
