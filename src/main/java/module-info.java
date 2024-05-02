@@ -4,6 +4,7 @@ module com.example.addressbook {
     requires java.sql;
     requires com.sun.jna.platform;
     requires com.sun.jna;
+    requires java.desktop;
 
 
     opens com.example.addressbook to javafx.fxml;

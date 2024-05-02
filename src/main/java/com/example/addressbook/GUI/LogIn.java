@@ -37,7 +37,7 @@ public class LogIn{
     protected void onLogIn() throws IOException {
         try {
             Stage stage = (Stage) loginnButton.getScene().getWindow();
-            LogInRegister graphsWindow = new LogInRegister();
+            LogInController graphsWindow = new LogInController();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();

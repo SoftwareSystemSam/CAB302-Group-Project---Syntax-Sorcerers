@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SignIn{
+public class SignUp{
     @FXML
     private Button loginnButton;
     @FXML
@@ -37,7 +37,7 @@ public class SignIn{
     protected void onLogIn() throws IOException {
         try {
             Stage stage = (Stage) loginnButton.getScene().getWindow();
-            LogInRegister graphsWindow = new LogInRegister();
+            LogIn graphsWindow = new LogIn();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
