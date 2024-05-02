@@ -6,8 +6,8 @@ import java.sql.*;
 public class SqliteUserDAO implements IUserDAO {
     private Connection connection;
 
-    public SqliteUserDAO() {
-        connection = SqliteConnection.getInstance();
+    public SqliteUserDAO(Connection connection) {
+        this.connection = connection;
         createTable();
 
     }

@@ -10,8 +10,8 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
 
     private Connection connection;
 
-    public SqliteScreenTimeEntryDAO() {
-        connection = SqliteConnection.getInstance();
+    public SqliteScreenTimeEntryDAO(Connection connection) {
+        this.connection = connection;
         createTable();
     }
 
