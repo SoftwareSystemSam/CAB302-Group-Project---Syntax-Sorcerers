@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class SignUp {
     @FXML
-    private Button signinButton;
+    private Button signupButton;
     @FXML
     private Button backButton;
     @FXML
@@ -38,9 +38,9 @@ public class SignUp {
         stage.show();
     }
     @FXML
-    protected void signinButtonAction() throws IOException {
+    protected void signupButtonAction() throws IOException {
         // Handle navigation back to the login page
-        Stage stage = (Stage) signinButton.getScene().getWindow();
+        Stage stage = (Stage) signupButton.getScene().getWindow();
         MyHubController loginWindow = new MyHubController();
         loginWindow.start(stage);
     }
