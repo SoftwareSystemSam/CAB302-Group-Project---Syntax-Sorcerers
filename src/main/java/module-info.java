@@ -8,6 +8,7 @@ module com.example.addressbook {
     requires org.mockito;
     requires org.mockito.junit.jupiter;
     requires java.desktop;
+    requires net.bytebuddy.agent;
 
 
     opens com.example.addressbook to javafx.fxml;
