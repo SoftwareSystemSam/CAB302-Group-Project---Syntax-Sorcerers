@@ -14,7 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
-
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Objects;
 import com.example.addressbook.SQL.UserService;
 import net.bytebuddy.agent.VirtualMachine;
 
@@ -56,20 +58,6 @@ public class SignUp {
         // Output the text written in the text box to the console.
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
-
-//        //add new email and password into userDAO
-//        // Create UserService instance
-//        UserService userDAO = new userDAO(); // Initialize UserDAO implementation
-//        Connection connection = getConnection(); // Implement method to get connection
-//        UserService userService = new UserService(userDAO, connection);
-
-//        // Register new user
-//        boolean registrationSuccessful = userService.registerNewUser(email, password);
-//        if (registrationSuccessful) {
-//            System.out.println("Registration successful!");
-//        } else {
-//            System.out.println("Registration failed: User already exists.");
-//        }
 
         // Handle navigation back to the login page
         Stage stage = (Stage) signupButton.getScene().getWindow();

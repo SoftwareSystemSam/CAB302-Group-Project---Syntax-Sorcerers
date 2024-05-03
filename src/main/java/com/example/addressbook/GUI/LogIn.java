@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.example.addressbook.SQL.UserDAO;
+//import com.example.addressbook.SQL.UserDAO;
 import com.example.addressbook.SQL.IUserDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,34 +39,34 @@ public class LogIn{
         stage.show();
     }
 
-    @FXML
-    protected void onLogIn() throws IOException {
-        String email = emailTextField.getText();
-        String password = passwordField.getText();
-        try {
-            // connect to database
-            Connection connection = DriverManager.getConnection("jdbc:your_database_url", "your_username", "your_password");
-            IUserDAO userDAO = new UserDAO(connection);
-            User user = userDAO.getUserByEmail(email);  // get user info form database
-
-            if (user != null && Objects.equals(password, user.getPassword())) {
-                // login successful
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController();
-                graphsWindow.start(stage);
-            } else {
-                // login fail
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Login failed. The email address or password is incorrect.");
-                alert.showAndWait();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("The database encountered an error.");
-            alert.showAndWait();
-        }
-    }
+//    @FXML
+//    protected void onLogIn() throws IOException {
+//        String email = emailTextField.getText();
+//        String password = passwordField.getText();
+//        try {
+//            // connect to database
+//            Connection connection = DriverManager.getConnection("jdbc:your_database_url", "your_username", "your_password");
+//            IUserDAO userDAO = new UserDAO(connection);
+//            User user = userDAO.getUserByEmail(email);  // get user info form database
+//
+//            if (user != null && Objects.equals(password, user.getPassword())) {
+//                // login successful
+//                Stage stage = (Stage) loginButton.getScene().getWindow();
+//                MyHubController graphsWindow = new MyHubController();
+//                graphsWindow.start(stage);
+//            } else {
+//                // login fail
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setContentText("Login failed. The email address or password is incorrect.");
+//                alert.showAndWait();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setContentText("The database encountered an error.");
+//            alert.showAndWait();
+//        }
+//    }
 
 
     @FXML
