@@ -48,5 +48,29 @@ public class SignUp {
         loginWindow.start(stage);
     }
 
-
+    @FXML
+    protected void GetFirstNameAction() throws IOException {
+        // Handle navigation back to the login page
+        Stage stage = (Stage) firstNameTextField.getScene().getWindow();
+    }
+    @FXML
+    protected void GetLastNameAction() throws IOException {
+        // Handle navigation back to the login page
+        Stage stage = (Stage) lastNameTextField.getScene().getWindow();
+    }
+    @FXML
+    protected void GetAgeAction() throws IOException {
+        // Handle navigation back to the login page
+        Stage stage = (Stage) ageTextField.getScene().getWindow();
+    }
+    @FXML
+    protected void GetEmailAction() throws IOException {
+        // Handle navigation back to the login page
+        Stage stage = (Stage) emailTextField.getScene().getWindow();
+    }
+    @FXML
+    protected void GetPasswordAction() throws IOException {
+        // Handle navigation back to the login page
+        Stage stage = (Stage) passwordField.getScene().getWindow();
+    }
 }
