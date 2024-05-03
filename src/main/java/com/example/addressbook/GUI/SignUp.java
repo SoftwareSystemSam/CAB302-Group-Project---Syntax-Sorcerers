@@ -48,11 +48,5 @@ public class SignUp {
         loginWindow.start(stage);
     }
 
-    @FXML
-    protected void onBack() throws IOException {
-        // Handle navigation back to the login page
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        LogIn graphsWindow = new LogIn();
-        graphsWindow.start(stage);
-    }
+
 }

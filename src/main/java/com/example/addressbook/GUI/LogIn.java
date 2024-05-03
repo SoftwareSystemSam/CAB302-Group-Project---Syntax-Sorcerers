@@ -15,6 +15,8 @@ public class LogIn{
     @FXML
     private Button loginButton;
     @FXML
+    private Button backButton;
+    @FXML
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
@@ -35,6 +37,16 @@ public class LogIn{
         try {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             MyHubController graphsWindow = new MyHubController();
+            graphsWindow.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    protected void onBack() throws IOException {
+        try {
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            LogInController graphsWindow = new LogInController();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
