@@ -31,12 +31,17 @@ public class SqliteUserDAOEntryTest {
 
         ResultSet mockResultSet = mock(ResultSet.class);
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(true, false);  // Return true first time (indicating a row exists), then false.
-        when(mockResultSet.getString(anyString())).thenReturn("user@example.com");
-        when(mockResultSet.getInt(anyString())).thenReturn(1);
+        when(mockResultSet.next()).thenReturn(true, false);  // Simulate at least one row being returned initially.
+
+        // Specifically match the column labels to return the correct data
+        when(mockResultSet.getString(eq("email"))).thenReturn("user@example.com");
+        when(mockResultSet.getString(eq("password"))).thenReturn("password");
+        when(mockResultSet.getInt(eq("id"))).thenReturn(1);
 
         dao = new SqliteUserDAO(mockConnection);
     }
+
+
 
     @Test
     void testCreateTable() throws SQLException {
@@ -63,18 +68,14 @@ public class SqliteUserDAOEntryTest {
 
     @Test
     void testGetUser() throws Exception {
-        when(mockResultSet.next()).thenReturn(true);
-        when(mockResultSet.getInt("id")).thenReturn(1);
-        when(mockResultSet.getString("email")).thenReturn("user@example.com");
-        when(mockResultSet.getString("password")).thenReturn("password");
+        User result = dao.getUser(1);  // Assuming '1' is a valid user ID
+        assertNotNull(result, "User should be found");
+        assertEquals(1, result.getId(), "ID should match");
+       assertEquals("user@example.com", result.getEmail(), "Email should match");
+        assertEquals("password", result.getPassword(), "Password should match");
 
-        User result = dao.getUser(1);
-
-        assertNotNull(result);
-        assertEquals(1, result.getId());
-        assertEquals("user@example.com", result.getEmail());
-        assertEquals("password", result.getPassword());
     }
+
 
     @Test
     void testGetUserByEmail() throws Exception {
@@ -87,14 +88,42 @@ public class SqliteUserDAOEntryTest {
         User user = dao.getUserByEmail("user@example.com");
         assertNotNull(user);
         assertEquals("user@example.com", user.getEmail());
+        assertEquals(1, user.getId());
+        assertEquals("password", user.getPassword());
 
 
     }
 
     @Test
-    void testGetUserNotFound() throws Exception {
+    void testGetUserNotFound() throws SQLException {
+        when(mockResultSet.next()).thenReturn(false);  // No user should be found
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
 
-        when(mockResultSet.next()).thenReturn(false);  // No user found
-        assertNull(dao.getUserByEmail("no_such_user@example.com"));
+        User result = dao.getUser(99);  // Assuming '1' is an ID that does not exist
+        assertNull(result, "No user should be found with this ID");
     }
+
+    @Test
+    void testGetUserEmail() throws Exception {
+        when(mockResultSet.next()).thenReturn(true); // Ensure the result set behaves as if a row is available
+        when(mockResultSet.getString(eq("email"))).thenReturn("user@example.com");
+
+        User result = dao.getUser(1); // Assuming '1' is a valid user ID
+
+        System.out.println("Email from DAO: " + result.getEmail()); // Detailed logging
+        assertEquals("user@example.com", result.getEmail(), "Email should match");
+    }
+
+    @Test
+    void testGetUserPassword() throws Exception {
+        when(mockResultSet.next()).thenReturn(true); // Ensure the result set behaves as if a row is available
+        when(mockResultSet.getString(eq("password"))).thenReturn("password");
+
+        User result = dao.getUser(1); // Assuming '1' is a valid user ID
+
+        System.out.println("Password from DAO: " + result.getPassword()); // Detailed logging
+        assertEquals("password", result.getPassword(), "Password should match");
+    }
+
 }

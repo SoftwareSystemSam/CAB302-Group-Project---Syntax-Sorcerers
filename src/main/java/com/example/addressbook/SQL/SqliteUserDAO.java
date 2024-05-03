@@ -68,8 +68,8 @@ public class SqliteUserDAO implements IUserDAO {
                     // Assuming User class has a constructor like User(id, email, password).
                     return new User(
                             resultSet.getInt("id"),
-                            resultSet.getString("email"),
-                            resultSet.getString("password")
+                            resultSet.getString("password"),
+                            resultSet.getString("email")
                     );
                 }
             }
@@ -88,8 +88,9 @@ public class SqliteUserDAO implements IUserDAO {
             if (resultSet.next()) {
                 return new User(
                         resultSet.getInt("id"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password") // Ideally should be a hashed password
+                        resultSet.getString("password"), // Ideally should be a hashed password
+                        resultSet.getString("email")
+
                 );
             }
         } catch (SQLException e) {
