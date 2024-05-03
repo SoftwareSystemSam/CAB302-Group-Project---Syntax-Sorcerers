@@ -56,5 +56,4 @@ public class LogInController extends Application {
         }
     }
 
-
 }
