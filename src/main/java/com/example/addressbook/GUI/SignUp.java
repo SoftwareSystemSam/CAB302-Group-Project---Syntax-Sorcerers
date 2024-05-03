@@ -16,13 +16,9 @@ import java.io.IOException;
 
 public class SignUp {
     @FXML
+    private Button signinButton;
+    @FXML
     private Button backButton;
-    @FXML
-    private TextField firstNameTextField;
-    @FXML
-    private TextField lastNameTextField;
-    @FXML
-    private TextField ageTextField;
     @FXML
     private TextField emailTextField;
     @FXML
@@ -42,28 +38,23 @@ public class SignUp {
         stage.show();
     }
     @FXML
-    protected void backButtonAction() throws IOException {
+    protected void signinButtonAction() throws IOException {
         // Handle navigation back to the login page
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        LogIn loginWindow = new LogIn();
+        Stage stage = (Stage) signinButton.getScene().getWindow();
+        MyHubController loginWindow = new MyHubController();
         loginWindow.start(stage);
     }
+    @FXML
+    protected void onBack() throws IOException {
+        try {
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            LogInController graphsWindow = new LogInController();
+            graphsWindow.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    @FXML
-    protected void GetFirstNameAction() throws IOException {
-        // Handle navigation back to the login page
-        Stage stage = (Stage) firstNameTextField.getScene().getWindow();
-    }
-    @FXML
-    protected void GetLastNameAction() throws IOException {
-        // Handle navigation back to the login page
-        Stage stage = (Stage) lastNameTextField.getScene().getWindow();
-    }
-    @FXML
-    protected void GetAgeAction() throws IOException {
-        // Handle navigation back to the login page
-        Stage stage = (Stage) ageTextField.getScene().getWindow();
-    }
     @FXML
     protected void GetEmailAction() throws IOException {
         // Handle navigation back to the login page
