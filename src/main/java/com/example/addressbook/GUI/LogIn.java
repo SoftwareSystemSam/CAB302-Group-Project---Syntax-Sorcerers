@@ -1,6 +1,7 @@
 package com.example.addressbook.GUI;
 
 import com.example.addressbook.HelloApplication;
+import com.example.addressbook.SQL.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,6 +18,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.example.addressbook.SQL.UserService;
+
 
 public class LogIn{
     @FXML
@@ -27,6 +30,10 @@ public class LogIn{
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
+    private IUserDAO userDAO;
+    private Connection connection;
+
+
     public static final String TITLE = "Screen Tracker";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
@@ -39,34 +46,45 @@ public class LogIn{
         stage.show();
     }
 
-//    @FXML
+    //    @FXML   before change
 //    protected void onLogIn() throws IOException {
-//        String email = emailTextField.getText();
-//        String password = passwordField.getText();
 //        try {
-//            // connect to database
-//            Connection connection = DriverManager.getConnection("jdbc:your_database_url", "your_username", "your_password");
-//            IUserDAO userDAO = new UserDAO(connection);
-//            User user = userDAO.getUserByEmail(email);  // get user info form database
-//
-//            if (user != null && Objects.equals(password, user.getPassword())) {
-//                // login successful
-//                Stage stage = (Stage) loginButton.getScene().getWindow();
-//                MyHubController graphsWindow = new MyHubController();
-//                graphsWindow.start(stage);
-//            } else {
-//                // login fail
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setContentText("Login failed. The email address or password is incorrect.");
-//                alert.showAndWait();
-//            }
+//            Stage stage = (Stage) loginButton.getScene().getWindow();
+//            MyHubController graphsWindow = new MyHubController();
+//            graphsWindow.start(stage);
 //        } catch (Exception e) {
 //            e.printStackTrace();
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("The database encountered an error.");
-//            alert.showAndWait();
 //        }
 //    }
+
+    @FXML
+    protected void onLogIn() throws IOException {
+        String email = emailTextField.getText();
+        String password = passwordField.getText();
+        try {
+            // ユーザー認証を行う
+            User authenticatedUser = loginUser(email, password);
+
+            if (authenticatedUser != null) {
+                // ログイン成功
+                // ここで適切な処理を行う（例えば、別の画面に遷移する）
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                MyHubController graphsWindow = new MyHubController();
+                graphsWindow.start(stage);
+            } else {
+                // ログイン失敗
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Login failed. The email address or password is incorrect.");
+                alert.showAndWait();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("In charge of interacting with the database.");
+            alert.showAndWait();
+        }
+    }
+
 
 
     @FXML
