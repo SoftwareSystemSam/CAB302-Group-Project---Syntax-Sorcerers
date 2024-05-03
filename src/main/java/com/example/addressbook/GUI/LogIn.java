@@ -66,13 +66,12 @@ public class LogIn{
             User authenticatedUser = loginUser(email, password);
 
             if (authenticatedUser != null) {
-                // ログイン成功
-                // ここで適切な処理を行う（例えば、別の画面に遷移する）
+                // login success
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 MyHubController graphsWindow = new MyHubController();
                 graphsWindow.start(stage);
             } else {
-                // ログイン失敗
+                // login fail
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Login failed. The email address or password is incorrect.");
                 alert.showAndWait();
