@@ -13,22 +13,19 @@ import java.io.IOException;
 
 public class LogIn{
     @FXML
-    private Button loginnButton;
+    private Button loginButton;
     @FXML
-    private TextArea idtextbox;
+    private TextField emailTextField;
     @FXML
-    private TextArea pstextbox;
+    private TextField passwordField;
+    public static final String TITLE = "Screen Tracker";
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 360;
 
-    public void start(Stage stage) {
-        initUI(stage);
-    }
-
-    private void initUI(Stage stage) {
-        // Create a VBox to hold the navigation bar and graphs
-        var vbox = new VBox();
-        var scene = new Scene(vbox, 950, 500);
-
-        stage.setTitle("log in Bar");
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
     }
@@ -36,21 +33,12 @@ public class LogIn{
     @FXML
     protected void onLogIn() throws IOException {
         try {
-            Stage stage = (Stage) loginnButton.getScene().getWindow();
-            LogInController graphsWindow = new LogInController();
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            MyHubController graphsWindow = new MyHubController();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    @FXML
-    public void idTexboxs() {
-        idtextbox.setText("""
-WELCOME TO THE SCREEN TRACKER APPLICATION. TICK THE BOX TO LOG IN AND MOVE ON.""");
-    }
-    @FXML
-    public void psTexboxs() {
-        pstextbox.setText("""
-WELCOME TO THE SCREEN TRACKER APPLICATION. TICK THE BOX TO LOG IN AND MOVE ON.""");
-    }
+
 }

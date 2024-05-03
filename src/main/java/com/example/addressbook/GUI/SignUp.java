@@ -1,5 +1,6 @@
 package com.example.addressbook.GUI;
 
+import com.example.addressbook.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -17,42 +18,41 @@ public class SignUp {
     @FXML
     private Button backButton;
     @FXML
-    private TextField emailTextBox;
+    private TextField firstNameTextField;
     @FXML
-    private PasswordField passwordTextBox;
+    private TextField lastNameTextField;
+    @FXML
+    private TextField ageTextField;
+    @FXML
+    private TextField emailTextField;
+    @FXML
+    private TextField passwordField;
+    public static final String TITLE = "Screen Tracker";
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 360;
 
 
-    public void start(Stage stage) {
-        initUI(stage);
-    }
-
-    private void initUI(Stage stage) {
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(20));
-        vbox.getChildren().addAll(emailTextBox, passwordTextBox, backButton);
-
-        Scene scene = new Scene(vbox, 300, 200);
-        stage.setTitle("Sign up for an account");
+    public void start(Stage stage) throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("signUp-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
     @FXML
-    protected void onSignUp() {
-        // Here you can handle the sign-up logic, e.g., validation, storing to database, etc.
-        System.out.println("Sign-up information: Email=" + emailTextBox.getText() + " Password=" + passwordTextBox.getText());
-        // Transition to the main application page or show success message
+    protected void backButtonAction() throws IOException {
+        // Handle navigation back to the login page
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        LogIn loginWindow = new LogIn();
+        loginWindow.start(stage);
     }
 
     @FXML
-    protected void onBack() {
+    protected void onBack() throws IOException {
         // Handle navigation back to the login page
         Stage stage = (Stage) backButton.getScene().getWindow();
-        // Assuming LogIn is your main login window class
-        LogIn logInWindow = new LogIn();
-        logInWindow.start(stage);
+        LogIn graphsWindow = new LogIn();
+        graphsWindow.start(stage);
     }
 }
