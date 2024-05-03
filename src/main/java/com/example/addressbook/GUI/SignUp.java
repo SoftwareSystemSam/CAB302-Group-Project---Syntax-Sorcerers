@@ -29,11 +29,8 @@ public class SignUp {
     private TextField emailTextField;
     @FXML
     private TextField passwordTextField;
-    @FXML
-    private IUserDAO userDAO;
-    @FXML
-    private Connection getConnection;
 
+    private UserService userService = new UserService();
 
     public static final String TITLE = "Screen Tracker";
     public static final int WIDTH = 640;
@@ -58,6 +55,8 @@ public class SignUp {
         // Output the text written in the text box to the console.
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
+
+        boolean success = userService.registerNewUser(email, password);
 
         // Handle navigation back to the login page
         Stage stage = (Stage) signupButton.getScene().getWindow();
