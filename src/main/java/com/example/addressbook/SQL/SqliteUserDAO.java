@@ -6,13 +6,15 @@ import java.sql.*;
 public class SqliteUserDAO implements IUserDAO {
     private Connection connection;
 
-    public SqliteUserDAO() {
-        connection = SqliteConnection.getInstance();
+    public SqliteUserDAO(Connection connection) {
+        this.connection = connection;
         createTable();
 
     }
 
-    private void createTable() {
+
+
+    public void createTable() {
         // Create table if not exists
         try {
             Statement statement = connection.createStatement();
@@ -27,6 +29,7 @@ public class SqliteUserDAO implements IUserDAO {
         }
     }
 
+
     @Override
     public void addUser(User user) {
         try {
@@ -38,6 +41,9 @@ public class SqliteUserDAO implements IUserDAO {
             e.printStackTrace();
         }
     }
+
+
+
 
     @java.lang.Override
     public void deleteUser(User user) {
@@ -62,8 +68,8 @@ public class SqliteUserDAO implements IUserDAO {
                     // Assuming User class has a constructor like User(id, email, password).
                     return new User(
                             resultSet.getInt("id"),
-                            resultSet.getString("email"),
-                            resultSet.getString("password")
+                            resultSet.getString("password"),
+                            resultSet.getString("email")
                     );
                 }
             }
@@ -82,8 +88,9 @@ public class SqliteUserDAO implements IUserDAO {
             if (resultSet.next()) {
                 return new User(
                         resultSet.getInt("id"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password") // Ideally should be a hashed password
+                        resultSet.getString("password"), // Ideally should be a hashed password
+                        resultSet.getString("email")
+
                 );
             }
         } catch (SQLException e) {

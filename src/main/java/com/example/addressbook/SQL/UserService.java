@@ -1,14 +1,17 @@
 package com.example.addressbook.SQL;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserService {
 
     private IUserDAO userDAO;
+    private Connection connection;
 
-    public UserService(IUserDAO userDAO){
+    public UserService(IUserDAO userDAO, Connection connection){
         this.userDAO= userDAO;
+        this.connection = connection;
     }
 
     public boolean registerNewUser(String email, String password){
@@ -28,7 +31,7 @@ public class UserService {
         if( user!= null && Objects.equals(password, user.getPassword())){
             // I'm leaving this here because this needs to be done after authentication has been handled and probably shouldn't be done here.
             // Once User has been verified then you can start tracking because they should have an id in the database
-            // ActiveWindowTracker tracker = new ActiveWindowTracker(user);
+            // ActiveWindowTracker tracker = new ActiveWindowTracker(user,connection);
             // tracker.trackActiveWindow(); // Now you can start tracking
             // If password matches then the login is sucessful
             return user;

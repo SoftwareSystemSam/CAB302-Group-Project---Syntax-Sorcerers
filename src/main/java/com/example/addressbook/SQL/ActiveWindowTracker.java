@@ -4,6 +4,7 @@ import com.sun.jna.Native;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -15,8 +16,8 @@ public class ActiveWindowTracker {
     private User currentUser;
 
     // Use this user when tracking active window
-    public ActiveWindowTracker(User currentUser){
-        this.screenTimeEntryDAO = new SqliteScreenTimeEntryDAO();
+    public ActiveWindowTracker(User currentUser, Connection connection){
+        this.screenTimeEntryDAO = new SqliteScreenTimeEntryDAO(connection);
         this.user32 = User32.INSTANCE;
         this.currentUser = currentUser;
     }
