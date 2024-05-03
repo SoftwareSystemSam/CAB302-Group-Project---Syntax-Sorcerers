@@ -21,74 +21,59 @@ public class Navigation extends HBox {
 
     public Navigation() {
         // Create navigation buttons
-        Button MyGoals = new Button("My Goals");
-//
-//        @FXML
-//        protected void MyGoalsButtonClick() throws IOException {
-//            try {
-//                Stage stage = (Stage) nextButton.getScene().getWindow();
-//                MyGoals MyGoalsWindow = new MyGoals();
-//                MyGoalsWindow.start(stage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        Button MyStats = new Button("My Stats");
-
-//        @FXML
-//        protected void MyStatsButtonClick() throws IOException {
-//            try {
-//                Stage stage = (Stage) nextButton.getScene().getWindow();
-//                MyHubController graphsWindow = new MyHubController();
-//                graphsWindow.start(stage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-        Button MyNotifications = new Button("My Notifications");
-
-//        @FXML
-//        protected void MyNotificationsButtonClick() throws IOException {
-//            try {
-//                Stage stage = (Stage) nextButton.getScene().getWindow();
-//                MyHubController graphsWindow = new MyHubController();
-//                graphsWindow.start(stage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        Button MyHealth = new Button("My Health");
-
-//        @FXML
-//        protected void MyHealthButtonClick() throws IOException {
-//            try {
-//                Stage stage = (Stage) nextButton.getScene().getWindow();
-//                MyHubController graphsWindow = new MyHubController();
-//                graphsWindow.start(stage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        Button MyData = new Button("My Data");
-
-//        @FXML
-//        protected void MyDataButtonClick() throws IOException {
-//            try {
-//                Stage stage = (Stage) nextButton.getScene().getWindow();
-//                MyHubController graphsWindow = new MyHubController();
-//                graphsWindow.start(stage);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+        Button myGoalsB = new Button("My Goals");
+        Button myNotificationsB = new Button("My Notifications");
+        Button myStatsB = new Button("My Stats");
+        Button myHealthB = new Button("My Health");
+        Button myDataB = new Button("My Data");
 
         // Add buttons to the navigation bar
-        this.getChildren().addAll(MyGoals, MyStats, MyNotifications, MyHealth, MyData);
+        this.getChildren().addAll(myGoalsB, myStatsB, myNotificationsB, myHealthB, myDataB);
 
         // Center the navigation bar horizontally
         this.setAlignment(Pos.CENTER);
+
+        // Set event handlers for button clicks
+        myGoalsB.setOnAction(event -> {
+            // Handle My Goals button click
+            // You can switch to My Goals view here
+            System.out.println("My Goals button clicked");
+            MyGoals myGoalsScene = new MyGoals();
+            try {
+                myGoalsScene.start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        myNotificationsB.setOnAction(event -> {
+            // Handle My Notifications button click
+            // You can switch to My Notifications view here
+            System.out.println("My Notifications button clicked");
+        });
+
+        myStatsB.setOnAction(event -> {
+            // Handle My Stats button click
+            // You can switch to My Stats view here
+            System.out.println("My Stats button clicked");
+        });
+
+        myHealthB.setOnAction(event -> {
+            // Handle My Health button click
+            // You can switch to My Health view here
+            System.out.println("My Health button clicked");
+            MyHealth myHealth = new MyHealth();
+            try {
+                myHealth.start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        myDataB.setOnAction(event -> {
+            // Handle My Data button click
+            // You can switch to My Data view here
+            System.out.println("My Data button clicked");
+        });
     }
 }
