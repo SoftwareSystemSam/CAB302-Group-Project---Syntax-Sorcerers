@@ -7,7 +7,7 @@ module com.example.addressbook {
     requires org.junit.jupiter.api;
     requires org.mockito;
     requires org.mockito.junit.jupiter;
-
+    requires java.desktop;
 
 
     opens com.example.addressbook to javafx.fxml;
