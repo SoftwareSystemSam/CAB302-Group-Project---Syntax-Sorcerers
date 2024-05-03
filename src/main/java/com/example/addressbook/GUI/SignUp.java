@@ -1,11 +1,9 @@
 package com.example.addressbook.GUI;
 
-import com.example.addressbook.HelloApplication;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -28,7 +26,7 @@ public class SignUp{
         var vbox = new VBox();
         var scene = new Scene(vbox, 950, 500);
 
-        stage.setTitle("log in Bar");
+        stage.setTitle("Sign up for an account");
         stage.setScene(scene);
         stage.show();
     }
