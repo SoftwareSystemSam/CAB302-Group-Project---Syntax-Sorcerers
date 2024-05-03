@@ -27,6 +27,7 @@ public class SignUp {
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
+
     public static final String TITLE = "Screen Tracker";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;

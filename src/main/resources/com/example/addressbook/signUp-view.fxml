@@ -18,13 +18,11 @@
     <VBox spacing="10.0" alignment="CENTER">
 
         <Label text="First Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="firstNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Enter Email"/>
-
-
+        <TextField fx:id="firstNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Enter First Name"/>
         <Label text="Last Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="lastNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Enter Email"/>
+        <TextField fx:id="lastNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Enter Last Name"/>
         <Label text="Age:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <TextField fx:id="ageTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Enter Email"/>
+        <TextField fx:id="ageTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Enter Your Age"/>
         <Label text="Email Address:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
         <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="Enter Email"/>
         <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4" />

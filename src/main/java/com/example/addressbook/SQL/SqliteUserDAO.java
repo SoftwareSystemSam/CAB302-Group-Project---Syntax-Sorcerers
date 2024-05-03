@@ -12,8 +12,6 @@ public class SqliteUserDAO implements IUserDAO {
 
     }
 
-
-
     private void createTable() {
         // Create table if not exists
         try {
@@ -29,7 +27,6 @@ public class SqliteUserDAO implements IUserDAO {
         }
     }
 
-
     @Override
     public void addUser(User user) {
         try {
@@ -41,9 +38,6 @@ public class SqliteUserDAO implements IUserDAO {
             e.printStackTrace();
         }
     }
-
-
-
 
     @java.lang.Override
     public void deleteUser(User user) {
