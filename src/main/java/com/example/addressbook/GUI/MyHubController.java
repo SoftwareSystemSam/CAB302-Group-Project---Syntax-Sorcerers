@@ -27,19 +27,18 @@ public class MyHubController extends Application {
     }
 
     private void initUI(Stage stage) throws SQLException {
-        // Create a navigation bar
+
         Navigation navigationBar = new Navigation();
 
-        // Instantiate BarChartPane and PieChartPane
+
         var barChart = new BarChartGUI();
         var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
-        // Create a VBox to hold the navigation bar and graphs
         var vbox = new VBox();
         vbox.setPrefSize(950, 600);
         var scene = new Scene(vbox, 950, 600);
 
-        // Add the navigation bar and graphs to the VBox
+
         vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart));
 
         stage.setTitle("Combined Charts with Navigation Bar");
