@@ -21,6 +21,7 @@ public class MyHubController extends Application {
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
     }
+
     @Override
     public void start(Stage stage) throws SQLException {
         initUI(stage);
