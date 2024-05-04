@@ -1,7 +1,7 @@
 package com.example.addressbook.GUI;
 
 import com.example.addressbook.HelloApplication;
-import com.example.addressbook.SQL.User;
+import com.example.addressbook.SQL.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,14 +11,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-//import com.example.addressbook.SQL.UserDAO;
-import com.example.addressbook.SQL.IUserDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.example.addressbook.SQL.UserService;
+
 
 
 public class LogIn{
@@ -33,10 +30,16 @@ public class LogIn{
     private IUserDAO userDAO;
     private Connection connection;
 
+    private UserService userService;
+
 
     public static final String TITLE = "Screen Tracker";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
+
+    public LogIn() {
+        initializeUserService();
+    }
 
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
@@ -45,6 +48,21 @@ public class LogIn{
         stage.setScene(scene);
         stage.show();
     }
+
+    private void initializeUserService() {
+        try {
+            // Assuming you have a method to get a connection
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:path_to_your_database.db");// Get path to DB
+            IUserDAO userDAO = new SqliteUserDAO(connection);
+            this.userService = new UserService(userDAO,connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Failed to connect to the database.");
+            alert.show();
+        }
+    }
+
 
     //    @FXML   before change
 //    protected void onLogIn() throws IOException {
@@ -63,10 +81,16 @@ public class LogIn{
         String password = passwordField.getText();
         try {
             // ユーザー認証を行う
-            User authenticatedUser = loginUser(email, password);
+            User  authenticatedUser = userService.loginUser(email, password);
 
             if (authenticatedUser != null) {
                 // login success
+
+                // Activate Window Tracker
+                 ActiveWindowTracker tracker = new ActiveWindowTracker(authenticatedUser,connection);
+                 tracker.trackActiveWindow(); // Now you can start tracking
+                // Activate Window Tracker
+
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 MyHubController graphsWindow = new MyHubController();
                 graphsWindow.start(stage);
