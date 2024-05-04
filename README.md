@@ -18,4 +18,5 @@ The project requirements are:
 **Things to note!!!**
 
 **This app will only work on windows machines!**
+
 **To start this application from intellij you need to run the application from the loginController class**
