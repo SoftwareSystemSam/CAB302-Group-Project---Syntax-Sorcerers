@@ -85,13 +85,15 @@ public class LogIn{
 
                 //Start up the database for the window tracking
                 Connection screenTimeConnection = SqliteConnection.getScreenTimeDbInstance();
+                IScreenTimeEntryDAO screenDAO = new SqliteScreenTimeEntryDAO(screenTimeConnection);
                 // Activate Window Tracker
                  ActiveWindowTracker tracker = new ActiveWindowTracker(authenticatedUser,screenTimeConnection);
                  tracker.trackActiveWindow(); // Now you can start tracking
 
+
                 //  Go to my hub
                 Stage stage = (Stage) loginButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController();
+                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO);
                 graphsWindow.start(stage);
             } else {
                 showLoginFailedAlert();

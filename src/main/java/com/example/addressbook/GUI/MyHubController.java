@@ -1,26 +1,25 @@
 package com.example.addressbook.GUI;
 
 
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
 import com.example.addressbook.SQL.User;
-import com.example.addressbook.SQL.IUserDAO;
-import com.example.addressbook.SQL.SqliteUserDAO;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.geometry.Pos;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 
 
 public class MyHubController extends Application {
+
+    private User currentUser;
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+
+    public MyHubController(User user, IScreenTimeEntryDAO screenDAO){
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+    }
     @Override
     public void start(Stage stage) {
         initUI(stage);
@@ -32,7 +31,7 @@ public class MyHubController extends Application {
 
         // Instantiate BarChartPane and PieChartPane
         var barChart = new BarChartGUI();
-        var pieChart = new PieChartGUI();
+        var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
         // Create a VBox to hold the navigation bar and graphs
         var vbox = new VBox();

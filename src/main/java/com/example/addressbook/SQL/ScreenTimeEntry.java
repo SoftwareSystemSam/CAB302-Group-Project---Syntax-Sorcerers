@@ -5,20 +5,26 @@ import com.example.addressbook.SQL.User;
 import java.time.LocalDateTime;
 
 public class ScreenTimeEntry{
-    private Long id;
+    private int id;
     private User user;
+
+    private int userId;
     private String applicationName;
     private Long duration;
     private LocalDateTime startTime;
 
 
     // Getters
-    public Long getId(){
+    public int getId(){
         return id;
     }
 
     public User getUser(){
         return user;
+    }
+
+    public int getUserId(){
+        return userId;
     }
 
     public String getApplicationName(){
@@ -51,6 +57,13 @@ public class ScreenTimeEntry{
     }
 
     public void setStartTime(LocalDateTime startTime){
+        this.startTime = startTime;
+    }
+
+    public ScreenTimeEntry(int userId, String applicationName, long duration, LocalDateTime startTime) {
+        this.userId = userId;
+        this.applicationName = applicationName;
+        this.duration = duration;
         this.startTime = startTime;
     }
 

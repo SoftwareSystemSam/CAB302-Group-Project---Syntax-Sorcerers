@@ -1,9 +1,9 @@
 package com.example.addressbook.SQL;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     // Database connection and table
@@ -41,7 +41,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
 
         Statement insertStatement = connection.createStatement();
         try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO screen_time_entries (user_id, application_name, duration, start_time) VALUES (?, ?, ?, ?)")) {
-            pstmt.setInt(1, entry.getUser().getId());
+            pstmt.setInt(1, entry.getUserId());
             pstmt.setString(2, entry.getApplicationName());
             pstmt.setLong(3, entry.getDuration());
             pstmt.setString(4, entry.getStartTime().toString()); //  Correct formatting? TODO check date time formatting
@@ -50,4 +50,25 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<ScreenTimeEntry> getScreenTimeEntriesByUserId(int userId) throws SQLException {
+        List<ScreenTimeEntry> entries = new ArrayList<>();
+        String query = "SELECT * FROM screen_time_entries WHERE user_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                entries.add(new ScreenTimeEntry(
+                        userId,
+                        rs.getString("application_name"),
+                        rs.getLong("duration"),
+                        LocalDateTime.parse(rs.getString("start_time"))
+                ));
+            }
+        }
+        return entries;
+    }
+
+
 }

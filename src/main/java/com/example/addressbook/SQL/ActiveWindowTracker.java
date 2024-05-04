@@ -20,6 +20,7 @@ public class ActiveWindowTracker {
         this.screenTimeEntryDAO = new SqliteScreenTimeEntryDAO(connection);
         this.user32 = User32.INSTANCE;
         this.currentUser = currentUser;
+
     }
 
     // https://stackoverflow.com/questions/5767104/using-jna-to-get-getforegroundwindow
@@ -54,16 +55,21 @@ public class ActiveWindowTracker {
 
 
     // Create new function to handle logging screen time tracking to appropriate user
-    private void logWindowTime(String applicationName, long durationInSeconds, LocalDateTime startTime) throws SQLException {
+    private void logWindowTime(String applicationName, long durationInSeconds, LocalDateTime startTime) {
+        try {
+            if (currentUser == null) {
+                System.err.println("No current user set for logging window time.");
+                return; //
+            }
 
-        ScreenTimeEntry entry = new ScreenTimeEntry();
 
-        entry.setUser(currentUser);
-        entry.setApplicationName(applicationName);
-        entry.setDuration(durationInSeconds);
-        entry.setStartTime(startTime);
+            int userId = currentUser.getId();  // Fetch the user ID from the currentUser
+            ScreenTimeEntry entry = new ScreenTimeEntry( userId, applicationName, durationInSeconds, startTime);
 
-        // Uses DAO to add entry to database
-        screenTimeEntryDAO.addScreenTimeEntry(entry);
+            // Uses DAO to add entry to database
+            screenTimeEntryDAO.addScreenTimeEntry(entry);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

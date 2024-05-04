@@ -37,15 +37,16 @@ class SqliteScreenTimeEntryDAOTest {
 
     @Test
     void testAddScreenTimeEntry() throws Exception {
-        // Create a User object with a valid ID
-        User user = new User(1, "user@example.com", "password"); // Adjust constructor as necessary
+        int userId = 1; // Example user ID
 
-        // Create ScreenTimeEntry and set the user
-        ScreenTimeEntry entry = new ScreenTimeEntry();
-        entry.setUser(user); // Ensure setUser method is implemented in ScreenTimeEntry
-        entry.setStartTime(LocalDateTime.parse("2019-03-27T10:15:30"));
-        entry.setApplicationName("Google Chrome");
-        entry.setDuration(3600L);
+        // Create ScreenTimeEntry directly using the constructor with parameters
+        ScreenTimeEntry entry = new ScreenTimeEntry(
+                userId, // Pass userId directly
+                "Google Chrome",
+                3600L,
+                LocalDateTime.parse("2019-03-27T10:15:30")
+        );
+
         // Prepare the PreparedStatement mock to avoid null pointer exceptions
         doNothing().when(mockPreparedStatement).setInt(anyInt(), anyInt());
         when(mockPreparedStatement.executeUpdate()).thenReturn(1); // Assume 1 row updated for success
