@@ -23,5 +23,14 @@
 
         <!-- Your charts or other content -->
         <!-- For example, you can include a Pane or a SplitPane -->
+
+
+    <HBox alignment="BOTTOM_CENTER">
+        <Button fx:id="backButton" text="Back" onAction="#onBackButton"/>
+        <Button fx:id="manualEntryButton" text="Manual Entry" onAction="#onManualEntryButton"/>
+    </HBox>
     </children>
+
 </VBox>
+
+

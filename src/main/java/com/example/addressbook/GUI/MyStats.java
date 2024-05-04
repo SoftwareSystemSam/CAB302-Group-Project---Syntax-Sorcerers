@@ -32,6 +32,14 @@ public class MyStats extends Application{
     @FXML
     private Button manualEntryButton;
 
+    @FXML
+    protected void onBackButton() throws IOException {
+    }
+
+    @FXML
+    protected void onManualEntryButton() throws IOException{
+
+    }
 
 
     @Override
@@ -41,12 +49,14 @@ public class MyStats extends Application{
 
     private void initUI(Stage stage) throws SQLException {
          Navigation navigationBar = new Navigation();
+
         var vbox = new VBox();
         vbox.setPrefSize(950, 600);
         var scene = new Scene(vbox, 950, 600);
+
         vbox.getChildren().addAll(navigationBar);
 
-        stage.setTitle("Combined Charts with Navigation Bar");
+        stage.setTitle("MyStats");
         stage.setScene(scene);
         stage.show();
     }
