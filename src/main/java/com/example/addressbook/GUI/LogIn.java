@@ -86,9 +86,12 @@ public class LogIn{
                 //Start up the database for the window tracking
                 Connection screenTimeConnection = SqliteConnection.getScreenTimeDbInstance();
                 IScreenTimeEntryDAO screenDAO = new SqliteScreenTimeEntryDAO(screenTimeConnection);
-                // Activate Window Tracker
-                 ActiveWindowTracker tracker = new ActiveWindowTracker(authenticatedUser,screenTimeConnection);
-                 tracker.trackActiveWindow(); // Now you can start tracking
+                // Activate Window Tracker - Will need to create a thread for this, otherwise program will hang
+                //https://www.geeksforgeeks.org/runnable-interface-in-java/
+                ActiveWindowTracker tracker = new ActiveWindowTracker(authenticatedUser, screenTimeConnection);
+                Thread trackerThread = new Thread(tracker);
+                trackerThread.start(); // Start tracking in a new thread
+
 
 
                 //  Go to my hub

@@ -10,10 +10,12 @@ import java.time.LocalDateTime;
 
 
 
-public class ActiveWindowTracker {
+public class ActiveWindowTracker implements Runnable { // https://www.geeksforgeeks.org/runnable-interface-in-java/ need to add runnable for threading
     private IScreenTimeEntryDAO screenTimeEntryDAO;
     private User32 user32;
     private User currentUser;
+
+    private volatile boolean running = true; // Control flag to see when the program is running
 
     // Use this user when tracking active window
     public ActiveWindowTracker(User currentUser, Connection connection){
@@ -23,34 +25,44 @@ public class ActiveWindowTracker {
 
     }
 
+
+    public void run() {
+        try {
+            trackActiveWindow();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     // https://stackoverflow.com/questions/5767104/using-jna-to-get-getforegroundwindow
     public void trackActiveWindow() throws SQLException {
-
-        // Need to check if user is logged in, otherwise SQL database won't know where to put data in tables.
-        if(currentUser == null){
+        if (currentUser == null) {
             throw new IllegalStateException("No user is currently logged in");
         }
-        HWND hwnd = user32.GetForegroundWindow(); // Get the active window handle
+        HWND hwnd = user32.GetForegroundWindow();
         char[] windowText = new char[512];
         user32.GetWindowText(hwnd, windowText, 512);
         String wText = Native.toString(windowText).trim();
-
-        // Start timer to track how long this window remains in the foreground
         long startTime = System.currentTimeMillis();
-        HWND newHwnd;
-        do {
-            newHwnd = user32.GetForegroundWindow(); // Check if the active window has changed
-            try {
-                Thread.sleep(1000); // Check every second
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+        while (running) { // Basically need to keep running this now otherwise no new windows will be tracked. Also needs to be run in separate thread
+            HWND newHwnd = user32.GetForegroundWindow();
+            if (!hwnd.equals(newHwnd)) {
+                long endTime = System.currentTimeMillis();
+                long timeSpentInSeconds = (endTime - startTime) / 1000;
+                logWindowTime(wText, timeSpentInSeconds, LocalDateTime.now());
+                hwnd = newHwnd;
+                user32.GetWindowText(hwnd, windowText, 512);
+                wText = Native.toString(windowText).trim();
+                startTime = System.currentTimeMillis();
             }
-        } while (hwnd.equals(newHwnd));
-
-        long endTime = System.currentTimeMillis();
-        long timeSpentInSeconds = (endTime - startTime) / 1000; // Convert time from milliseconds to seconds
-
-        logWindowTime(wText, timeSpentInSeconds, LocalDateTime.now());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
     }
 
 
