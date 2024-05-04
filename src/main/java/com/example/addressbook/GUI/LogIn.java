@@ -17,11 +17,12 @@ import com.example.addressbook.SQL.IUserDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import com.example.addressbook.SQL.UserService;
 
 
-public class LogIn{
+public class LogIn {
     @FXML
     private Button loginButton;
     @FXML
@@ -32,6 +33,7 @@ public class LogIn{
     private TextField passwordField;
     private IUserDAO userDAO;
     private Connection connection;
+    private UserService userService;
 
 
     public static final String TITLE = "Screen Tracker";
@@ -46,7 +48,7 @@ public class LogIn{
         stage.show();
     }
 
-    //    @FXML   before change
+//        @FXML  before changes
 //    protected void onLogIn() throws IOException {
 //        try {
 //            Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -61,29 +63,23 @@ public class LogIn{
     protected void onLogIn() throws IOException {
         String email = emailTextField.getText();
         String password = passwordField.getText();
-        try {
-            // ユーザー認証を行う
-            User authenticatedUser = loginUser(email, password);
 
-            if (authenticatedUser != null) {
+        try {
+            User user = userService.loginUser(email, password);
+            if (user != null && Objects.equals(password, user.getPassword())) {
                 // login success
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 MyHubController graphsWindow = new MyHubController();
                 graphsWindow.start(stage);
             } else {
                 // login fail
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Login failed. The email address or password is incorrect.");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid email or password.");
                 alert.showAndWait();
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("In charge of interacting with the database.");
-            alert.showAndWait();
         }
     }
-
 
 
     @FXML
@@ -102,10 +98,13 @@ public class LogIn{
         // Handle navigation back to the login page
         Stage stage = (Stage) emailTextField.getScene().getWindow();
     }
+
     @FXML
     protected void GetPasswordAction() throws IOException {
         // Handle navigation back to the login page
         Stage stage = (Stage) passwordField.getScene().getWindow();
     }
 }
+
+
 
