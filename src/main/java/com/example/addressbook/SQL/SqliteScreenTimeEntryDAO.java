@@ -1,6 +1,7 @@
 package com.example.addressbook.SQL;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,29 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return entries;
     }
+
+    public List<ScreenTimeEntry> getScreenTimeEntriesByUserIdAndDate(int userId, LocalDate date) throws SQLException {
+        List<ScreenTimeEntry> entries = new ArrayList<>();
+        String query = "SELECT application_name, SUM(duration) as total_duration " +
+                "FROM screen_time_entries " +
+                "WHERE user_id = ? AND date(start_time) = ? " +
+                "GROUP BY application_name";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, date.toString()); // Ensure date is in 'yyyy-MM-dd' format
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                entries.add(new ScreenTimeEntry(
+                        userId,
+                        rs.getString("application_name"),
+                        rs.getLong("total_duration"),
+                        date.atStartOfDay()
+                ));
+            }
+        }
+        return entries;
+    }
+
 
 
 }

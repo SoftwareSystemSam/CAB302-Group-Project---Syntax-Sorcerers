@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 
 
 public class MyHubController extends Application {
@@ -21,11 +22,11 @@ public class MyHubController extends Application {
         this.screenTimeEntryDAO = screenDAO;
     }
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
         initUI(stage);
     }
 
-    private void initUI(Stage stage) {
+    private void initUI(Stage stage) throws SQLException {
         // Create a navigation bar
         Navigation navigationBar = new Navigation();
 
@@ -35,7 +36,8 @@ public class MyHubController extends Application {
 
         // Create a VBox to hold the navigation bar and graphs
         var vbox = new VBox();
-        var scene = new Scene(vbox, 950, 500);
+        vbox.setPrefSize(950, 600);
+        var scene = new Scene(vbox, 950, 600);
 
         // Add the navigation bar and graphs to the VBox
         vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart));
