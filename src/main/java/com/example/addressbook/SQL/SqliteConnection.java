@@ -4,21 +4,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SqliteConnection {
-    private static Connection instance = null;
+    private static Connection userDbInstance = null;
+    private static Connection screenTimeDbInstance = null;
 
-    private SqliteConnection() {
-        String url = "jdbc:sqlite:contacts.db";
-        try {
-            instance = DriverManager.getConnection(url);
-        } catch (SQLException sqlEx) {
-            System.err.println(sqlEx);
+    // Private constructor to prevent instantiation
+    private SqliteConnection() { }
+
+    public static Connection getUserDbInstance() {
+        if (userDbInstance == null) {
+            userDbInstance = createConnection("jdbc:sqlite:userDatabase.db");
         }
+        return userDbInstance;
     }
 
-    public static Connection getInstance() {
-        if (instance == null) {
-            new SqliteConnection();
+    public static Connection getScreenTimeDbInstance() {
+        if (screenTimeDbInstance == null) {
+            screenTimeDbInstance = createConnection("jdbc:sqlite:screenTimeTrackingDatabase.db");
         }
-        return instance;
+        return screenTimeDbInstance;
+    }
+
+    private static Connection createConnection(String url) {
+        try {
+            return DriverManager.getConnection(url);
+        } catch (SQLException sqlEx) {
+            System.err.println("Failed to connect to database: " + url);
+            System.err.println(sqlEx.getMessage());
+            return null;
+        }
     }
 }
