@@ -1,44 +1,44 @@
 package com.example.addressbook.GUI;
 
 
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
 import com.example.addressbook.SQL.User;
-import com.example.addressbook.SQL.IUserDAO;
-import com.example.addressbook.SQL.SqliteUserDAO;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.geometry.Pos;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 
 
 public class MyHubController extends Application {
+
+    private User currentUser;
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+
+    public MyHubController(User user, IScreenTimeEntryDAO screenDAO){
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+    }
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
         initUI(stage);
     }
 
-    private void initUI(Stage stage) {
-        // Create a navigation bar
+    private void initUI(Stage stage) throws SQLException {
+
         Navigation navigationBar = new Navigation();
 
-        // Instantiate BarChartPane and PieChartPane
+
         var barChart = new BarChartGUI();
-        var pieChart = new PieChartGUI();
+        var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
-        // Create a VBox to hold the navigation bar and graphs
         var vbox = new VBox();
-        var scene = new Scene(vbox, 950, 500);
+        vbox.setPrefSize(950, 600);
+        var scene = new Scene(vbox, 950, 600);
 
-        // Add the navigation bar and graphs to the VBox
+
         vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart));
 
         stage.setTitle("Combined Charts with Navigation Bar");

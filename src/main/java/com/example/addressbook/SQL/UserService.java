@@ -15,12 +15,15 @@ public class UserService {
     }
 
     public boolean registerNewUser(String email, String password){
-        if(userDAO.getUserByEmail(email) != null){
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            return false; // Basic null/empty check
+        }
+
+        if (userDAO.getUserByEmail(email) != null) {
             // User already exists
             return false;
-        }
-        else{
-            User newUser = new User(email,password);
+        } else {
+            User newUser = new User(password, email);
             userDAO.addUser(newUser);
             return true;
         }
