@@ -27,10 +27,7 @@ public class LogIn{
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
-    private IUserDAO userDAO;
-    private Connection connection;
-
-    private UserService userService;
+     private UserService userService;
 
 
     public static final String TITLE = "Screen Tracker";
@@ -49,22 +46,22 @@ public class LogIn{
         stage.show();
     }
 
+
+
     private void initializeUserService() {
-        try {
-            // Assuming you have a method to get a connection
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:path_to_your_database.db");// Get path to DB
-            IUserDAO userDAO = new SqliteUserDAO(connection);
-            this.userService = new UserService(userDAO,connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Failed to connect to the database.");
-            alert.show();
-        }
+        Connection userConnection = SqliteConnection.getUserDbInstance();
+        IUserDAO userDAO = new SqliteUserDAO(userConnection);
+        this.userService = new UserService(userDAO, userConnection);
+    }
+
+    private void showDatabaseError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText("Failed to connect to the database.");
+        alert.show();
     }
 
 
-    //    @FXML   before change
+            //    @FXML   before change
 //    protected void onLogIn() throws IOException {
 //        try {
 //            Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -86,26 +83,29 @@ public class LogIn{
             if (authenticatedUser != null) {
                 // login success
 
+                //Start up the database for the window tracking
+                Connection screenTimeConnection = SqliteConnection.getScreenTimeDbInstance();
                 // Activate Window Tracker
-                 ActiveWindowTracker tracker = new ActiveWindowTracker(authenticatedUser,connection);
+                 ActiveWindowTracker tracker = new ActiveWindowTracker(authenticatedUser,screenTimeConnection);
                  tracker.trackActiveWindow(); // Now you can start tracking
-                // Activate Window Tracker
 
+                //  Go to my hub
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 MyHubController graphsWindow = new MyHubController();
                 graphsWindow.start(stage);
             } else {
-                // login fail
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Login failed. The email address or password is incorrect.");
-                alert.showAndWait();
+                showLoginFailedAlert();
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("In charge of interacting with the database.");
-            alert.showAndWait();
+            showDatabaseError();
         }
+    }
+
+    private void showLoginFailedAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText("Login failed. The email address or password is incorrect.");
+        alert.showAndWait();
     }
 
 

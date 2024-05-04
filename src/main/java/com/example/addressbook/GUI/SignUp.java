@@ -2,6 +2,7 @@ package com.example.addressbook.GUI;
 
 import com.example.addressbook.HelloApplication;
 import com.example.addressbook.SQL.IUserDAO;
+import com.example.addressbook.SQL.SqliteConnection;
 import com.example.addressbook.SQL.SqliteUserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,17 +50,9 @@ public class SignUp {
     }
 
     private void initializeUserService() {
-        try {
-            // Assuming you have a method to get a connection
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:path_to_your_database.db");
-            IUserDAO userDAO = new SqliteUserDAO(connection);
-            this.userService = new UserService(userDAO,connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Failed to connect to the database.");
-            alert.show();
-        }
+        Connection userConnection = SqliteConnection.getUserDbInstance();
+        IUserDAO userDAO = new SqliteUserDAO(userConnection);
+        this.userService = new UserService(userDAO, userConnection);
     }
 
 

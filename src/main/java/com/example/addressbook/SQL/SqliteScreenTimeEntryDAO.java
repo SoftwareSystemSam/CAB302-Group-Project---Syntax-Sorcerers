@@ -11,6 +11,9 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     private Connection connection;
 
     public SqliteScreenTimeEntryDAO(Connection connection) {
+        if (connection == null) {
+            throw new IllegalArgumentException("Connection cannot be null");
+        }
         this.connection = connection;
         createTable();
     }
@@ -25,7 +28,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
                     + "application_name VARCHAR,"
                     + "duration BIGINT,"
                     + "start_time DATETIME,"
-                    + "FOREIGN KEY (user_id) REFERENCE users(id) ON DELETE CASCADE" // This will link the user_id in this table to the users table id
+                    + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE" // Corrected the 'REFERENCE' to 'REFERENCES'
                     + ")";
             statement.execute(query);
         } catch (Exception e) {
@@ -33,10 +36,11 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
     }
 
+
     public void addScreenTimeEntry(ScreenTimeEntry entry) throws SQLException {
-        // TODO add logic to implement screen time entry into database.
+
         Statement insertStatement = connection.createStatement();
-        try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO screen_time (user_id, application_name, duration, start_time) VALUES (?, ?, ?, ?)")) {
+        try (PreparedStatement pstmt = connection.prepareStatement("INSERT INTO screen_time_entries (user_id, application_name, duration, start_time) VALUES (?, ?, ?, ?)")) {
             pstmt.setInt(1, entry.getUser().getId());
             pstmt.setString(2, entry.getApplicationName());
             pstmt.setLong(3, entry.getDuration());

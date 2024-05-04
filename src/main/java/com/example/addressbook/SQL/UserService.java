@@ -23,7 +23,7 @@ public class UserService {
             // User already exists
             return false;
         } else {
-            User newUser = new User(email, password);
+            User newUser = new User(password, email);
             userDAO.addUser(newUser);
             return true;
         }

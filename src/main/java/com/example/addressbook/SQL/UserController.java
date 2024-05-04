@@ -9,7 +9,7 @@ public class UserController {
 
 
     public UserController(){
-        this.connection = SqliteConnection.getInstance();
+        this.connection = SqliteConnection.getUserDbInstance();
         IUserDAO userDao = new SqliteUserDAO(connection);
         this.userService = new UserService(userDao,connection);
     }
