@@ -15,3 +15,4 @@ The project requirements are:
 
 •	The app will include customizable notifications for users when they exceed predetermined screen time limits for specific applications or overall daily usage.
 
+**To start this application from intellij you need to run the application from the loginController class**
