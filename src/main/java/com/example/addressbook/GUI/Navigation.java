@@ -56,9 +56,10 @@ public class Navigation extends HBox {
             // Handle My Stats button click
             // You can switch to My Stats view here
             System.out.println("My Stats button clicked");
-            MyStats myStats = new MyStats();
             try {
-                myStats.start(new Stage());
+                Stage stage = (Stage) myStatsB.getScene().getWindow();
+                MyStats myStats = new MyStats();
+                myStats.start(stage);
             } catch (Exception e){
                 e.printStackTrace();
             }
