@@ -17,7 +17,7 @@ The project requirements are:
 
 **Things to note!!!**
 
-**If you have just created an account and logged in, you need to wait for like 10 to 20 seconds for the datbase to update with your screen time entries**
+**If you have just created an account and logged in, you need to wait for like 10 to 20 seconds for the database to update with your screen time entries**
 
 **This app will only work on windows machines!**
 
