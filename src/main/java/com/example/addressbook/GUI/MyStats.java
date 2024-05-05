@@ -41,20 +41,25 @@ public class MyStats extends Application{
 
     }
 
+    @FXML
+    protected void onBack() throws IOException {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
-    public void start(Stage stage) throws SQLException {
+    public void start(Stage stage) throws SQLException, IOException {
         initUI(stage);
     }
 
-    private void initUI(Stage stage) throws SQLException {
-         Navigation navigationBar = new Navigation();
+    private void initUI(Stage stage) throws SQLException, IOException {
 
-        var vbox = new VBox();
-        vbox.setPrefSize(950, 600);
-        var scene = new Scene(vbox, 950, 600);
-
-        vbox.getChildren().addAll(navigationBar);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MyStats.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 
         stage.setTitle("MyStats");
         stage.setScene(scene);
