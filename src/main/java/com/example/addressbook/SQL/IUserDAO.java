@@ -27,6 +27,8 @@ public interface IUserDAO {
 
     public User getUserByEmail(String email);
 
+    void updateUser(User user);//For Update user Password
+
     // Shouldn't be needed but leaving here just in case
     //User validateUser(String email, String password);
 
