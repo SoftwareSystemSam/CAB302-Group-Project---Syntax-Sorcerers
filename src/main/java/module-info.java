@@ -9,6 +9,7 @@ module com.example.addressbook {
     requires org.mockito.junit.jupiter;
     requires java.desktop;
     requires net.bytebuddy.agent;
+    requires org.kordamp.ikonli.javafx;
 
 
     opens com.example.addressbook to javafx.fxml;

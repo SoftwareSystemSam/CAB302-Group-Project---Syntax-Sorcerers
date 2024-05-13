@@ -16,6 +16,9 @@ public interface IScreenTimeEntryDAO{
 
 
 
+
+
+
     LocalDateTime findMostRecentStartTimeByUserAppAndDate(int userId, String applicationName, LocalDate date) throws SQLException;
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
 }

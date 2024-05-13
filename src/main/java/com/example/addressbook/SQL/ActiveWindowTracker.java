@@ -16,6 +16,8 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
     private User32 user32;
     private User currentUser;
 
+    private volatile  boolean paused = false;
+
     private volatile boolean running = true; // Control flag to see when the program is running
 
     // Use this user when tracking active window
@@ -28,12 +30,40 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
 
 
     public void run() {
-        try {
-            trackActiveWindow();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (running) {
+            while (!paused) {
+                try {
+                    trackActiveWindow();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            synchronized (this) {
+                try {
+                    // Wait to be notified to resume
+                    while (paused) {
+                        wait();
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    //pause
+                }
+            }
         }
     }
+
+    public synchronized void pause(){
+        paused = true;
+    }
+
+    public synchronized void resume(){
+
+        synchronized (this){
+            paused = false;
+            this.notifyAll();
+        }
+    }
+
 
     // https://stackoverflow.com/questions/5767104/using-jna-to-get-getforegroundwindow
     public void trackActiveWindow() throws SQLException {

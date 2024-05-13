@@ -96,7 +96,7 @@ public class LogIn{
 
                 //  Go to my hub
                 Stage stage = (Stage) loginButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO);
+                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO, tracker);
                 graphsWindow.start(stage);
             } else {
                 showLoginFailedAlert();
