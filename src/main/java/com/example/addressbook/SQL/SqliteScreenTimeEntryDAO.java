@@ -93,6 +93,52 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         return entries;
     }
 
+  
+
+    public LocalDateTime findMostRecentStartTimeByUserAppAndDate(int userId, String applicationName, LocalDate date) throws SQLException {
+        String query = "SELECT start_time FROM screen_time_entries " +
+                "WHERE user_id = ? AND application_name = ? AND date(start_time) = ? " +
+                "ORDER BY start_time DESC LIMIT 1"; // Ensures only the most recent time is fetched
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, applicationName);
+            pstmt.setString(3, date.toString());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return LocalDateTime.parse(rs.getString("start_time"));
+            }
+        }
+        return null;
+    }
+
+
+    public void upsertScreenTimeEntry(int userId, String applicationName, long duration, LocalDateTime dateTime) throws SQLException {
+        LocalDate date = dateTime.toLocalDate(); // Extracting the date part for date checks
+        LocalDateTime existingStartDateTime = findMostRecentStartTimeByUserAppAndDate(userId, applicationName, date);
+
+        if (existingStartDateTime != null) {
+            // Entry exists for today, update it
+            String updateQuery = "UPDATE screen_time_entries SET duration = duration + ? WHERE user_id = ? AND application_name = ? AND start_time = ?";
+            try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+                pstmt.setLong(1, duration);
+                pstmt.setInt(2, userId);
+                pstmt.setString(3, applicationName);
+                pstmt.setString(4, existingStartDateTime.toString()); // Use the exact datetime of the existing entry
+                pstmt.executeUpdate();
+            }
+        } else {
+            // Entry does not exist for today, insert a new one with the current datetime
+            String insertQuery = "INSERT INTO screen_time_entries (user_id, application_name, duration, start_time) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
+                pstmt.setInt(1, userId);
+                pstmt.setString(2, applicationName);
+                pstmt.setLong(3, duration);
+                pstmt.setString(4, dateTime.toString()); // Use the actual current datetime
+                pstmt.executeUpdate();
+            }
+        }
+    }
+
 
 
 }

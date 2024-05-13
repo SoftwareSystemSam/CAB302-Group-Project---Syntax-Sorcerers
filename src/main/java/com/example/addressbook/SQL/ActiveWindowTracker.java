@@ -6,6 +6,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -18,7 +19,7 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
     private volatile boolean running = true; // Control flag to see when the program is running
 
     // Use this user when tracking active window
-    public ActiveWindowTracker(User currentUser, Connection connection){
+    public ActiveWindowTracker(User currentUser, Connection connection) {
         this.screenTimeEntryDAO = new SqliteScreenTimeEntryDAO(connection);
         this.user32 = User32.INSTANCE;
         this.currentUser = currentUser;
@@ -71,15 +72,14 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
         try {
             if (currentUser == null) {
                 System.err.println("No current user set for logging window time.");
-                return; //
+                return;
             }
 
-
             int userId = currentUser.getId();  // Fetch the user ID from the currentUser
-            ScreenTimeEntry entry = new ScreenTimeEntry( userId, applicationName, durationInSeconds, startTime);
+            LocalDate date = startTime.toLocalDate(); // Convert LocalDateTime to LocalDate
 
-            // Uses DAO to add entry to database
-            screenTimeEntryDAO.addScreenTimeEntry(entry);
+            // Uses DAO to upsert entry to database
+            screenTimeEntryDAO.upsertScreenTimeEntry(userId, applicationName, durationInSeconds, startTime);
         } catch (SQLException e) {
             e.printStackTrace();
         }
