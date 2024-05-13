@@ -31,22 +31,23 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
 
     public void run() {
         while (running) {
-            while (!paused) {
+            if (!paused) {
                 try {
+                    System.out.println("I am running the screen tracker.");
                     trackActiveWindow();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
-            synchronized (this) {
+            }  else {
                 try {
-                    // Wait to be notified to resume
-                    while (paused) {
-                        wait();
+                    synchronized (this) {
+                        while (paused) {
+                            System.out.println("I have paused.");
+                            wait();  // Wait until resume is called
+                        }
                     }
                 } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    //pause
+                    Thread.currentThread().interrupt(); // Handle thread interruption
                 }
             }
         }
@@ -54,6 +55,7 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
 
     public synchronized void pause(){
         paused = true;
+        System.out.println("Pause has been called.");
     }
 
     public synchronized void resume(){
@@ -61,6 +63,7 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
         synchronized (this){
             paused = false;
             this.notifyAll();
+            System.out.println("Resume has been called.");
         }
     }
 
@@ -76,7 +79,7 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
         String wText = Native.toString(windowText).trim();
         long startTime = System.currentTimeMillis();
 
-        while (running) { // Basically need to keep running this now otherwise no new windows will be tracked. Also needs to be run in separate thread
+        while (!paused) { // Basically need to keep running this now otherwise no new windows will be tracked. Also needs to be run in separate thread
             HWND newHwnd = user32.GetForegroundWindow();
             if (!hwnd.equals(newHwnd)) {
                 long endTime = System.currentTimeMillis();
