@@ -32,7 +32,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
                     + "application_name VARCHAR,"
                     + "duration BIGINT,"
                     + "start_time DATETIME,"
-                    + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE" // Corrected the 'REFERENCE' to 'REFERENCES'
+                    + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
                     + ")";
             statement.execute(query);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             pstmt.setInt(1, entry.getUserId());
             pstmt.setString(2, entry.getApplicationName());
             pstmt.setLong(3, entry.getDuration());
-            pstmt.setString(4, entry.getStartTime().toString()); //  Correct formatting? TODO check date time formatting
+            pstmt.setString(4, entry.getStartTime().toString());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,7 +114,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         return null;
     }
 
-
+    // https://stackoverflow.com/questions/36442307/insert-data-and-if-already-inserted-then-update-in-sql
     public void upsertScreenTimeEntry(int userId, String applicationName, long duration, LocalDateTime dateTime) throws SQLException {
         LocalDate date = dateTime.toLocalDate(); // Extracting the date part for date checks
         LocalDateTime existingStartDateTime = findMostRecentStartTimeByUserAppAndDate(userId, applicationName, date);
