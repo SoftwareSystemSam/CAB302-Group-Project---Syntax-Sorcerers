@@ -65,8 +65,6 @@ public class UserService {
         }
     }
 
-
-
     // This function may not be needed. Leaving here just in case
     public User findUserById(int id){
         return userDAO.getUser(id);
@@ -80,4 +78,6 @@ public class UserService {
             userDAO.deleteUser(user);
         }
     }
+
+
 }
