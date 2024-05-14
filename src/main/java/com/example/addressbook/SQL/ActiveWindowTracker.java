@@ -75,19 +75,28 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
         }
         HWND hwnd = user32.GetForegroundWindow();
         char[] windowText = new char[512];
-        user32.GetWindowText(hwnd, windowText, 512);
-        String wText = Native.toString(windowText).trim();
+        if (hwnd != null) {
+            user32.GetWindowText(hwnd, windowText, 512);
+        }
+        String wText = hwnd != null ? Native.toString(windowText).trim() : "Unknown Window";
         long startTime = System.currentTimeMillis();
 
-        while (!paused) { // Basically need to keep running this now otherwise no new windows will be tracked. Also needs to be run in separate thread
+        while (!paused) {
             HWND newHwnd = user32.GetForegroundWindow();
-            if (!hwnd.equals(newHwnd)) {
+            // Check if hwnd is null or its different from newhwnd
+            if (hwnd == null || !hwnd.equals(newHwnd)) {
                 long endTime = System.currentTimeMillis();
                 long timeSpentInSeconds = (endTime - startTime) / 1000;
-                logWindowTime(wText, timeSpentInSeconds, LocalDateTime.now());
-                hwnd = newHwnd;
-                user32.GetWindowText(hwnd, windowText, 512);
-                wText = Native.toString(windowText).trim();
+                if (hwnd != null) { // Only log if hwnd was initially non-null
+                    logWindowTime(wText, timeSpentInSeconds, LocalDateTime.now());
+                }
+                hwnd = newHwnd; // Update hwnd to newhwnd whether its null or not
+                if (hwnd != null) {
+                    user32.GetWindowText(hwnd, windowText, 512);
+                    wText = Native.toString(windowText).trim();
+                } else {
+                    wText = "Unknown Window"; // Handle case when hwnd is still null
+                }
                 startTime = System.currentTimeMillis();
             }
             try {

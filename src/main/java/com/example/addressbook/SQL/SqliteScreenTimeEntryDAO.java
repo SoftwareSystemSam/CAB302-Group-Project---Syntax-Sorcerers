@@ -1,10 +1,13 @@
 package com.example.addressbook.SQL;
 
 import java.sql.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     // Database connection and table
@@ -138,6 +141,29 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             }
         }
     }
+    // https://www.w3schools.com/java/java_hashmap.asp <- little hashmap guide
+    public Map<DayOfWeek, Long> getWeeklyScreenTimeByUserId(int userId, LocalDate startOfWeek) throws SQLException {
+        Map<DayOfWeek, Long> weeklyScreenTime = new HashMap<>();
+        String query = "SELECT date(start_time) as date, SUM(duration) as total_duration " +
+                "FROM screen_time_entries " +
+                "WHERE user_id = ? AND date(start_time) BETWEEN ? AND ? " +
+                "GROUP BY date(start_time)";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, startOfWeek.toString()); // start of the week
+            pstmt.setString(3, startOfWeek.plusDays(6).toString()); // end of the week
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    LocalDate date = LocalDate.parse(rs.getString("date"));
+                    Long duration = rs.getLong("total_duration");
+                    weeklyScreenTime.put(date.getDayOfWeek(), duration);
+                }
+            }
+        }
+        return weeklyScreenTime;
+    }
+
+
 
 
 

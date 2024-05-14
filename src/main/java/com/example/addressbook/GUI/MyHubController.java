@@ -38,7 +38,7 @@ public class MyHubController extends Application {
         Navigation navigationBar = new Navigation();
 
 
-        var barChart = new BarChartGUI();
+        var barChart = new BarChartGUI(currentUser.getId(), screenTimeEntryDAO);
         var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
         // Create toggle button with Ikonli icons

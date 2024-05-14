@@ -1,9 +1,11 @@
 package com.example.addressbook.SQL;
 
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface IScreenTimeEntryDAO{
     void addScreenTimeEntry(ScreenTimeEntry entry) throws SQLException;
@@ -14,7 +16,7 @@ public interface IScreenTimeEntryDAO{
 
     void upsertScreenTimeEntry(int userId, String applicationName, long duration, LocalDateTime dateTime) throws SQLException;
 
-
+    Map<DayOfWeek, Long> getWeeklyScreenTimeByUserId(int userId, LocalDate startOfWeek) throws SQLException;
 
 
 
