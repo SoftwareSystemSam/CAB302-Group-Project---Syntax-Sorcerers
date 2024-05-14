@@ -99,6 +99,11 @@ public class SqliteUserDAO implements IUserDAO {
         return null;
     }
 
+    @Override
+    public void updateUser(User user, String newPassword) {
+
+    }
+
     // The below code shouldn't be needed because the User data will be yoinked via the getUserByEmail, then you can compare user.password to inputPassword
 
 //    public User validateUser(String email, String password) {

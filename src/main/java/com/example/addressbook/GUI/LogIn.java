@@ -24,8 +24,6 @@ public class LogIn{
     @FXML
     private Button backButton;
     @FXML
-    private Button ResetButton;
-    @FXML
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
@@ -122,16 +120,6 @@ public class LogIn{
         try {
             Stage stage = (Stage) backButton.getScene().getWindow();
             LogInController graphsWindow = new LogInController();
-            graphsWindow.start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    protected void onReset() throws IOException {
-        try {
-            Stage stage = (Stage) ResetButton.getScene().getWindow();
-            ResetPass graphsWindow = new ResetPass();
             graphsWindow.start(stage);
         } catch (Exception e) {
             e.printStackTrace();
