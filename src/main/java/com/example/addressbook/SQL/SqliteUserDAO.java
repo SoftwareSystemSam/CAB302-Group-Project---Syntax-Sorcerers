@@ -101,8 +101,17 @@ public class SqliteUserDAO implements IUserDAO {
 
     @Override
     public void updateUser(User user, String newPassword) {
+        String updateSQL = "UPDATE users SET password = ? WHERE id = ?";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setInt(2, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+}
 
     // The below code shouldn't be needed because the User data will be yoinked via the getUserByEmail, then you can compare user.password to inputPassword
 
@@ -124,5 +133,5 @@ public class SqliteUserDAO implements IUserDAO {
 //        }
 //        return null;
 //    }
-}
+
 
