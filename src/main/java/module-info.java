@@ -4,11 +4,16 @@ module com.example.addressbook {
     requires java.sql;
     requires com.sun.jna.platform;
     requires com.sun.jna;
-    requires org.junit.jupiter.api;
+
+//    requires org.junit.jupiter.engine;
+//
+//    requires org.junit.jupiter.api;
     requires org.mockito;
     requires org.mockito.junit.jupiter;
-    requires java.desktop;
     requires net.bytebuddy.agent;
+
+    requires java.desktop;
+
     requires org.kordamp.ikonli.javafx;
 
 
@@ -18,5 +23,5 @@ module com.example.addressbook {
     opens com.example.addressbook.GUI to javafx.fxml;
     exports com.example.addressbook.SQL;
     opens com.example.addressbook.SQL to javafx.fxml;
-    opens com.example.addressbook.SQLTest to org.junit.platform.commons;
+
 }

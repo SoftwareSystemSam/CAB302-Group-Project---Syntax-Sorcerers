@@ -1,4 +1,4 @@
-package com.example.addressbook.SQLTest;
+package com.example.addressbook;
 
 import com.example.addressbook.SQL.ScreenTimeEntry;
 import com.example.addressbook.SQL.SqliteScreenTimeEntryDAO;
