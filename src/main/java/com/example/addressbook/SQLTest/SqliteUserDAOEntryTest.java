@@ -126,4 +126,20 @@ public class SqliteUserDAOEntryTest {
         assertEquals("password", result.getPassword(), "Password should match");
     }
 
+    @Test
+    void testUpdateUser() throws Exception {
+        // Create a User object with initial details
+        User user = new User(1, "user@example.com", "oldPassword");
+        String newPassword = "newPassword";
+
+        // Call the method to be tested
+        dao.updateUser(user, newPassword);
+
+        // Verify that the correct SQL statement was prepared and executed
+        verify(mockPreparedStatement).setString(1, newPassword);
+        verify(mockPreparedStatement).setInt(2, user.getId());
+        verify(mockPreparedStatement).executeUpdate();
+    }
+
+
 }
