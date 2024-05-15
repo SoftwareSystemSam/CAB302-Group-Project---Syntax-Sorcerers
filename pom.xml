@@ -112,22 +112,15 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <argLine>--add-exports org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED</argLine>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <executions>
                     <execution>
+                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.addressbook/com.example.addressbook.HelloApplication</mainClass>
+                            <mainClass>com.example.addressbook/com.example.addressbook.GUI.LogInController</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -140,5 +133,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
