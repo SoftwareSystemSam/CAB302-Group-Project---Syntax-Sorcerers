@@ -31,7 +31,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Run tests with Maven
-      run: mvn test
+      run: mvn test -DargLine="--add-opens org.junit.platform.commons/org.junit.platform.commons.util=ALL-UNNAMED --add-opens org.junit.platform.commons/org.junit.platform.commons.logging=ALL-UNNAMED --add-opens org.junit.jupiter.api/org.junit.jupiter.api=ALL-UNNAMED --add-opens org.junit.jupiter.engine/org.junit.jupiter.engine.execution=ALL-UNNAMED"
 
 #    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #    - name: Update dependency graph
