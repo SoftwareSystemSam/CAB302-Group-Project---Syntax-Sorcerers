@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 
 
-public class LogIn{
+public class ResetPass{
     @FXML
     private Button resetButton;
     @FXML
@@ -96,7 +96,7 @@ public class LogIn{
 
 
                 //  Go to my hub
-                Stage stage = (Stage) loginButton.getScene().getWindow();
+                Stage stage = (Stage) resetButton.getScene().getWindow();
                 MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO);
                 graphsWindow.start(stage);
             } else {
