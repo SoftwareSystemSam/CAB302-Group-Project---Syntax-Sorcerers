@@ -77,8 +77,8 @@ public class ResetPass{
         String email = emailTextField.getText();
         String password = passwordField.getText();
         try {
-            // ユーザー認証を行う
-            User  authenticatedUser = userService.loginUser(email, password);
+
+            User  authenticatedUser = userService.resetUserPassword(email, password);
 
             if (authenticatedUser != null) {
                 // login success
