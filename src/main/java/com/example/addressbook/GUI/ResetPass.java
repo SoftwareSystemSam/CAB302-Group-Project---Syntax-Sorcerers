@@ -83,6 +83,7 @@ public class LogIn{
             if (authenticatedUser != null) {
                 // login success
 
+
                 //Start up the database for the window tracking
                 Connection screenTimeConnection = SqliteConnection.getScreenTimeDbInstance();
                 IScreenTimeEntryDAO screenDAO = new SqliteScreenTimeEntryDAO(screenTimeConnection);
