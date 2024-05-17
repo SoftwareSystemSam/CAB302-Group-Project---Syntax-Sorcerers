@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 
 import java.sql.SQLException;
 
@@ -16,6 +19,8 @@ public class MyHubController extends Application {
 
     private User currentUser;
     private IScreenTimeEntryDAO screenTimeEntryDAO;
+    private Parent root; // Root layout of the scene
+    private VBox contentArea; // Area to load content
 
     public MyHubController(User user, IScreenTimeEntryDAO screenDAO){
         this.currentUser = user;
@@ -28,24 +33,33 @@ public class MyHubController extends Application {
     }
 
     private void initUI(Stage stage) throws SQLException {
-
         Navigation navigationBar = new Navigation();
 
+        contentArea = new VBox();
+        contentArea.setPrefSize(950, 600);
+
+        // Create the root layout containing navigation bar and content area
+        root = new BorderPane();
+        ((BorderPane) root).setTop(navigationBar);
+        ((BorderPane) root).setCenter(contentArea);
 
         var barChart = new BarChartGUI();
         var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
-        var vbox = new VBox();
-        vbox.setPrefSize(950, 600);
-        var scene = new Scene(vbox, 950, 600);
+        // Add charts to the content area
+        HBox chartsBox = new HBox(barChart, pieChart);
+        contentArea.getChildren().add(chartsBox);
 
 
-        vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart));
+        // Create scene
+        Scene scene = new Scene(root, 950, 600);
 
+        // Set the scene and show the stage
         stage.setTitle("Combined Charts with Navigation Bar");
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch(args);

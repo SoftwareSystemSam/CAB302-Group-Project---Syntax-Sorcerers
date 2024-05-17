@@ -1,4 +1,6 @@
 package com.example.addressbook.GUI;
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 
 
 import java.io.IOException;
@@ -53,25 +57,24 @@ public class Navigation extends HBox {
         });
 
         myStatsB.setOnAction(event -> {
-            // Handle My Stats button click
-            // You can switch to My Stats view here
+            // Handle My Goals button click
+            // You can switch to My Goals view here
             System.out.println("My Stats button clicked");
+            MyStats2 myStatsScene = new MyStats2();
             try {
-                Stage stage = (Stage) myStatsB.getScene().getWindow();
-                MyStats myStats = new MyStats();
-                myStats.start(stage);
-            } catch (Exception e){
+                myStatsScene.start(new Stage());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
         myHealthB.setOnAction(event -> {
-            // Handle My Health button click
-            // You can switch to My Health view here
-            System.out.println("My Health button clicked");
-            MyHealth myHealth = new MyHealth();
+            // Handle My Goals button click
+            // You can switch to My Goals view here
+            System.out.println("My Goals button clicked");
+            MyHealth myMyHealthScene = new MyHealth();
             try {
-                myHealth.start(new Stage());
+                myMyHealthScene.start(new Stage());
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -45,7 +45,4 @@ public class MyGoals extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

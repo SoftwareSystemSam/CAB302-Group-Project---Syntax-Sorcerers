@@ -6,13 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
@@ -23,6 +20,8 @@ public class LogIn{
     private Button loginButton;
     @FXML
     private Button backButton;
+    @FXML
+    private Button accountButton;
     @FXML
     private TextField emailTextField;
     @FXML
@@ -113,6 +112,16 @@ public class LogIn{
         alert.showAndWait();
     }
 
+    @FXML
+    protected void myAccount() throws IOException {
+        try {
+            Stage stage = (Stage) accountButton.getScene().getWindow();
+            MyAccount myAccount = new MyAccount();
+            myAccount.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @FXML
