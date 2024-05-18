@@ -1,83 +1,94 @@
 package com.example.addressbook.GUI;
 
-import com.example.addressbook.SQL.IScreenTimeEntryDAO;
-import com.example.addressbook.SQL.User;
+import com.example.addressbook.HelloApplication;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
-import javafx.geometry.Pos;
-import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-
-import java.util.List;
-import java.util.Map;
-
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 public class MyStats2 extends Application {
-    private Parent root;
+    @FXML
+    private BarChart<String, Number> barChart;
+    @FXML
+    private CategoryAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
+    @FXML
+    private Label topAppsLabel;
+
+    private List<String> mostUsedApps = List.of("App A", "App B", "App C", "App D", "App E");
+    private Map<String, Integer> appUsageData = Map.of(
+            "App A", 100,
+            "App B", 80,
+            "App C", 60,
+            "App D", 40,
+            "App E", 20
+    );
 
     @Override
     public void start(Stage primaryStage) {
-        // Sample data - replace this with your actual data
-        List<String> mostUsedApps = List.of("App A", "App B", "App C", "App D", "App E");
-        Map<String, Integer> appUsageData = Map.of(
-                "App A", 100,
-                "App B", 80,
-                "App C", 60,
-                "App D", 40,
-                "App E", 20
-        );
+        try {
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("MyStats2.fxml"));
+            HBox root = loader.load();
+            Scene scene = new Scene(root, 800, 400);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("App Usage Analyzer");
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        // Create a bar chart
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+    @FXML
+    public void initialize() {
         barChart.setTitle("Most Used Applications");
         xAxis.setLabel("Application");
         yAxis.setLabel("Usage Count");
+        loadChartData();
+        loadTopApps();
+    }
 
-        // Prepare data for the chart
+    private void loadChartData() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         for (String appName : mostUsedApps) {
             series.getData().add(new XYChart.Data<>(appName, appUsageData.getOrDefault(appName, 0)));
         }
-
-        // Add data to the chart
         barChart.getData().add(series);
+    }
 
-        // Create a label to display top most used apps
-        Label topAppsLabel = new Label("Top Most Used Applications:\n");
+    private void loadTopApps() {
+        StringBuilder labelContent = new StringBuilder("Top Most Used Applications:\n");
         for (String appName : mostUsedApps) {
-            topAppsLabel.setText(topAppsLabel.getText() + appName + "\n");
+            labelContent.append(appName).append("\n");
         }
+        topAppsLabel.setText(labelContent.toString());
+    }
 
-        // Create layout
-        HBox root = new HBox(10);
-        root.getChildren().addAll(barChart, topAppsLabel);
+    @FXML
+    private void handleRefresh() {
+        barChart.getData().clear();
+        loadChartData();
+        loadTopApps();
+    }
 
-        // Center the content vertically and horizontally
-        root.setAlignment(javafx.geometry.Pos.CENTER);
+    @FXML
+    private void handleClose() {
+        Stage stage = (Stage) barChart.getScene().getWindow();
+        stage.close();
+    }
 
-        // Set up scene
-        Scene scene = new Scene(root, 800, 400);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("App Usage Analyzer");
-        primaryStage.show();
+    public static void main(String[] args) {
+        launch(args);
     }
 }
-
-
-
-
