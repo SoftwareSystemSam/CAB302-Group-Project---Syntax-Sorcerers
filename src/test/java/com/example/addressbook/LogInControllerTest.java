@@ -1,3 +1,5 @@
+package com.example.addressbook;
+
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -8,7 +10,6 @@ import javafx.stage.Stage;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.testfx.framework.junit5.ApplicationExtension;
 import com.example.addressbook.HelloApplication;
 import com.example.addressbook.GUI.LogInController;
 
