@@ -1,5 +1,4 @@
 package com.example.addressbook;
-
 import com.example.addressbook.SQL.SqliteUserDAO;
 import com.example.addressbook.SQL.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,10 +9,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.sql.*;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-
 public class SqliteUserDAOEntryTest {
     @Mock
     private Connection mockConnection;
@@ -21,9 +19,9 @@ public class SqliteUserDAOEntryTest {
     private PreparedStatement mockPreparedStatement;
     @Mock
     private ResultSet mockResultSet;
+
     @Mock
     private Statement mockStatement;
-
     private SqliteUserDAO dao;
     private AutoCloseable closeable;
 
@@ -34,6 +32,7 @@ public class SqliteUserDAOEntryTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
 
+        ResultSet mockResultSet = mock(ResultSet.class);
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true, false); // Simulate at least one row being returned initially.
 
@@ -53,6 +52,7 @@ public class SqliteUserDAOEntryTest {
 
     @Test
     void testCreateTable() throws SQLException {
+
         verify(mockStatement, times(1)).execute(anyString());
     }
 
@@ -80,7 +80,9 @@ public class SqliteUserDAOEntryTest {
         assertEquals(1, result.getId(), "ID should match");
         assertEquals("user@example.com", result.getEmail(), "Email should match");
         assertEquals("password", result.getPassword(), "Password should match");
+
     }
+
 
     @Test
     void testGetUserByEmail() throws Exception {
@@ -95,6 +97,8 @@ public class SqliteUserDAOEntryTest {
         assertEquals("user@example.com", user.getEmail());
         assertEquals(1, user.getId());
         assertEquals("password", user.getPassword());
+
+
     }
 
     @Test
@@ -128,4 +132,5 @@ public class SqliteUserDAOEntryTest {
         System.out.println("Password from DAO: " + result.getPassword()); // Detailed logging
         assertEquals("password", result.getPassword(), "Password should match");
     }
+
 }
