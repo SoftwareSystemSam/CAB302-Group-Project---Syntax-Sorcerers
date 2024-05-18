@@ -10,6 +10,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class NavigationTest extends ApplicationTest {
 
     private FxRobot robot;
