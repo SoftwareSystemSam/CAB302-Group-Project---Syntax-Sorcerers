@@ -45,6 +45,25 @@ public class UserService {
         }
     }
 
+    public User resetUserPassword(String email, String newPassword) throws SQLException {
+        // Search for the user by email
+        User user = userDAO.getUserByEmail(email);
+
+        // Check if the user exists
+        if (user != null) {
+            // Set the new password
+            user.setPassword(newPassword);
+
+            // Update the user information
+            userDAO.updateUser(user, newPassword);
+
+            // Return the updated user information
+            return user;
+        } else {
+            // If the user does not exist, throw an error
+            return null;
+        }
+    }
 
     // This function may not be needed. Leaving here just in case
     public User findUserById(int id){
@@ -59,4 +78,6 @@ public class UserService {
             userDAO.deleteUser(user);
         }
     }
+
+
 }
