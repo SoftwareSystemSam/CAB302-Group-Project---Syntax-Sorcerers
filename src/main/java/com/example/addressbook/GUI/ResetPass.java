@@ -15,9 +15,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
-
-
 public class ResetPass{
     @FXML
     private Button resetButton;
@@ -27,19 +24,18 @@ public class ResetPass{
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
-    private UserService userService;
 
+    private UserService userService;
 
     public static final String TITLE = "Screen Tracker";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
-    public ResetPass() {
-        initializeUserService();
-    }
+
+    public ResetPass() {initializeUserService();}
 
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("resetpass-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("resetPass-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
         stage.setTitle(TITLE);
         stage.setScene(scene);
