@@ -98,7 +98,7 @@ public class LogIn{
         String email = emailTextField.getText();
         String password = passwordField.getText();
         try {
-            // ユーザー認証を行う
+
             User  authenticatedUser = userService.loginUser(email, password);
 
             if (authenticatedUser != null) {
