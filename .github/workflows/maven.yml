@@ -26,7 +26,11 @@ jobs:
           echo "MAVEN_HOME=$HOME/apache-maven-3.9.5" >> $GITHUB_ENV
           echo "$HOME/apache-maven-3.9.5/bin" >> $GITHUB_PATH
 
-      
+      - name: Setup xvfb
+        run: |
+          sudo apt-get install -y xvfb
+          Xvfb :99 & 
+          echo "DISPLAY=:99.0" >> $GITHUB_ENV
 
       - name: Generate Javadoc
         run: |
