@@ -2,6 +2,7 @@ package com.example.addressbook.GUI;
 
 import com.example.addressbook.HelloApplication;
 import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.ScreenTimeEntry;
 import com.example.addressbook.SQL.User;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +39,7 @@ public class MyStats2 extends Application {
     @FXML
     private Label topAppsLabel;
 
-    private List<String> mostUsedApps = List.of("App A", "App B", "App C", "App D", "App E");
-    private Map<String, Integer> appUsageData = Map.of(
-            "App A", 100,
-            "App B", 80,
-            "App C", 60,
-            "App D", 40,
-            "App E", 20
-    );
+    private List<String> mostUsedApps = new ArrayList<>();
 
     @Override
     public void start(Stage primaryStage) {
@@ -53,7 +49,7 @@ public class MyStats2 extends Application {
             HBox root = loader.load();
             Scene scene = new Scene(root, 800, 400);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("App Usage Analyzer");
+            primaryStage.setTitle("MyStats");
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,21 +60,49 @@ public class MyStats2 extends Application {
     public void initialize() {
         barChart.setTitle("Most Used Applications");
         xAxis.setLabel("Application");
-        yAxis.setLabel("Usage Count");
+        yAxis.setLabel("Usage Count (Seconds)");
         loadChartData();
         loadTopApps();
     }
 
     private void loadChartData() {
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for (String appName : mostUsedApps) {
-            series.getData().add(new XYChart.Data<>(appName, appUsageData.getOrDefault(appName, 0)));
+        try {
+            int userId = currentUser.getId();  // Assuming you have a currentUser object with an ID
+            Map<String, ScreenTimeEntry> weeklyTopApps = screenTimeEntryDAO.getMostUsedAppForEachDayOfWeek(userId);
+
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Top Apps of the Week");
+
+            // Mapping day of week indices to names for better readability
+            String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+            // Clear the existing list to prevent duplication of data on refresh
+            mostUsedApps.clear();
+
+            // Ensure data for all days is present
+            for (int i = 0; i < 7; i++) {
+                String dayIndex = String.valueOf(i);
+                ScreenTimeEntry entry = weeklyTopApps.get(dayIndex);
+                if (entry != null) {
+                    series.getData().add(new XYChart.Data<>(dayNames[i], entry.getDuration()));
+                    mostUsedApps.add(dayNames[i] + " - " + entry.getApplicationName()); // Add the app name with the day
+                } else {
+                    // If no data is present for a day, add a zero value and null to the list
+                    series.getData().add(new XYChart.Data<>(dayNames[i], 0));
+                    mostUsedApps.add(dayNames[i] + " - None"); // Represent no data with "None"
+                }
+            }
+
+            barChart.getData().clear();
+            barChart.getData().add(series);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to load chart data: " + e.getMessage());
         }
-        barChart.getData().add(series);
     }
 
     private void loadTopApps() {
-        StringBuilder labelContent = new StringBuilder("Top Most Used Applications:\n");
+        StringBuilder labelContent = new StringBuilder("Most Used Applications:\n\n");
         for (String appName : mostUsedApps) {
             labelContent.append(appName).append("\n");
         }

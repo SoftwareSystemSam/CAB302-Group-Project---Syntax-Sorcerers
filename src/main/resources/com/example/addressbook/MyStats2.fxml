@@ -6,7 +6,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<HBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.addressbook.GUI.MyStats2">
+<HBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
     <BarChart fx:id="barChart" prefHeight="400" prefWidth="600">
         <xAxis>
             <CategoryAxis fx:id="xAxis" />

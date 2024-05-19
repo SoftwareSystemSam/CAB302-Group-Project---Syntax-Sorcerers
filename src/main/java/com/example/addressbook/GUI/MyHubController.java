@@ -33,7 +33,7 @@ public class MyHubController extends Application {
     }
 
     private void initUI(Stage stage) throws SQLException {
-        ;
+
         Navigation navigationBar = new Navigation(currentUser, screenTimeEntryDAO);
 
         contentArea = new VBox();
