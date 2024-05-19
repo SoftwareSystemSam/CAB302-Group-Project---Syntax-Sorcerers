@@ -42,7 +42,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: target/site/apidocs
+          folder: target/docs/javadoc
 
       - name: Build and test with Maven
         run: mvn -B clean verify --file pom.xml
