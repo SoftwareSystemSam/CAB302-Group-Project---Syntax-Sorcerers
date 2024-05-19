@@ -28,11 +28,15 @@ public class Navigation extends HBox {
     public Navigation(User user, IScreenTimeEntryDAO screenDAO) {
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
+        setupNavigationBar();
+
     }
 
-    public Navigation() {
+    public Navigation(){
+        setupNavigationBar();
+    }
 
-
+    private void setupNavigationBar() {
         // Create navigation buttons
         Button myGoalsB = new Button("My Goals");
         Button myNotificationsB = new Button("My Notifications");
@@ -49,7 +53,6 @@ public class Navigation extends HBox {
         // Set event handlers for button clicks
         myGoalsB.setOnAction(event -> {
             // Handle My Goals button click
-            // You can switch to My Goals view here
             System.out.println("My Goals button clicked");
             MyGoals myGoalsScene = new MyGoals();
             try {
@@ -61,13 +64,11 @@ public class Navigation extends HBox {
 
         myNotificationsB.setOnAction(event -> {
             // Handle My Notifications button click
-            // You can switch to My Notifications view here
             System.out.println("My Notifications button clicked");
         });
 
         myStatsB.setOnAction(event -> {
-            // Handle My Goals button click
-            // You can switch to My Goals view here
+            // Handle My Stats button click
             System.out.println("My Stats button clicked");
             MyStats2 myStatsScene = new MyStats2(currentUser,screenTimeEntryDAO);
             try {
@@ -78,9 +79,8 @@ public class Navigation extends HBox {
         });
 
         myHealthB.setOnAction(event -> {
-            // Handle My Goals button click
-            // You can switch to My Goals view here
-            System.out.println("My Goals button clicked");
+            // Handle My Health button click
+            System.out.println("My Health button clicked");
             MyHealth myMyHealthScene = new MyHealth();
             try {
                 myMyHealthScene.start(new Stage());
@@ -91,7 +91,6 @@ public class Navigation extends HBox {
 
         myDataB.setOnAction(event -> {
             // Handle My Data button click
-            // You can switch to My Data view here
             System.out.println("My Data button clicked");
         });
     }

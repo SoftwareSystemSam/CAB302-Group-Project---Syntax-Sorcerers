@@ -49,6 +49,7 @@ public class MyStats2 extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("MyStats2.fxml"));
+            loader.setController(this);
             HBox root = loader.load();
             Scene scene = new Scene(root, 800, 400);
             primaryStage.setScene(scene);
