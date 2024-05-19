@@ -6,13 +6,19 @@ import java.sql.*;
 public class SqliteUserDAO implements IUserDAO {
     private Connection connection;
 
+    /**
+     * Constructor for the SqliteUserDAO
+     * @param connection The connection to the database
+    * */
     public SqliteUserDAO(Connection connection) {
         this.connection = connection;
         createTable();
 
     }
 
-
+    /**
+     * Create the User table if it doesn't exist
+     */
 
     public void createTable() {
         // Create table if not exists
@@ -29,7 +35,10 @@ public class SqliteUserDAO implements IUserDAO {
         }
     }
 
-
+    /**
+     * Add a user to the database
+     * @param user The user to be added
+     * */
     @Override
     public void addUser(User user) {
         try {
@@ -44,7 +53,10 @@ public class SqliteUserDAO implements IUserDAO {
 
 
 
-
+    /**
+     * Delete a user from the database
+     * @param user  The user to be deleted
+     * */
     @java.lang.Override
     public void deleteUser(User user) {
         try (
@@ -58,6 +70,11 @@ public class SqliteUserDAO implements IUserDAO {
     }
 
 
+    /**
+     * Get a user from the database by their ID
+     * @param id The ID of the user to be retrieved
+     * @return The user with the given ID
+     */
 
     @java.lang.Override
     public User getUser(int id) {
@@ -79,6 +96,12 @@ public class SqliteUserDAO implements IUserDAO {
         return null;
     }
 
+
+    /**
+     * Get a user from the database by their email
+     * @param email The email of the user to be retrieved
+     * @return The user with the given email
+     */
     @Override
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
@@ -99,6 +122,10 @@ public class SqliteUserDAO implements IUserDAO {
         return null;
     }
 
+    /**
+     * Update a user in the database
+     * @param user The user to be updated
+     * */
     @Override
     public void updateUser(User user, String newPassword) {
         String updateSQL = "UPDATE users SET password = ? WHERE id = ?";
