@@ -29,11 +29,14 @@ jobs:
       
 
       - name: Generate Javadoc
-        run: mvn javadoc:javadoc
-      - name: Publish Javadoc
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: target/docs/javadoc
+        run: |
+          for dir in $(find . -name 'pom.xml' -printf '%h\n'); do
+          (cd $dir && mvn javadoc:javadoc)
+          done
+          - name: Publish Javadoc
+            uses: JamesIves/github-pages-deploy-action@v4
+            with:
+              folder: target/docs/javadoc
 
       - name: Build and test with Maven
         run: mvn -B clean verify --file pom.xml
