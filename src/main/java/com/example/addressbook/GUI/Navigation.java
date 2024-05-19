@@ -22,8 +22,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class Navigation extends HBox {
+    private User currentUser;
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+
+    public Navigation(User user, IScreenTimeEntryDAO screenDAO) {
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+    }
 
     public Navigation() {
+
+
         // Create navigation buttons
         Button myGoalsB = new Button("My Goals");
         Button myNotificationsB = new Button("My Notifications");
@@ -60,7 +69,7 @@ public class Navigation extends HBox {
             // Handle My Goals button click
             // You can switch to My Goals view here
             System.out.println("My Stats button clicked");
-            MyStats2 myStatsScene = new MyStats2();
+            MyStats2 myStatsScene = new MyStats2(currentUser,screenTimeEntryDAO);
             try {
                 myStatsScene.start(new Stage());
             } catch (Exception e) {

@@ -1,6 +1,8 @@
 package com.example.addressbook.GUI;
 
 import com.example.addressbook.HelloApplication;
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.User;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MyStats2 extends Application {
+    private User currentUser;
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+    public MyStats2(User user, IScreenTimeEntryDAO screenDAO) {
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+    }
+
     @FXML
     private BarChart<String, Number> barChart;
     @FXML
