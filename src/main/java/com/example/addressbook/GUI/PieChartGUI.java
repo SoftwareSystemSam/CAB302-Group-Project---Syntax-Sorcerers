@@ -17,17 +17,32 @@ import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 
+/**
+ * This class is used to handle the pie chart GUI for MyHubController
+ */
 public class PieChartGUI extends VBox {
     private TableView<ScreenTimeEntry> table = new TableView<>();
     private ObservableList<ScreenTimeEntry> tableData = FXCollections.observableArrayList();
     private PieChart pieChart;
 
+    /**
+     * This function is used to create a new pie chart GUI
+     * @param userId The user id
+     * @param screenTimeEntryDAO The screen time entry DAO
+     * @throws SQLException If an exception occurs
+     */
     public PieChartGUI(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) throws SQLException {
         setupPieChart(userId, screenTimeEntryDAO);
         setupTableView();
         setupRefreshTimer(userId, screenTimeEntryDAO);
     }
 
+    /**
+     * This function is used to set up the pie chart
+     * @param userId The user id
+     * @param screenTimeEntryDAO The screen time entry DAO
+     * @throws SQLException If an exception occurs
+     */
     private void setupPieChart(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         List<ScreenTimeEntry> entries = screenTimeEntryDAO.getScreenTimeEntriesByUserIdAndDate(userId, LocalDate.now());
@@ -39,6 +54,9 @@ public class PieChartGUI extends VBox {
         tableData.setAll(entries);
     }
 
+    /**
+     * This function is used to set up the table view
+     */
     private void setupTableView() {
         TableColumn<ScreenTimeEntry, String> appNameCol = new TableColumn<>("Application Name");
         appNameCol.setCellValueFactory(new PropertyValueFactory<>("applicationName"));
@@ -51,6 +69,11 @@ public class PieChartGUI extends VBox {
 
 
     //https://stackoverflow.com/questions/56688910/javafx-webview-auto-refresh
+    /**
+     * This function is used to set up the refresh timer
+     * @param userId The user id
+     * @param screenTimeEntryDAO The screen time entry DAO
+     */
     private void setupRefreshTimer(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) {
         Timeline refreshTimeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             refreshData(userId, screenTimeEntryDAO);
@@ -61,6 +84,11 @@ public class PieChartGUI extends VBox {
 
 
     //https://stackoverflow.com/questions/13784333/platform-runlater-and-task-in-javafx
+    /**
+     * This function is used to refresh the data
+     * @param userId The user id
+     * @param screenTimeEntryDAO The screen time entry DAO
+     */
     private void refreshData(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) {
         Platform.runLater(() -> {
             try {

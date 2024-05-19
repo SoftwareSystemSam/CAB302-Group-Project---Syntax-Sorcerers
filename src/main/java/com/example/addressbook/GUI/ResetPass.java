@@ -11,7 +11,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
+/**
+ * This class is used to handle the reset password controller
+ */
 public class ResetPass{
     @FXML
     private Button resetButton;
@@ -28,9 +30,16 @@ public class ResetPass{
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
-
+    /**
+     * This function is used to start the reset password controller
+     * */
     public ResetPass() {initializeUserService();}
 
+    /**
+     * This function is used to start the reset password controller
+     * @param stage The stage to start
+     * @throws IOException If an exception occurs
+     */
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("resetPass-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
@@ -40,19 +49,28 @@ public class ResetPass{
     }
 
 
-
+    /**
+     * This function is used to initialize the user service
+     */
     private void initializeUserService() {
         Connection userConnection = SqliteConnection.getUserDbInstance();
         IUserDAO userDAO = new SqliteUserDAO(userConnection);
         this.userService = new UserService(userDAO, userConnection);
     }
-
+    /**
+     * This function is used to handle the reset button click
+     * @throws IOException If an IO exception occurs
+     */
     private void showDatabaseError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("Failed to connect to the database.");
         alert.show();
     }
 
+    /**
+     * This function is used to handle the reset button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onReset() throws IOException {
         String email = emailTextField.getText();
@@ -97,16 +115,27 @@ public class ResetPass{
             showDatabaseError();
         }
     }
+    /**
+     * This function is used to show the alert
+     * @param message The message to show
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);
         alert.showAndWait();
     }
+    /**
+     * This function is used to show the login failed alert
+     */
     private void showLoginFailedAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("Reset Password is failed. The email address is incorrect.");
         alert.showAndWait();
     }
+    /**
+     * This function is used to handle the back button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onBack() throws IOException {
         try {

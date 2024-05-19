@@ -16,7 +16,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-
+/**
+ * This class is used to handle the login controller
+ */
 
 public class LogIn{
     @FXML
@@ -36,10 +38,18 @@ public class LogIn{
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
+    /**
+     * This function is used to start the login controller
+     * */
     public LogIn() {
         initializeUserService();
     }
 
+    /**
+     * This function is used to start the login controller
+     * @param stage The stage to start
+     * @throws IOException If an exception occurs
+     */
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
@@ -49,13 +59,18 @@ public class LogIn{
     }
 
 
-
+    /**
+     * This function is used to initialize the user service
+     */
     private void initializeUserService() {
         Connection userConnection = SqliteConnection.getUserDbInstance();
         IUserDAO userDAO = new SqliteUserDAO(userConnection);
         this.userService = new UserService(userDAO, userConnection);
     }
 
+    /**
+     * This function is used to show the database error
+     */
     private void showDatabaseError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("Failed to connect to the database.");
@@ -74,6 +89,10 @@ public class LogIn{
 //        }
 //    }
 
+    /**
+     * This function is used to handle the login button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onLogIn() throws IOException {
         String email = emailTextField.getText();
@@ -109,6 +128,9 @@ public class LogIn{
         }
     }
 
+    /**
+     * This function is used to show the login failed alert
+     */
     private void showLoginFailedAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText("Login failed. The email address or password is incorrect.");
@@ -117,6 +139,10 @@ public class LogIn{
 
 
 
+    /**
+     * This function is used to handle the back button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onBack() throws IOException {
         try {
@@ -128,6 +154,10 @@ public class LogIn{
         }
     }
 
+    /**
+     * This function is used to handle the reset button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onReset() throws IOException {
         try {

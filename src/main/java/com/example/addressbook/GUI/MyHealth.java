@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class is used to handle the health facts controller
+ */
 public class MyHealth extends Application {
 
     @FXML
@@ -23,6 +26,11 @@ public class MyHealth extends Application {
 
     private List<String> healthFacts = new ArrayList<>();
 
+    /**
+     * This function is used to start the health facts controller
+     * @param primaryStage The stage to start
+     * @throws Exception If an exception occurs
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Load FXML file
@@ -42,6 +50,9 @@ public class MyHealth extends Application {
         loadFactsButton.setOnAction(event -> loadHealthFacts());
     }
 
+    /**
+     * This function is used to load health facts
+     */
     private void loadHealthFacts() {
         // Add health facts about screen time
         healthFacts.clear();

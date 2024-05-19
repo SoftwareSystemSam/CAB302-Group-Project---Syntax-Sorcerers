@@ -9,11 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is used to handle the screen time entry data access object
+ */
 public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     // Database connection and table
 
     private Connection connection;
-
+    /**
+     * Constructor for the SqliteScreenTimeEntryDAO
+     * @param connection The connection to the database
+     */
     public SqliteScreenTimeEntryDAO(Connection connection) {
         if (connection == null) {
             throw new IllegalArgumentException("Connection cannot be null");
@@ -22,6 +28,9 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         createTable();
     }
 
+    /**
+     * Create the Screen Time Entry table if it doesn't exist
+     */
     private void createTable() {
         // Create table if not exists
         try {
@@ -40,7 +49,11 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
     }
 
-
+    /**
+     * Add a screen time entry to the database
+     * @param entry The screen time entry to be added
+     * @throws SQLException If an SQL exception occurs
+     */
     public void addScreenTimeEntry(ScreenTimeEntry entry) throws SQLException {
 
         Statement insertStatement = connection.createStatement();
@@ -54,7 +67,12 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Get all screen time entries by user id
+     * @param userId The user id
+     * @return A list of screen time entries
+     * @throws SQLException If an SQL exception occurs
+     */
     @Override
     public List<ScreenTimeEntry> getScreenTimeEntriesByUserId(int userId) throws SQLException {
         List<ScreenTimeEntry> entries = new ArrayList<>();
@@ -73,7 +91,13 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return entries;
     }
-
+    /**
+     * Get all screen time entries by user id and date
+     * @param userId The user id
+     * @param date The date
+     * @return A list of screen time entries
+     * @throws SQLException If an SQL exception occurs
+     */
     public List<ScreenTimeEntry> getScreenTimeEntriesByUserIdAndDate(int userId, LocalDate date) throws SQLException {
         List<ScreenTimeEntry> entries = new ArrayList<>();
         String query = "SELECT application_name, SUM(duration) as total_duration " +
@@ -97,7 +121,14 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     }
 
   
-
+    /**
+     * Find the most recent start time by user id, application name, and date
+     * @param userId The user id
+     * @param applicationName The application name
+     * @param date The date
+     * @return The most recent start time
+     * @throws SQLException If an SQL exception occurs
+     */
     public LocalDateTime findMostRecentStartTimeByUserAppAndDate(int userId, String applicationName, LocalDate date) throws SQLException {
         String query = "SELECT start_time FROM screen_time_entries " +
                 "WHERE user_id = ? AND application_name = ? AND date(start_time) = ? " +
@@ -115,6 +146,14 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     }
 
     // https://stackoverflow.com/questions/36442307/insert-data-and-if-already-inserted-then-update-in-sql
+    /**
+     * Upsert a screen time entry
+     * @param userId The user id
+     * @param applicationName The application name
+     * @param duration The duration
+     * @param dateTime The date and time
+     * @throws SQLException If an SQL exception occurs
+     */
     public void upsertScreenTimeEntry(int userId, String applicationName, long duration, LocalDateTime dateTime) throws SQLException {
         LocalDate date = dateTime.toLocalDate(); // Extracting the date part for date checks
         LocalDateTime existingStartDateTime = findMostRecentStartTimeByUserAppAndDate(userId, applicationName, date);
@@ -141,7 +180,15 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             }
         }
     }
+
     // https://www.w3schools.com/java/java_hashmap.asp <- little hashmap guide
+    /**
+     * Get the weekly screen time by user id
+     * @param userId The user id
+     * @param startOfWeek The start of the week
+     * @return A map of the weekly screen time
+     * @throws SQLException If an SQL exception occurs
+     */
     public Map<DayOfWeek, Long> getWeeklyScreenTimeByUserId(int userId, LocalDate startOfWeek) throws SQLException {
         Map<DayOfWeek, Long> weeklyScreenTime = new HashMap<>();
         String query = "SELECT date(start_time) as date, SUM(duration) as total_duration " +
@@ -162,9 +209,4 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return weeklyScreenTime;
     }
-
-
-
-
-
 }

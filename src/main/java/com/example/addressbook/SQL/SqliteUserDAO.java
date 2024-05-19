@@ -2,7 +2,9 @@ package com.example.addressbook.SQL;
 
 import java.sql.*;
 
-
+/**
+ * This class is used to handle the User DAO
+ */
 public class SqliteUserDAO implements IUserDAO {
     private Connection connection;
 

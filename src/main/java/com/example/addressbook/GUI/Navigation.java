@@ -17,8 +17,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * This class is used to handle the navigation bar
+ */
 public class Navigation extends HBox {
 
+    /**
+     * This function is used to create a new navigation bar
+     */
     public Navigation() {
         // Create navigation buttons
         Button myGoalsB = new Button("My Goals");

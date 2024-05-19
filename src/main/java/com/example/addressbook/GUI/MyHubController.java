@@ -16,23 +16,41 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.sql.SQLException;
 import java.util.Objects;
 
-
+/**
+ * This class is used to handle the MyHub controller
+ */
 public class MyHubController extends Application {
 
     private ActiveWindowTracker windowTracker;
     private User currentUser;
     private IScreenTimeEntryDAO screenTimeEntryDAO;
 
+    /**
+     * This function is used to create a new MyHub controller
+     * @param user The user
+     * @param screenDAO The screen time entry DAO
+     * @param tracker The active window tracker
+     */
     public MyHubController(User user, IScreenTimeEntryDAO screenDAO, ActiveWindowTracker tracker){
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
         this.windowTracker = tracker;
     }
+    /**
+     * This function is used to start the MyHub controller
+     * @param stage The stage to start
+     * @throws SQLException If an exception occurs
+     */
     @Override
     public void start(Stage stage) throws SQLException {
         initUI(stage);
     }
 
+    /**
+     * This function is used to initialize the user interface
+     * @param stage The stage to initialize
+     * @throws SQLException If an exception occurs
+     */
     private void initUI(Stage stage) throws SQLException {
 
         Navigation navigationBar = new Navigation();

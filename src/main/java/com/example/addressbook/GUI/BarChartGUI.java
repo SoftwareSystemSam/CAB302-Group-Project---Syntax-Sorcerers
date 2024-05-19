@@ -18,20 +18,28 @@ import javafx.util.Duration;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
-
+/**
+ * This class is used to handle the bar chart GUI for MyHubController
+ */
 public class BarChartGUI extends HBox {
 
     private IScreenTimeEntryDAO screenTimeEntryDAO;
     private int userId;
     private BarChart<String, Number> barChart;
-
+    /**
+     * This function is used to create a new bar chart GUI
+     * @param userId The user id
+     * @param screenTimeEntryDAO The screen time entry DAO
+     */
     public BarChartGUI(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) {
         this.userId = userId;
         this.screenTimeEntryDAO = screenTimeEntryDAO;
         initializeChart();
         setupAutoRefresh();
     }
-
+    /**
+     * This function is used to initialize the bar chart
+     */
     private void initializeChart() {
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Day of the Week");
@@ -45,7 +53,9 @@ public class BarChartGUI extends HBox {
         populateChartData();
         getChildren().add(barChart);
     }
-
+    /**
+     * This function is used to populate the chart data
+     */
     private void populateChartData() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Screen Time");
@@ -69,7 +79,9 @@ public class BarChartGUI extends HBox {
             e.printStackTrace();
         }
     }
-
+    /**
+     * This function is used to set up the auto refresh
+     */
     private void setupAutoRefresh() {
         Timeline refreshTimeline = new Timeline(
                 new KeyFrame(

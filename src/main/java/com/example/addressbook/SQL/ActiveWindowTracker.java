@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
+/**
+ * This class is used to track the active window
+ */
 
 public class ActiveWindowTracker implements Runnable { // https://www.geeksforgeeks.org/runnable-interface-in-java/ need to add runnable for threading
     private IScreenTimeEntryDAO screenTimeEntryDAO;
@@ -20,7 +22,12 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
 
     private volatile boolean running = true; // Control flag to see when the program is running
 
-    // Use this user when tracking active window
+
+    /**
+     * Constructor for the ActiveWindowTracker
+     * @param currentUser The current user
+     * @param connection The connection to the database
+     */
     public ActiveWindowTracker(User currentUser, Connection connection) {
         this.screenTimeEntryDAO = new SqliteScreenTimeEntryDAO(connection);
         this.user32 = User32.INSTANCE;
@@ -28,7 +35,9 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
 
     }
 
-
+    /**
+     * This function is used to start the active window tracker
+     */
     public void run() {
         while (running) {
             if (!paused) {
@@ -52,12 +61,16 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
             }
         }
     }
-
+    /**
+     * This function is used to pause the active window tracker
+     */
     public synchronized void pause(){
         paused = true;
         System.out.println("Pause has been called.");
     }
-
+    /**
+     * This function is used to resume the active window tracker
+     */
     public synchronized void resume(){
 
         synchronized (this){
@@ -69,6 +82,10 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
 
 
     // https://stackoverflow.com/questions/5767104/using-jna-to-get-getforegroundwindow
+    /**
+     * This function is used to track the active window
+     * @throws SQLException If an SQL exception occurs
+     */
     public void trackActiveWindow() throws SQLException {
         if (currentUser == null) {
             throw new IllegalStateException("No user is currently logged in");
@@ -109,7 +126,13 @@ public class ActiveWindowTracker implements Runnable { // https://www.geeksforge
     }
 
 
-    // Create new function to handle logging screen time tracking to appropriate user
+
+    /**
+     * This function is used to log the window time
+     * @param applicationName The name of the application
+     * @param durationInSeconds The duration in seconds
+     * @param startTime The start time
+     */
     private void logWindowTime(String applicationName, long durationInSeconds, LocalDateTime startTime) {
         try {
             if (currentUser == null) {
