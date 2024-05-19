@@ -93,6 +93,4 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         return entries;
     }
 
-
-
 }
