@@ -10,6 +10,6 @@ public interface IScreenTimeEntryDAO{
     List<ScreenTimeEntry> getScreenTimeEntriesByUserId(int userId) throws SQLException;
 
     List<ScreenTimeEntry> getScreenTimeEntriesByUserIdAndDate(int userId, LocalDate date) throws SQLException;
-
+    Map<String, ScreenTimeEntry> getMostUsedAppForEachDayOfWeek(int userId) throws SQLException
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
 }
