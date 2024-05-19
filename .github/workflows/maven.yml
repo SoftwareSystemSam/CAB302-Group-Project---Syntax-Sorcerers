@@ -37,6 +37,9 @@ jobs:
           for dir in $(find . -mindepth 2 -name 'pom.xml' -printf '%h\n'); do
             (cd $dir && mvn javadoc:javadoc)
           done
+      - name: List Javadoc directory
+        run: ls -l target/docs/javadoc
+
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
