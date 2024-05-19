@@ -26,8 +26,7 @@ jobs:
           echo "MAVEN_HOME=$HOME/apache-maven-3.9.5" >> $GITHUB_ENV
           echo "$HOME/apache-maven-3.9.5/bin" >> $GITHUB_PATH
 
-      - name: Build and test with Maven
-        run: mvn -B clean verify --file pom.xml
+      
 
       - name: Generate Javadoc
         run: mvn javadoc:javadoc
@@ -35,3 +34,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: target/docs/javadoc
+
+      - name: Build and test with Maven
+        run: mvn -B clean verify --file pom.xml
