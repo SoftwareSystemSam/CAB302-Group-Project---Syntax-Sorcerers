@@ -1,7 +1,5 @@
 package com.example.addressbook.GUI;
 
-import com.example.addressbook.SQL.IScreenTimeEntryDAO;
-import com.example.addressbook.SQL.User;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,12 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javafx.scene.Node;
 
+/**
+ * MyHealth class provides health facts to the user.
+ */
 public class MyHealth extends Application {
     @FXML
     private Label healthFactsLabel;
@@ -26,7 +26,10 @@ public class MyHealth extends Application {
     @FXML
     private Button backButton;
     private  Parent root;
-
+    /**
+     * Starts the MyHealth stage.
+     * @param primaryStage The primary stage to start.
+     */
     @Override
     public void start(Stage primaryStage) {
         // Load FXML file
@@ -51,7 +54,9 @@ public class MyHealth extends Application {
 
 
     }
-
+    /**
+     * Loads health facts and displays a random fact.
+     */
     private void loadHealthFacts() {
         // Add health facts about screen time
         healthFacts.clear();
