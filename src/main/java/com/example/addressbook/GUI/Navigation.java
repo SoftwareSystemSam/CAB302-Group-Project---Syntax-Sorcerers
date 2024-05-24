@@ -1,46 +1,41 @@
 package com.example.addressbook.GUI;
-import com.example.addressbook.SQL.IScreenTimeEntryDAO;
-import com.example.addressbook.SQL.User;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 
 
-import java.io.IOException;
-import java.util.List;
-
+/**
+ * The Navigation class extends HBox and represents the navigation bar of the application.
+ * It contains three buttons: "My Goals", "My Stats", and "My Health".
+ * Each button is associated with an event handler that handles the button click event.
+ */
 public class Navigation extends HBox {
 
+    /**
+     * The constructor of the Navigation class.
+     * It initializes the navigation bar with three buttons and sets their event handlers.
+     */
     public Navigation() {
         // Create navigation buttons
         Button myGoalsB = new Button("My Goals");
-        Button myNotificationsB = new Button("My Notifications");
         Button myStatsB = new Button("My Stats");
         Button myHealthB = new Button("My Health");
-        Button myDataB = new Button("My Data");
 
         // Add buttons to the navigation bar
-        this.getChildren().addAll(myGoalsB, myStatsB, myNotificationsB, myHealthB, myDataB);
+        this.getChildren().addAll(myGoalsB, myStatsB, myHealthB);
 
         // Center the navigation bar horizontally
         this.setAlignment(Pos.CENTER);
 
         // Set event handlers for button clicks
+
+        /*
+         * Set the event handler for the "My Goals" button.
+         * When the button is clicked, it prints a message to the console and opens the MyGoals scene.
+         */
         myGoalsB.setOnAction(event -> {
-            // Handle My Goals button click
-            // You can switch to My Goals view here
             System.out.println("My Goals button clicked");
             MyGoals myGoalsScene = new MyGoals();
             try {
@@ -50,15 +45,11 @@ public class Navigation extends HBox {
             }
         });
 
-        myNotificationsB.setOnAction(event -> {
-            // Handle My Notifications button click
-            // You can switch to My Notifications view here
-            System.out.println("My Notifications button clicked");
-        });
-
+        /*
+         * Set the event handler for the "My Stats" button.
+         * When the button is clicked, it prints a message to the console and opens the MyStats2 scene.
+         */
         myStatsB.setOnAction(event -> {
-            // Handle My Goals button click
-            // You can switch to My Goals view here
             System.out.println("My Stats button clicked");
             MyStats2 myStatsScene = new MyStats2();
             try {
@@ -68,9 +59,11 @@ public class Navigation extends HBox {
             }
         });
 
+        /*
+         * Set the event handler for the "My Health" button.
+         * When the button is clicked, it prints a message to the console and opens the MyHealth scene.
+         */
         myHealthB.setOnAction(event -> {
-            // Handle My Goals button click
-            // You can switch to My Goals view here
             System.out.println("My Goals button clicked");
             MyHealth myMyHealthScene = new MyHealth();
             try {
@@ -80,10 +73,5 @@ public class Navigation extends HBox {
             }
         });
 
-        myDataB.setOnAction(event -> {
-            // Handle My Data button click
-            // You can switch to My Data view here
-            System.out.println("My Data button clicked");
-        });
     }
 }
