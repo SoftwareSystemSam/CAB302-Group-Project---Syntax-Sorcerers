@@ -9,7 +9,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * MyAccount class handles the user account settings.
+ */
 public class MyAccount extends Application {
 
     public static final String TITLE = "Screen Tracker";
@@ -26,7 +28,11 @@ public class MyAccount extends Application {
     private Button confirmButton;
     @FXML
     private Button backButton;
-
+    /**
+     * Starts the MyAccount stage.
+     * @param stage The stage to start.
+     * @throws IOException If an input or output exception occurred.
+     */
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("account.fxml"));
         fxmlLoader.setController(this); // Set the controller
@@ -46,6 +52,10 @@ public class MyAccount extends Application {
             confirmButton.setDisable(!isEmailValid);
         });
     }
+    /**
+     * Handles the back button action.
+     * @throws IOException If an input or output exception occurred.
+     */
     @FXML
     protected void onBack() throws IOException {
         try {
@@ -56,15 +66,21 @@ public class MyAccount extends Application {
             e.printStackTrace();
         }
     }
+    /**
+     * Checks if the entered email is valid.
+     * @param email The email to check.
+     * @return true if the email is valid, false otherwise.
+     */
 
-    // Method to check if the entered email is valid
     private boolean isValidEmail(String email) {
         // Implement your email validation logic here
         // For simplicity, let's assume any non-empty email is valid
         return email != null && !email.trim().isEmpty();
     }
 
-    // Define action for the confirm button
+    /**
+     * Defines action for the confirm button.
+     */
     @FXML
     private void confirmButtonAction() {
         // Implement your logic for handling password change confirmation here
