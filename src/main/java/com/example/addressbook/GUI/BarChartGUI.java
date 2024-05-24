@@ -1,17 +1,19 @@
 package com.example.addressbook.GUI;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-
+/**
+ * BarChartGUI class represents a bar chart displaying the number of hours spent doing university work on different days of the week.
+ */
 public class BarChartGUI extends HBox {
-
+    /**
+     * Constructor for BarChartGUI class.
+     * Initializes the bar chart with data.
+     */
     public BarChartGUI() {
 
         var root = new HBox();
