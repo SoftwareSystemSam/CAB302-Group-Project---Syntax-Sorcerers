@@ -1,8 +1,8 @@
-package com.example.addressbook.SQLTest;
+package com.example.addressbook;
 
 import com.example.addressbook.SQL.ScreenTimeEntry;
 import com.example.addressbook.SQL.SqliteScreenTimeEntryDAO;
-import com.example.addressbook.SQL.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.*;
 
+
 class SqliteScreenTimeEntryDAOTest {
     @Mock
     private Connection mockConnection;
@@ -26,13 +27,21 @@ class SqliteScreenTimeEntryDAOTest {
     private ResultSet mockResultSet;
 
     private SqliteScreenTimeEntryDAO dao;
+    private AutoCloseable closeable;
 
     @BeforeEach
     void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        // Use openMocks to initialize the mocks
+        closeable = MockitoAnnotations.openMocks(this);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         dao = new SqliteScreenTimeEntryDAO(mockConnection);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        // Close the open mocks to release resources
+        closeable.close();
     }
 
     @Test
@@ -58,4 +67,3 @@ class SqliteScreenTimeEntryDAOTest {
         verify(mockPreparedStatement).executeUpdate();
     }
 }
-

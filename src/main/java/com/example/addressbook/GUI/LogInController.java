@@ -14,7 +14,9 @@ import java.io.IOException;
 import static com.example.addressbook.HelloApplication.TITLE;
 import static java.awt.image.ImageObserver.HEIGHT;
 import static java.awt.image.ImageObserver.WIDTH;
-
+/**
+ * This class is used to handle the login controller
+ */
 public class LogInController extends Application {
 
     public static final String TITLE = "Screen Tracker";
@@ -25,6 +27,11 @@ public class LogInController extends Application {
     @FXML
     private Button signupButton;
 
+    /**
+     * This function is used to start the login controller
+     * @param stage The stage to start
+     * @throws Exception If an exception occurs
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
@@ -33,7 +40,10 @@ public class LogInController extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * This function is used to handle the login button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onLogInButtonClick() throws IOException {
         try {
@@ -44,7 +54,10 @@ public class LogInController extends Application {
             e.printStackTrace();
         }
     }
-
+    /**
+     * This function is used to handle the sign up button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onSignUpButtonClick() throws IOException {
         try {

@@ -6,52 +6,42 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-
-
 /**
- * This class is used to handle the login controller
+ * This class is used to handle the reset password controller
  */
-
-public class LogIn{
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button backButton;
+public class ResetPass{
     @FXML
     private Button resetButton;
+    @FXML
+    private Button backButton;
     @FXML
     private TextField emailTextField;
     @FXML
     private TextField passwordField;
-     private UserService userService;
 
+    private UserService userService;
 
     public static final String TITLE = "Screen Tracker";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
     /**
-     * This function is used to start the login controller
+     * This function is used to start the reset password controller
      * */
-    public LogIn() {
-        initializeUserService();
-    }
+    public ResetPass() {initializeUserService();}
 
     /**
-     * This function is used to start the login controller
+     * This function is used to start the reset password controller
      * @param stage The stage to start
      * @throws IOException If an exception occurs
      */
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("resetPass-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
         stage.setTitle(TITLE);
         stage.setScene(scene);
@@ -67,9 +57,9 @@ public class LogIn{
         IUserDAO userDAO = new SqliteUserDAO(userConnection);
         this.userService = new UserService(userDAO, userConnection);
     }
-
     /**
-     * This function is used to show the database error
+     * This function is used to handle the reset button click
+     * @throws IOException If an IO exception occurs
      */
     private void showDatabaseError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -77,32 +67,32 @@ public class LogIn{
         alert.show();
     }
 
-
-            //    @FXML   before change
-//    protected void onLogIn() throws IOException {
-//        try {
-//            Stage stage = (Stage) loginButton.getScene().getWindow();
-//            MyHubController graphsWindow = new MyHubController();
-//            graphsWindow.start(stage);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
-     * This function is used to handle the login button click
+     * This function is used to handle the reset button click
      * @throws IOException If an IO exception occurs
      */
     @FXML
-    protected void onLogIn() throws IOException {
+    protected void onReset() throws IOException {
         String email = emailTextField.getText();
         String password = passwordField.getText();
+        // Validate input
+        if ( email.isEmpty() || password.isEmpty()) {
+            showAlert("Incorrect email or Password cannot be empty.");
+            return;
+        }
+
+        if (password.length() < 8) { // Example: Check minimum password length
+            showAlert("Password must be at least 8 characters long.");
+            return;
+        }
+
         try {
 
-            User  authenticatedUser = userService.loginUser(email, password);
+            User  authenticatedUser = userService.resetUserPassword(email, password);
 
             if (authenticatedUser != null) {
                 // login success
+
 
                 //Start up the database for the window tracking
                 Connection screenTimeConnection = SqliteConnection.getScreenTimeDbInstance();
@@ -113,10 +103,8 @@ public class LogIn{
                 Thread trackerThread = new Thread(tracker);
                 trackerThread.start(); // Start tracking in a new thread
 
-
-
                 //  Go to my hub
-                Stage stage = (Stage) loginButton.getScene().getWindow();
+                Stage stage = (Stage) resetButton.getScene().getWindow();
                 MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO, tracker);
                 graphsWindow.start(stage);
             } else {
@@ -127,18 +115,23 @@ public class LogIn{
             showDatabaseError();
         }
     }
-
+    /**
+     * This function is used to show the alert
+     * @param message The message to show
+     */
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     /**
      * This function is used to show the login failed alert
      */
     private void showLoginFailedAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText("Login failed. The email address or password is incorrect.");
+        alert.setContentText("Reset Password is failed. The email address is incorrect.");
         alert.showAndWait();
     }
-
-
-
     /**
      * This function is used to handle the back button click
      * @throws IOException If an IO exception occurs
@@ -152,33 +145,6 @@ public class LogIn{
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * This function is used to handle the reset button click
-     * @throws IOException If an IO exception occurs
-     */
-    @FXML
-    protected void onReset() throws IOException {
-        try {
-            Stage stage = (Stage) resetButton.getScene().getWindow();
-            ResetPass graphsWindow = new ResetPass();
-            graphsWindow.start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    protected void GetEmailAction() throws IOException {
-        // Handle navigation back to the login page
-        Stage stage = (Stage) emailTextField.getScene().getWindow();
-    }
-    @FXML
-    protected void GetPasswordAction() throws IOException {
-        // Handle navigation back to the login page
-        Stage stage = (Stage) passwordField.getScene().getWindow();
     }
 }
 

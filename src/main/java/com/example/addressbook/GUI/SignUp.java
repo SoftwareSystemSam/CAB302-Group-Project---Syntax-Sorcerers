@@ -18,7 +18,9 @@ import java.sql.SQLException;
 import java.util.Objects;
 import com.example.addressbook.SQL.UserService;
 import net.bytebuddy.agent.VirtualMachine;
-
+/**
+ * This class is used to handle the sign up controller
+ */
 public class SignUp {
     @FXML
     private Button signupButton;
@@ -35,11 +37,18 @@ public class SignUp {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
-
+    /**
+     * This function is used to start the sign up controller
+     * */
     public SignUp() {
         initializeUserService();
     }
 
+    /**
+     * This function is used to start the sign up controller
+     * @param stage The stage to start
+     * @throws IOException If an exception occurs
+     */
     public void start(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("signUp-view.fxml"));
@@ -49,6 +58,9 @@ public class SignUp {
         stage.show();
     }
 
+    /**
+     * This function is used to initialize the user service
+     */
     private void initializeUserService() {
         Connection userConnection = SqliteConnection.getUserDbInstance();
         IUserDAO userDAO = new SqliteUserDAO(userConnection);
@@ -75,6 +87,10 @@ public class SignUp {
 //        loginWindow.start(stage);
 //    }
 
+    /**
+     * This function is used to handle the sign up button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void signupButtonAction() throws Exception {
         String email = emailTextField.getText();
@@ -106,12 +122,20 @@ public class SignUp {
 
 
 
+    /**
+     * This function is used to show the alert
+     * @param message The message to show
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
+    /**
+     * This function is used to handle the back button click
+     * @throws IOException If an IO exception occurs
+     */
     @FXML
     protected void onBack() throws IOException {
         try {

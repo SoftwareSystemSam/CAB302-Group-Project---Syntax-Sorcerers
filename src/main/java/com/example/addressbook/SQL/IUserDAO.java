@@ -25,7 +25,20 @@ public interface IUserDAO {
 
     public User getUser(int id);
 
+    /**
+     * Retrieves a user from the database by email.
+     *
+     * @param email The email of the contact to retrieve.
+     * @return The user with the given email, or null if not found.
+     */
     public User getUserByEmail(String email);
+
+    /**
+     * Updates a user in the database.
+     * @param user The user to update.
+     */
+
+    void updateUser(User user, String newPassword);//For Update user Password
 
     // Shouldn't be needed but leaving here just in case
     //User validateUser(String email, String password);

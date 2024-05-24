@@ -28,6 +28,4 @@
         <Button fx:id="signupButton" text="SignUp" onAction="#signupButtonAction"/>
         <Button fx:id="backButton" text="Back" onAction="#onBack"/>
     </HBox>
-
-
 </VBox>

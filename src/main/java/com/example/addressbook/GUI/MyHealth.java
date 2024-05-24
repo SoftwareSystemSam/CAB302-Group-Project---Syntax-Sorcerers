@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Random;
 import javafx.scene.Node;
 
+/**
+ * This class is used to handle the health facts controller
+ */
 public class MyHealth extends Application {
     @FXML
     private Label healthFactsLabel;
@@ -27,6 +30,11 @@ public class MyHealth extends Application {
     private Button backButton;
     private  Parent root;
 
+    /**
+     * This function is used to start the health facts controller
+     * @param primaryStage The stage to start
+     * @throws Exception If an exception occurs
+     */
     @Override
     public void start(Stage primaryStage) {
         // Load FXML file
@@ -52,6 +60,9 @@ public class MyHealth extends Application {
 
     }
 
+    /**
+     * This function is used to load health facts
+     */
     private void loadHealthFacts() {
         // Add health facts about screen time
         healthFacts.clear();

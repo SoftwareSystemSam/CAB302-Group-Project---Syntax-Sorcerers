@@ -2,7 +2,9 @@ package com.example.addressbook.SQL;
 
 import java.sql.Connection;
 
-// Basically a controller that lets UserService functions use the SqliteUserDAO database functions
+/**
+ * This class is used to handle the user service
+ */
 public class UserController {
     private UserService userService;
     private Connection connection;
