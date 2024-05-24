@@ -17,17 +17,31 @@ import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
 
+/**
+ * PieChartGUI class represents a pie chart displaying the screen time of different applications.
+ */
 public class PieChartGUI extends VBox {
     private TableView<ScreenTimeEntry> table = new TableView<>();
     private ObservableList<ScreenTimeEntry> tableData = FXCollections.observableArrayList();
     private PieChart pieChart;
-
+    /**
+     * Constructor for PieChartGUI class.
+     * Initializes the pie chart and table view with data.
+     * @param userId The user's ID.
+     * @param screenTimeEntryDAO The DAO for screen time entries.
+     * @throws SQLException If a database access error occurs.
+     */
     public PieChartGUI(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) throws SQLException {
         setupPieChart(userId, screenTimeEntryDAO);
         setupTableView();
         setupRefreshTimer(userId, screenTimeEntryDAO);
     }
-
+    /**
+     * Sets up the pie chart with data.
+     * @param userId The user's ID.
+     * @param screenTimeEntryDAO The DAO for screen time entries.
+     * @throws SQLException If a database access error occurs.
+     */
     private void setupPieChart(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         List<ScreenTimeEntry> entries = screenTimeEntryDAO.getScreenTimeEntriesByUserIdAndDate(userId, LocalDate.now());
@@ -38,7 +52,9 @@ public class PieChartGUI extends VBox {
         this.getChildren().add(pieChart);
         tableData.setAll(entries);
     }
-
+    /**
+     * Sets up the table view.
+     */
     private void setupTableView() {
         TableColumn<ScreenTimeEntry, String> appNameCol = new TableColumn<>("Application Name");
         appNameCol.setCellValueFactory(new PropertyValueFactory<>("applicationName"));
@@ -48,7 +64,11 @@ public class PieChartGUI extends VBox {
         table.setItems(tableData);
         this.getChildren().add(table);
     }
-
+    /**
+     * Sets up a timer to refresh the data every 5 seconds.
+     * @param userId The user's ID.
+     * @param screenTimeEntryDAO The DAO for screen time entries.
+     */
 
     //https://stackoverflow.com/questions/56688910/javafx-webview-auto-refresh
     private void setupRefreshTimer(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) {
@@ -59,7 +79,11 @@ public class PieChartGUI extends VBox {
         refreshTimeline.play();
     }
 
-
+    /**
+     * Refreshes the data in the pie chart and table view.
+     * @param userId The user's ID.
+     * @param screenTimeEntryDAO The DAO for screen time entries.
+     */
     //https://stackoverflow.com/questions/13784333/platform-runlater-and-task-in-javafx
     private void refreshData(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) {
         Platform.runLater(() -> {
