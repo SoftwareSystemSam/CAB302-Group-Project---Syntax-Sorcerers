@@ -6,19 +6,21 @@ import com.example.addressbook.SQL.SqliteConnection;
 import com.example.addressbook.SQL.SqliteUserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Objects;
-import com.example.addressbook.SQL.UserService;
-import net.bytebuddy.agent.VirtualMachine;
 
+import com.example.addressbook.SQL.UserService;
+
+/**
+ * The SignUp class extends Application and represents the sign-up controller of the application.
+ * It contains two buttons: "signupButton", and "backButton".
+ * Each button is associated with an event handler that handles the button click event.
+ */
 public class SignUp {
     @FXML
     private Button signupButton;
@@ -35,11 +37,18 @@ public class SignUp {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
 
-
+    /**
+     * Constructor for SignUp class.
+     * Initializes the UserService.
+     */
     public SignUp() {
         initializeUserService();
     }
-
+    /**
+     * Starts the SignUp stage.
+     * @param stage The stage to start.
+     * @throws IOException If an input or output exception occurred.
+     */
     public void start(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("signUp-view.fxml"));
@@ -48,33 +57,18 @@ public class SignUp {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * Initializes the UserService.
+     */
     private void initializeUserService() {
         Connection userConnection = SqliteConnection.getUserDbInstance();
         IUserDAO userDAO = new SqliteUserDAO(userConnection);
         this.userService = new UserService(userDAO, userConnection);
     }
-
-
-
-//    @FXML
-//    protected void signupButtonAction() throws IOException {
-//        //get text
-//        String email = emailTextField.getText();
-//        String password = passwordTextField.getText();
-//
-//        // Output the text written in the text box to the console.
-//        System.out.println("Email: " + email);
-//        System.out.println("Password: " + password);
-//
-//        boolean success = userService.registerNewUser(email, password);
-//
-//        // Handle navigation back to the login page
-//        Stage stage = (Stage) signupButton.getScene().getWindow();
-//        MyHubController loginWindow = new MyHubController();
-//        loginWindow.start(stage);
-//    }
-
+    /**
+     * Handles the signup button action.
+     * @throws Exception If an exception occurred.
+     */
     @FXML
     protected void signupButtonAction() throws Exception {
         String email = emailTextField.getText();
@@ -105,13 +99,19 @@ public class SignUp {
     }
 
 
-
+    /**
+     * Shows an alert with the given message.
+     * @param message The message to show in the alert.
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    /**
+     * Handles the back button action.
+     * @throws IOException If an input or output exception occurred.
+     */
     @FXML
     protected void onBack() throws IOException {
         try {
