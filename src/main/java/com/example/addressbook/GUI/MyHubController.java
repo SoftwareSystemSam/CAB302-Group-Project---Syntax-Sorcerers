@@ -9,28 +9,44 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
-
+/**
+ * Handles the password field action.
+ * Throws IOException If an input or output exception occurred.
+ */
 public class MyHubController extends Application {
 
     private User currentUser;
     private IScreenTimeEntryDAO screenTimeEntryDAO;
     private Parent root; // Root layout of the scene
     private VBox contentArea; // Area to load content
-
+    /**
+     * Constructor for MyHubController class.
+     * @param user The current user.
+     * @param screenDAO The DAO for screen time entries.
+     */
     public MyHubController(User user, IScreenTimeEntryDAO screenDAO){
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
     }
+    /**
+     * Starts the MyHubController stage.
+     * @param stage The stage to start.
+     * @throws SQLException If a database access error occurs.
+     */
     @Override
     public void start(Stage stage) throws SQLException {
         initUI(stage);
     }
-
+    /**
+     * Initializes the user interface.
+     * @param stage The stage to initialize.
+     * @throws SQLException If a database access error occurs.
+     */
     private void initUI(Stage stage) throws SQLException {
         Navigation navigationBar = new Navigation();
 
@@ -58,8 +74,10 @@ public class MyHubController extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-
+    /**
+     * The main entry point for all JavaFX applications.
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }
