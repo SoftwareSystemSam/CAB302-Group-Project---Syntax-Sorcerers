@@ -66,7 +66,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }// Testing
     /**
      * Get all screen time entries by user id
      * @param userId The user id
