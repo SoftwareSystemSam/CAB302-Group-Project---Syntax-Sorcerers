@@ -66,6 +66,10 @@ public class MyAccount extends Application {
             e.printStackTrace();
         }
     }
+
+
+
+
     /**
      * Checks if the entered email is valid.
      * @param email The email to check.
@@ -84,7 +88,21 @@ public class MyAccount extends Application {
     @FXML
     private void confirmButtonAction() {
         // Implement your logic for handling password change confirmation here
-        System.out.println("Password change confirmed!");
+        // Show success alert
+        showAlert("Success", "An email has been sent, confirming your password change");
+    }
+    /**
+     * Shows an information alert with the given title and message.
+     * @param title The title of the alert.
+     * @param message The message of the alert.
+     */
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }
