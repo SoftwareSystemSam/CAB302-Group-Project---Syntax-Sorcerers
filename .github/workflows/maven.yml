@@ -46,7 +46,7 @@ jobs:
         with:
           branch: gh-pages
           folder: docs/javadoc
-          token: ${{ secrets.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 }}
+          token: ${{ secrets.YOUR_SECRET_NAME }}
 
       - name: Build and test with Maven
         run: mvn -B clean verify --file pom.xml
