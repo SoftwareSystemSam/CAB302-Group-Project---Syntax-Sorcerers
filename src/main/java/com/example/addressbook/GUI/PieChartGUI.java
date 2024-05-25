@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,6 +46,8 @@ public class PieChartGUI extends VBox {
      * @throws SQLException If an exception occurs
      */
     private void setupPieChart(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) throws SQLException {
+        Label tableTitle = new Label("List of All Apps Used Today");
+        tableTitle.setStyle("-fx-font-size: 18px; -fx-padding: 10 0 10 0;");
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         List<ScreenTimeEntry> entries = screenTimeEntryDAO.getScreenTimeEntriesByUserIdAndDate(userId, LocalDate.now());
         // Sort entries by duration in descending order and limit to 20
@@ -56,7 +59,7 @@ public class PieChartGUI extends VBox {
         pieChart.setTitle("Today's Top 20 Apps By Usage");
         pieChart.setLegendVisible(true);
         pieChart.setLegendSide(Side.RIGHT);
-        this.getChildren().add(pieChart);
+        this.getChildren().addAll(pieChart, tableTitle);
         tableData.setAll(entries);
     }
 
