@@ -1,4 +1,6 @@
 package com.example.addressbook.GUI;
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.User;
 import javafx.scene.control.*;
 
 import javafx.scene.layout.HBox;
