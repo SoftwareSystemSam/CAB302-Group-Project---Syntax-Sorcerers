@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-
+import javafx.scene.control.Label;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -61,46 +61,54 @@ public class MyHubController extends Application {
      * @throws SQLException If an exception occurs
      */
     private void initUI(Stage stage) throws SQLException {
-
         Navigation navigationBar = new Navigation(currentUser, screenTimeEntryDAO);
 
         contentArea = new VBox();
-        contentArea.setPrefSize(950, 600);
+        contentArea.setPrefSize(1200, 700);
 
         var barChart = new BarChartGUI(currentUser.getId(), screenTimeEntryDAO);
-        // Create the root layout containing navigation bar and content area
-        root = new BorderPane();
-        ((BorderPane) root).setTop(navigationBar);
-        ((BorderPane) root).setCenter(contentArea);
         var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
+
+        // Adjusting the layout for better control over the pie chart and bar chart
+        HBox chartsBox = new HBox();
+        chartsBox.setSpacing(20); // Adds space between the charts
+        chartsBox.getChildren().add(barChart);
+        VBox pieChartContainer = new VBox(pieChart); // Wrap pie chart for better control
+        pieChartContainer.setPrefSize(450, 600); // Set preferred size for pie chart container
+        chartsBox.getChildren().add(pieChartContainer);
 
         // Create toggle button with Ikonli icons
         ToggleButton toggleButton = new ToggleButton();
         FontIcon pauseIcon = new FontIcon("fa-pause");
         FontIcon playIcon = new FontIcon("fa-play");
         toggleButton.setGraphic(pauseIcon);  // Default to pause icon
+        // Create label for the toggle button
+        Label trackerLabel = new Label("Pause Screen Time Tracker");
+        trackerLabel.setStyle("-fx-font-size: 16px; -fx-padding: 5px;");;
 
         toggleButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
                 toggleButton.setGraphic(playIcon); // Switch to play icon
                 windowTracker.pause(); // Pause the tracker
+                trackerLabel.setText("Resume Screen Time Tracker");
             } else {
                 toggleButton.setGraphic(pauseIcon); // Switch back to pause icon
                 windowTracker.resume(); // Resume the tracker
+                trackerLabel.setText("Pause Screen Time Tracker");
             }
         });
         toggleButton.setMinSize(60, 60);
 
-
         var vbox = new VBox();
-        vbox.setPrefSize(950, 600);
-        var scene = new Scene(vbox, 950, 600);
+        vbox.setPrefSize(1200, 600); // Adjusted the size to fit new layout
+        var scene = new Scene(vbox, 1200, 600); // Adjusted the scene size
+
         // Add charts to the content area
-        HBox chartsBox = new HBox(barChart, pieChart);
         contentArea.getChildren().add(chartsBox);
 
 
-        vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart, toggleButton));
+
+        vbox.getChildren().addAll(navigationBar, contentArea, toggleButton, trackerLabel);
 
         // Set the scene and show the stage
         stage.setTitle("Combined Charts with Navigation Bar");
