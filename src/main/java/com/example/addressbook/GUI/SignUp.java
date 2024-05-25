@@ -6,16 +6,14 @@ import com.example.addressbook.SQL.SqliteConnection;
 import com.example.addressbook.SQL.SqliteUserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Objects;
+
 import com.example.addressbook.SQL.UserService;
 import net.bytebuddy.agent.VirtualMachine;
 /**

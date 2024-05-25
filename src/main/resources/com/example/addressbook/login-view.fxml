@@ -30,5 +30,6 @@
         <Button fx:id="loginButton" text="LogIn" onAction="#onLogIn"/>
         <Button fx:id="resetButton" text="Reset Password" onAction="#onReset"/>
         <Button fx:id="backButton" text="Back" onAction="#onBack"/>
+        <Button fx:id="accountButton" text="MyAccount" onAction="#myAccount"/>
     </HBox>
 </VBox>

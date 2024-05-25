@@ -66,7 +66,11 @@ public class PieChartGUI extends VBox {
         table.setItems(tableData);
         this.getChildren().add(table);
     }
-
+    /**
+     * Sets up a timer to refresh the data every 5 seconds.
+     * @param userId The user's ID.
+     * @param screenTimeEntryDAO The DAO for screen time entries.
+     */
 
     //https://stackoverflow.com/questions/56688910/javafx-webview-auto-refresh
     /**
@@ -82,7 +86,11 @@ public class PieChartGUI extends VBox {
         refreshTimeline.play();
     }
 
-
+    /**
+     * Refreshes the data in the pie chart and table view.
+     * @param userId The user's ID.
+     * @param screenTimeEntryDAO The DAO for screen time entries.
+     */
     //https://stackoverflow.com/questions/13784333/platform-runlater-and-task-in-javafx
     /**
      * This function is used to refresh the data

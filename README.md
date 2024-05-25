@@ -7,9 +7,9 @@ For our project our group has chosen the screen time tracker. This app will moni
 The project requirements are:
 •	The app will be able to display statistical data based on the users’ screen time for each application through a GUI (Can do daily, weekly, monthly stats).
 
-•	Users will be able to sign-up for an account with username and password.
+•	Users will be able to sign-up for an myAccount with username and password.
 
-•	This account will allow users to store their data and retrieve it from a database.
+•	This myAccount will allow users to store their data and retrieve it from a database.
 
 •	 There will be a section that will show general health information from professional medical sources surrounding computer usage, such as regular breaks, proper posture, computer station ergonomics etc.
 
@@ -17,7 +17,7 @@ The project requirements are:
 
 **Things to note!!!**
 
-**If you have just created an account and logged in, you need to wait for like 10 to 20 seconds for the database to update with your screen time entries**
+**If you have just created an myAccount and logged in, you need to wait for like 10 to 20 seconds for the database to update with your screen time entries**
 
 **This app will only work on windows machines!**
 

@@ -13,11 +13,16 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.kordamp.ikonli.javafx.FontIcon;
+import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
 /**
- * This class is used to handle the MyHub controller
+ * Handles the password field action.
+ * Throws IOException If an input or output exception occurred.
  */
 public class MyHubController extends Application {
 
@@ -52,11 +57,18 @@ public class MyHubController extends Application {
      * @throws SQLException If an exception occurs
      */
     private void initUI(Stage stage) throws SQLException {
-
         Navigation navigationBar = new Navigation();
 
+        contentArea = new VBox();
+        contentArea.setPrefSize(950, 600);
 
         var barChart = new BarChartGUI(currentUser.getId(), screenTimeEntryDAO);
+        // Create the root layout containing navigation bar and content area
+        root = new BorderPane();
+        ((BorderPane) root).setTop(navigationBar);
+        ((BorderPane) root).setCenter(contentArea);
+
+        var barChart = new BarChartGUI();
         var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
         // Create toggle button with Ikonli icons
@@ -80,15 +92,22 @@ public class MyHubController extends Application {
         var vbox = new VBox();
         vbox.setPrefSize(950, 600);
         var scene = new Scene(vbox, 950, 600);
+        // Add charts to the content area
+        HBox chartsBox = new HBox(barChart, pieChart);
+        contentArea.getChildren().add(chartsBox);
 
 
         vbox.getChildren().addAll(navigationBar, new HBox(barChart, pieChart, toggleButton));
 
+        // Set the scene and show the stage
         stage.setTitle("Combined Charts with Navigation Bar");
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * The main entry point for all JavaFX applications.
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }

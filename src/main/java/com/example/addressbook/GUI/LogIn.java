@@ -6,13 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
@@ -136,6 +133,20 @@ public class LogIn{
         alert.setContentText("Login failed. The email address or password is incorrect.");
         alert.showAndWait();
     }
+    /**
+     * Handles the account button action.
+     * @throws IOException If an input or output exception occurred.
+     */
+    @FXML
+    protected void myAccount() throws IOException {
+        try {
+            Stage stage = (Stage) accountButton.getScene().getWindow();
+            MyAccount myAccount = new MyAccount();
+            myAccount.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -175,6 +186,10 @@ public class LogIn{
         // Handle navigation back to the login page
         Stage stage = (Stage) emailTextField.getScene().getWindow();
     }
+    /**
+     * Handles the password field action.
+     * @throws IOException If an input or output exception occurred.
+     */
     @FXML
     protected void GetPasswordAction() throws IOException {
         // Handle navigation back to the login page

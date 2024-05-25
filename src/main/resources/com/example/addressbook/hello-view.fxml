@@ -13,7 +13,7 @@
     </padding>
 
     <Label text="Welcome to My Screen Tracker.
-  You must register an account and login to use this app."
+  You must register an myAccount and login to use this app."
            wrapText="true"/>
 
     <HBox alignment="CENTER" spacing="10.0">
