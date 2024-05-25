@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -52,8 +53,9 @@ public class PieChartGUI extends VBox {
                 .limit(20) // Limit to top 20 entries
                 .forEach(entry -> pieChartData.add(new PieChart.Data(entry.getApplicationName(), entry.getDuration())));
         pieChart = new PieChart(pieChartData);
+        pieChart.setTitle("Today's Top 20 Apps By Usage");
         pieChart.setLegendVisible(true);
-        pieChart.setLegendSide(Side.BOTTOM);
+        pieChart.setLegendSide(Side.RIGHT);
         this.getChildren().add(pieChart);
         tableData.setAll(entries);
     }
@@ -64,12 +66,41 @@ public class PieChartGUI extends VBox {
     private void setupTableView() {
         TableColumn<ScreenTimeEntry, String> appNameCol = new TableColumn<>("Application Name");
         appNameCol.setCellValueFactory(new PropertyValueFactory<>("applicationName"));
-        TableColumn<ScreenTimeEntry, Long> durationCol = new TableColumn<>("Duration (seconds)");
+
+        TableColumn<ScreenTimeEntry, Long> durationCol = new TableColumn<>("Duration (HH:MM:SS)");
         durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        // Set custom cell factory to format the duration
+        durationCol.setCellFactory(column -> new TableCell<ScreenTimeEntry, Long>() {
+            @Override
+            protected void updateItem(Long item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) { // if the cell is empty
+                    setText(null);
+                    setStyle("");
+                } else {
+                    // Format the duration
+                    setText(formatDuration(item));
+                }
+            }
+        });
+
         table.getColumns().addAll(appNameCol, durationCol);
         table.setItems(tableData);
         this.getChildren().add(table);
     }
+
+    /**
+     * Formats a duration in seconds into a string of format HH:MM:SS.
+     * @param seconds the duration in seconds.
+     * @return the formatted duration string.
+     */
+    private String formatDuration(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long sec = seconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, sec);
+    }
+
 
 
     //https://stackoverflow.com/questions/56688910/javafx-webview-auto-refresh
