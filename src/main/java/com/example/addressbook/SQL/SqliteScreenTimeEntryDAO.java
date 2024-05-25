@@ -119,6 +119,32 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return entries;
     }
+    public Map<String, ScreenTimeEntry> getMostUsedAppForEachDayOfWeek(int userId) throws SQLException {
+        Map<String, ScreenTimeEntry> mostUsedApps = new HashMap<>();
+        String query = "SELECT strftime('%w', start_time) as day_of_week, application_name, SUM(duration) as total_duration " +
+                "FROM screen_time_entries " +
+                "WHERE user_id = ? " +
+                "GROUP BY day_of_week, application_name " +
+                "ORDER BY day_of_week, total_duration DESC";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            String currentDayOfWeek = null;
+            while (rs.next()) {
+                String dayOfWeek = rs.getString("day_of_week");
+                if (!dayOfWeek.equals(currentDayOfWeek)) {
+                    currentDayOfWeek = dayOfWeek;
+                    mostUsedApps.put(dayOfWeek, new ScreenTimeEntry(
+                            userId,
+                            rs.getString("application_name"),
+                            rs.getLong("total_duration"),
+                            null
+                    ));
+                }
+            }
+        }
+        return mostUsedApps;
+    }
 
   
     /**

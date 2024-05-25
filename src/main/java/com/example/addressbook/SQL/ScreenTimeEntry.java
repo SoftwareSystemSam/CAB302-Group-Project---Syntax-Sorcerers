@@ -15,6 +15,9 @@ public class ScreenTimeEntry{
     private Long duration;
     private LocalDateTime startTime;
 
+    public ScreenTimeEntry(String applicationName, long duration) {
+    }
+
 
     // Getters
     /**

@@ -31,6 +31,7 @@ public interface IScreenTimeEntryDAO{
      */
 
     List<ScreenTimeEntry> getScreenTimeEntriesByUserIdAndDate(int userId, LocalDate date) throws SQLException;
+    Map<String, ScreenTimeEntry> getMostUsedAppForEachDayOfWeek(int userId) throws SQLException;
     /**
      * Add or update a screen time entry
      * @param userId The id of the user

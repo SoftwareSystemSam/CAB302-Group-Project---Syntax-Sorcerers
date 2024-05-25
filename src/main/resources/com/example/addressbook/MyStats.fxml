@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.addressbook.GUI.MyStats">
+
+
+        <!-- Your navigation bar -->
+
+
+        <!-- Your charts or other content -->
+        <!-- For example, you can include a Pane or a SplitPane -->
+
+
+    <HBox alignment="CENTER" spacing="10.0">
+        <Button fx:id="backButton" text="Back" onAction="#onBack"/>
+        <Button fx:id="manualEntryButton" text="Manual Entry" onAction="#onManualEntryButton"/>
+    </HBox>
+
+</VBox>
+
+

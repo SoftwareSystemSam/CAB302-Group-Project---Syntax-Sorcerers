@@ -13,11 +13,24 @@ import java.util.List;
  * This class is used to handle the navigation bar
  */
 public class Navigation extends HBox {
+    private User currentUser;
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
 
     /**
      * This function is used to create a new navigation bar
      */
-    public Navigation() {
+    public Navigation(User user, IScreenTimeEntryDAO screenDAO) {
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+        setupNavigationBar();
+
+    }
+
+    public Navigation(){
+        setupNavigationBar();
+    }
+
+    private void setupNavigationBar() {
         // Create navigation buttons
         Button myGoalsB = new Button("My Goals");
         Button myStatsB = new Button("My Stats");
@@ -36,6 +49,7 @@ public class Navigation extends HBox {
          * When the button is clicked, it prints a message to the console and opens the MyGoals scene.
          */
         myGoalsB.setOnAction(event -> {
+            // Handle My Goals button click
             System.out.println("My Goals button clicked");
             MyGoals myGoalsScene = new MyGoals();
             try {
@@ -51,7 +65,7 @@ public class Navigation extends HBox {
          */
         myStatsB.setOnAction(event -> {
             System.out.println("My Stats button clicked");
-            MyStats2 myStatsScene = new MyStats2();
+            MyStats2 myStatsScene = new MyStats2(currentUser,screenTimeEntryDAO);
             try {
                 myStatsScene.start(new Stage());
             } catch (Exception e) {
@@ -64,7 +78,8 @@ public class Navigation extends HBox {
          * When the button is clicked, it prints a message to the console and opens the MyHealth scene.
          */
         myHealthB.setOnAction(event -> {
-            System.out.println("My Goals button clicked");
+            // Handle My Health button click
+            System.out.println("My Health button clicked");
             MyHealth myMyHealthScene = new MyHealth();
             try {
                 myMyHealthScene.start(new Stage());

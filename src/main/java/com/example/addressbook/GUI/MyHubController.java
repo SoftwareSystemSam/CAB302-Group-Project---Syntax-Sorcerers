@@ -61,7 +61,8 @@ public class MyHubController extends Application {
      * @throws SQLException If an exception occurs
      */
     private void initUI(Stage stage) throws SQLException {
-        Navigation navigationBar = new Navigation();
+
+        Navigation navigationBar = new Navigation(currentUser, screenTimeEntryDAO);
 
         contentArea = new VBox();
         contentArea.setPrefSize(950, 600);
