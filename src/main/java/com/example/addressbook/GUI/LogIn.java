@@ -23,7 +23,7 @@ public class LogIn{
     @FXML
     private Button backButton;
     @FXML
-    private Button resetButton;
+    private Button accountButton;
     @FXML
     private TextField emailTextField;
     @FXML
@@ -165,20 +165,20 @@ public class LogIn{
         }
     }
 
-    /**
-     * This function is used to handle the reset button click
-     * @throws IOException If an IO exception occurs
-     */
-    @FXML
-    protected void onReset() throws IOException {
-        try {
-            Stage stage = (Stage) resetButton.getScene().getWindow();
-            ResetPass graphsWindow = new ResetPass();
-            graphsWindow.start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * This function is used to handle the reset button click
+//     * @throws IOException If an IO exception occurs
+//     */
+//    @FXML
+//    protected void onReset() throws IOException {
+//        try {
+//            Stage stage = (Stage) resetButton.getScene().getWindow();
+//            ResetPass graphsWindow = new ResetPass();
+//            graphsWindow.start(stage);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     @FXML
