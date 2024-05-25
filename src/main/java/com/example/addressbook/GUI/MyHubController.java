@@ -30,6 +30,8 @@ public class MyHubController extends Application {
     private User currentUser;
     private IScreenTimeEntryDAO screenTimeEntryDAO;
 
+    private VBox contentArea; // Area to load content
+
     /**
      * This function is used to create a new MyHub controller
      * @param user The user
