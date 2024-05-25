@@ -46,6 +46,7 @@ jobs:
         with:
           branch: gh-pages
           folder: docs/javadoc
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and test with Maven
         run: mvn -B clean verify --file pom.xml
