@@ -46,7 +46,11 @@ public class PieChartGUI extends VBox {
     private void setupPieChart(int userId, IScreenTimeEntryDAO screenTimeEntryDAO) throws SQLException {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         List<ScreenTimeEntry> entries = screenTimeEntryDAO.getScreenTimeEntriesByUserIdAndDate(userId, LocalDate.now());
-        entries.forEach(entry -> pieChartData.add(new PieChart.Data(entry.getApplicationName(), entry.getDuration())));
+        // Sort entries by duration in descending order and limit to 20
+        entries.stream()
+                .sorted((e1, e2) -> Long.compare(e2.getDuration(), e1.getDuration())) // Sort by duration descending
+                .limit(20) // Limit to top 20 entries
+                .forEach(entry -> pieChartData.add(new PieChart.Data(entry.getApplicationName(), entry.getDuration())));
         pieChart = new PieChart(pieChartData);
         pieChart.setLegendVisible(true);
         pieChart.setLegendSide(Side.BOTTOM);
@@ -66,11 +70,7 @@ public class PieChartGUI extends VBox {
         table.setItems(tableData);
         this.getChildren().add(table);
     }
-    /**
-     * Sets up a timer to refresh the data every 5 seconds.
-     * @param userId The user's ID.
-     * @param screenTimeEntryDAO The DAO for screen time entries.
-     */
+
 
     //https://stackoverflow.com/questions/56688910/javafx-webview-auto-refresh
     /**
@@ -86,14 +86,10 @@ public class PieChartGUI extends VBox {
         refreshTimeline.play();
     }
 
-    /**
-     * Refreshes the data in the pie chart and table view.
-     * @param userId The user's ID.
-     * @param screenTimeEntryDAO The DAO for screen time entries.
-     */
+
     //https://stackoverflow.com/questions/13784333/platform-runlater-and-task-in-javafx
     /**
-     * This function is used to refresh the data
+     * This function is used to refresh the data and only display top 20 entries
      * @param userId The user id
      * @param screenTimeEntryDAO The screen time entry DAO
      */
@@ -102,7 +98,11 @@ public class PieChartGUI extends VBox {
             try {
                 ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
                 List<ScreenTimeEntry> entries = screenTimeEntryDAO.getScreenTimeEntriesByUserIdAndDate(userId, LocalDate.now());
-                entries.forEach(entry -> pieChartData.add(new PieChart.Data(entry.getApplicationName(), entry.getDuration())));
+                // Sort and limit entries as in setupPieChart
+                entries.stream()
+                        .sorted((e1, e2) -> Long.compare(e2.getDuration(), e1.getDuration()))
+                        .limit(20)
+                        .forEach(entry -> pieChartData.add(new PieChart.Data(entry.getApplicationName(), entry.getDuration())));
                 pieChart.setData(pieChartData);
                 tableData.setAll(entries);
             } catch (SQLException e) {
