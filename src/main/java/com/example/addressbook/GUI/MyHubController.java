@@ -90,11 +90,11 @@ public class MyHubController extends Application {
             if (isSelected) {
                 toggleButton.setGraphic(playIcon); // Switch to play icon
                 windowTracker.pause(); // Pause the tracker
-                trackerLabel.setText("Resume Screen Time Tracker");
+                trackerLabel.setText("Resume Screen Time Tracker"); // Reflect the state in the label
             } else {
                 toggleButton.setGraphic(pauseIcon); // Switch back to pause icon
                 windowTracker.resume(); // Resume the tracker
-                trackerLabel.setText("Pause Screen Time Tracker");
+                trackerLabel.setText("Pause Screen Time Tracker"); // Reflect the state in the label
             }
         });
         toggleButton.setMinSize(60, 60);
