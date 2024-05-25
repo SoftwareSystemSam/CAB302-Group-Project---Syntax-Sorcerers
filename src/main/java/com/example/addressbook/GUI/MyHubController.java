@@ -32,6 +32,8 @@ public class MyHubController extends Application {
 
     private VBox contentArea; // Area to load content
 
+    private Parent root; // Root layout of the scene
+
     /**
      * This function is used to create a new MyHub controller
      * @param user The user
@@ -69,8 +71,6 @@ public class MyHubController extends Application {
         root = new BorderPane();
         ((BorderPane) root).setTop(navigationBar);
         ((BorderPane) root).setCenter(contentArea);
-
-        var barChart = new BarChartGUI();
         var pieChart = new PieChartGUI(currentUser.getId(), screenTimeEntryDAO);
 
         // Create toggle button with Ikonli icons

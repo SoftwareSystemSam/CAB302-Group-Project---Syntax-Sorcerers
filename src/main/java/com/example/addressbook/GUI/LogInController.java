@@ -67,5 +67,4 @@ public class LogInController extends Application {
             e.printStackTrace();
         }
     }
-
 }
