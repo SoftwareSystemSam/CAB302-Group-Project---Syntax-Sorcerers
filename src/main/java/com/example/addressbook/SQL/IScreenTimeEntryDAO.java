@@ -81,5 +81,13 @@ public interface IScreenTimeEntryDAO{
      */
     void deleteGoal(int userId, String goal) throws SQLException;
 
+    /**
+     * Get all goals by user id
+     * @param userId The id of the user
+     * @return A list of goals
+     * @throws SQLException If an SQL exception occurs
+     */
+    List<String> getGoalsByUserId(int userId) throws SQLException;
+
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
 }

@@ -16,8 +16,10 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     // Database connection and table
 
     private Connection connection;
+
     /**
      * Constructor for the SqliteScreenTimeEntryDAO
+     *
      * @param connection The connection to the database
      */
     public SqliteScreenTimeEntryDAO(Connection connection) {
@@ -68,6 +70,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
 
     /**
      * Add a screen time entry to the database
+     *
      * @param entry The screen time entry to be added
      * @throws SQLException If an SQL exception occurs
      */
@@ -84,8 +87,10 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             e.printStackTrace();
         }
     }// Testing
+
     /**
      * Get all screen time entries by user id
+     *
      * @param userId The user id
      * @return A list of screen time entries
      * @throws SQLException If an SQL exception occurs
@@ -108,10 +113,12 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return entries;
     }
+
     /**
      * Get all screen time entries by user id and date
+     *
      * @param userId The user id
-     * @param date The date
+     * @param date   The date
      * @return A list of screen time entries
      * @throws SQLException If an SQL exception occurs
      */
@@ -136,6 +143,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return entries;
     }
+
     public Map<String, ScreenTimeEntry> getMostUsedAppForEachDayOfWeek(int userId) throws SQLException {
         Map<String, ScreenTimeEntry> mostUsedApps = new HashMap<>();
         String query = "SELECT strftime('%w', start_time) as day_of_week, application_name, SUM(duration) as total_duration " +
@@ -163,12 +171,13 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         return mostUsedApps;
     }
 
-  
+
     /**
      * Find the most recent start time by user id, application name, and date
-     * @param userId The user id
+     *
+     * @param userId          The user id
      * @param applicationName The application name
-     * @param date The date
+     * @param date            The date
      * @return The most recent start time
      * @throws SQLException If an SQL exception occurs
      */
@@ -189,12 +198,14 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     }
 
     // https://stackoverflow.com/questions/36442307/insert-data-and-if-already-inserted-then-update-in-sql
+
     /**
      * Upsert a screen time entry
-     * @param userId The user id
+     *
+     * @param userId          The user id
      * @param applicationName The application name
-     * @param duration The duration
-     * @param dateTime The date and time
+     * @param duration        The duration
+     * @param dateTime        The date and time
      * @throws SQLException If an SQL exception occurs
      */
     public void upsertScreenTimeEntry(int userId, String applicationName, long duration, LocalDateTime dateTime) throws SQLException {
@@ -225,9 +236,11 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     }
 
     // https://www.w3schools.com/java/java_hashmap.asp <- little hashmap guide
+
     /**
      * Get the weekly screen time by user id
-     * @param userId The user id
+     *
+     * @param userId      The user id
      * @param startOfWeek The start of the week
      * @return A map of the weekly screen time
      * @throws SQLException If an SQL exception occurs
@@ -253,7 +266,14 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         return weeklyScreenTime;
     }
 
-   public void addGoal(int userId, String goal) throws SQLException {
+    /**
+     * Add goal to the database by user id and goal
+     *
+     * @param userId
+     * @param goal
+     * @throws SQLException
+     */
+    public void addGoal(int userId, String goal) throws SQLException {
         String insertQuery = "INSERT INTO goals (user_id, goal) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
             pstmt.setInt(1, userId);
@@ -262,6 +282,13 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
     }
 
+    /**
+     * Get all goals by user id
+     *
+     * @param userId The id of the user
+     * @param goal   The goal to be deleted
+     * @throws SQLException
+     */
     public void deleteGoal(int userId, String goal) throws SQLException {
         String deleteQuery = "DELETE FROM goals WHERE user_id = ? AND goal = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(deleteQuery)) {
@@ -269,5 +296,25 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             pstmt.setString(2, goal);
             pstmt.executeUpdate();
         }
+    }
+
+    /**
+     * Get all goals by user id
+     *
+     * @param userId The id of the user
+     * @return A list of goals
+     * @throws SQLException If an SQL exception occurs
+     */
+    public List<String> getGoalsByUserId(int userId) throws SQLException {
+        List<String> goals = new ArrayList<>();
+        String query = "SELECT goal FROM goals WHERE user_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                goals.add(rs.getString("goal"));
+            }
+        }
+        return goals;
     }
 }
