@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.addressbook.GUI.MyNotifications"
+      alignment="CENTER" spacing="10" padding="20">
+    <CheckBox fx:id="Goal1" text="Notification 1" />
+    <CheckBox fx:id="Goal2" text="Notification 2" />
+    <CheckBox fx:id="Goal3" text="Notification 3" />
+    <CheckBox fx:id="Goal4" text="Notification 4" />
+    <CheckBox fx:id="Goal5" text="Notification 5" />
+    <Button text="Submit" onAction="#handleSubmit"/>
+</VBox>
