@@ -29,7 +29,11 @@ public class SqliteUserDAO implements IUserDAO {
             String query = "CREATE TABLE IF NOT EXISTS users ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + "email VARCHAR NOT NULL UNIQUE,"
-                    + "password VARCHAR NOT NULL"
+                    + "password VARCHAR NOT NULL,"
+                    + "custom_notification_enabled BOOLEAN default false,"
+                    + "data_storage_time_limit_days INTEGER default 60,"
+                    + "custom_notification_time_minutes INTEGER default 60,"
+                    + "custom_notification_message VARCHAR default 'You have been using your computer for a long time'"
                     + ")";
             statement.execute(query);
         } catch (Exception e) {
