@@ -53,10 +53,10 @@ public class PieChartGUI extends VBox {
         // Sort entries by duration in descending order and limit to 20
         entries.stream()
                 .sorted((e1, e2) -> Long.compare(e2.getDuration(), e1.getDuration())) // Sort by duration descending
-                .limit(20) // Limit to top 20 entries
+                .limit(10) // Limit to top 20 entries
                 .forEach(entry -> pieChartData.add(new PieChart.Data(entry.getApplicationName(), entry.getDuration())));
         pieChart = new PieChart(pieChartData);
-        pieChart.setTitle("Today's Top 20 Apps By Usage");
+        pieChart.setTitle("Today's Top 10 Apps By Usage");
         pieChart.setLegendVisible(true);
         pieChart.setLegendSide(Side.RIGHT);
         this.getChildren().addAll(pieChart, tableTitle);
