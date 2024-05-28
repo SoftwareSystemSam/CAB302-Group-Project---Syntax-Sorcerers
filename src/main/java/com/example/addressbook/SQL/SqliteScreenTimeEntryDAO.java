@@ -26,6 +26,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         this.connection = connection;
         createTable();
+        createGoalsTable();
     }
 
     /**
@@ -41,6 +42,22 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
                     + "application_name VARCHAR,"
                     + "duration BIGINT,"
                     + "start_time DATETIME,"
+                    + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+                    + ")";
+            statement.execute(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createGoalsTable() {
+        // Create table if not exists
+        try {
+            Statement statement = connection.createStatement();
+            String query = "CREATE TABLE IF NOT EXISTS goals ("
+                    + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "user_id INTEGER,"
+                    + "goal VARCHAR,"
                     + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
                     + ")";
             statement.execute(query);
@@ -234,5 +251,23 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             }
         }
         return weeklyScreenTime;
+    }
+
+   public void addGoal(int userId, String goal) throws SQLException {
+        String insertQuery = "INSERT INTO goals (user_id, goal) VALUES (?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(insertQuery)) {
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, goal);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deleteGoal(int userId, String goal) throws SQLException {
+        String deleteQuery = "DELETE FROM goals WHERE user_id = ? AND goal = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(deleteQuery)) {
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, goal);
+            pstmt.executeUpdate();
+        }
     }
 }

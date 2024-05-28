@@ -63,5 +63,23 @@ public interface IScreenTimeEntryDAO{
      */
 
     LocalDateTime findMostRecentStartTimeByUserAppAndDate(int userId, String applicationName, LocalDate date) throws SQLException;
+
+    /**
+     * Add goal to the database by user id and goal
+     * @param userId
+     * @param goal
+     * @throws SQLException
+     */
+    void addGoal(int userId, String goal) throws SQLException;
+
+    /**
+     * Delete a goal by user id and goal
+     * @param userId The id of the user
+     * @param goal The goal to be deleted
+     * @throws SQLException If an SQL exception occurs
+     *
+     */
+    void deleteGoal(int userId, String goal) throws SQLException;
+
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
 }

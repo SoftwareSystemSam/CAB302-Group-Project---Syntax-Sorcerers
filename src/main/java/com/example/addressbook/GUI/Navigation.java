@@ -53,7 +53,7 @@ public class Navigation extends HBox {
         myGoalsB.setOnAction(event -> {
             // Handle My Goals button click
             System.out.println("My Goals button clicked");
-            MyGoals myGoalsScene = new MyGoals();
+            MyGoals myGoalsScene = new MyGoals(currentUser,screenTimeEntryDAO);
             try {
                 myGoalsScene.start(new Stage());
             } catch (Exception e) {

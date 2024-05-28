@@ -1,5 +1,7 @@
 package com.example.addressbook.GUI;
 
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.User;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +25,17 @@ public class MyGoals extends Application {
 
     @FXML
     private Button saveButton;
+
+    private Button deleteButton;
+
+    private User currentUser;
+
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+
+    public MyGoals(User user, IScreenTimeEntryDAO screenDAO) {
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+    }
 
     @FXML
     private void initialize() {
