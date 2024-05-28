@@ -89,5 +89,28 @@ public interface IScreenTimeEntryDAO{
      */
     List<String> getGoalsByUserId(int userId) throws SQLException;
 
+    /**
+     * Delete all user data by user id
+     * @param userId The id of the user
+     * @throws SQLException If an SQL exception occurs
+     */
+    void deleteUserData(int userId) throws SQLException;
+
+    /**
+     * Delete all user data by user id within x days
+     * @param userId The id of the user
+     * @param days The number of days
+     * @throws SQLException If an SQL exception occurs
+     */
+    void deleteUserDataWithinXDays(int userId, int days) throws SQLException;
+
+    /**
+     * Get the total screen time by user id to see if they have spent more than x hours on the computer
+     * @param userId The id of the user
+     * @return The total screen time
+     * @throws SQLException If an SQL exception occurs
+     */
+    Boolean hasUserSpentMoreThanXHoursOnComputer(int userId, int hours) throws SQLException;
+
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
 }

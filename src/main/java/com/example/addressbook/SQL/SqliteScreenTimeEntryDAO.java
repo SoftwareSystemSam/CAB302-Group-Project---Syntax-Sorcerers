@@ -317,4 +317,44 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return goals;
     }
+    /**
+     * Delete a user's screen time entries
+     * @param userId The id of the user
+     * @throws SQLException If an SQL exception occurs
+     */
+    public void deleteUserData(int userId) throws SQLException {
+        String deleteQuery = "DELETE FROM screen_time_entries WHERE user_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(deleteQuery)) {
+            pstmt.setInt(1, userId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    /**
+     * Delete a user's screen time entries within the last X days
+     * @param userId The id of the user
+     * @param days The number of days
+     * @throws SQLException If an SQL exception occurs
+     */
+
+    public void deleteUserDataWithinXDays(int userId, int days) throws SQLException {
+        String deleteQuery = "DELETE FROM screen_time_entries WHERE user_id = ? AND date(start_time) >= date('now', '-" + days + " days')";
+        try (PreparedStatement pstmt = connection.prepareStatement(deleteQuery)) {
+            pstmt.setInt(1, userId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public Boolean hasUserSpentMoreThanXHoursOnComputer(int userId, int hours) throws SQLException {
+        String query = "SELECT SUM(duration) as total_duration FROM screen_time_entries WHERE user_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                long totalDuration = rs.getLong("total_duration");
+                return totalDuration >= hours * 3600; // Convert hours to seconds
+            }
+        }
+        return false;
+    }
 }
