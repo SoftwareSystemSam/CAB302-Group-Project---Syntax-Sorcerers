@@ -11,15 +11,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
-
 import java.util.Optional;
 
+/**
+ * MyData class handles the user's data settings.
+ */
 public class MyData extends Application {
     @FXML
     private Button privacyPolicyButton;
 
     @FXML
     private Button deleteDataButton;
+    /**
+     * Starts the MyData stage.
+     * @param primaryStage The primary stage.
+     * @throws Exception If an exception occurred.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/addressbook/MyData.fxml")));
@@ -27,7 +34,9 @@ public class MyData extends Application {
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
-
+    /**
+     * Shows the privacy policy in an alert dialog.
+     */
     @FXML
     private void showPrivacyPolicy() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -36,7 +45,9 @@ public class MyData extends Application {
         alert.setContentText("This is the privacy policy of the app. WE WILL SELL YOUR DATA TO THE CCP! WE ALSO HAVE A CREDIT CARD LOGGER");
         alert.showAndWait();
     }
-
+    /**
+     * Deletes all data after user confirmation and email validation.
+     */
     @FXML
     private void deleteAllData() {
         Alert warningAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -70,12 +81,16 @@ public class MyData extends Application {
             });
         }
     }
-
+    /**
+     * Validates user email
+     */
     private boolean isValidEmail(String email) {
         // Basic email validation
         return email != null && email.contains("@") && email.contains(".");
     }
-
+    /**
+     * Informs of successful data delete.
+     */
     private void performDataDeletion() {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Data Deletion Confirmation");
