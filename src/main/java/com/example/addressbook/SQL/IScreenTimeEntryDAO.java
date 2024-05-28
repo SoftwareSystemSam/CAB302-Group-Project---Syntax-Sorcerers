@@ -126,5 +126,13 @@ public interface IScreenTimeEntryDAO{
      */
     void enableOrDisableCustomNotification(int userId, boolean enabled) throws SQLException;
 
+    /**
+     * Get the custom notification time by user id
+     * @param userId The id of the user
+     * @return The custom notification time
+     * @throws SQLException If an SQL exception occurs
+     */
+    void setCustomNotificationTime(int userId, int minutes) throws SQLException;
+
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
 }

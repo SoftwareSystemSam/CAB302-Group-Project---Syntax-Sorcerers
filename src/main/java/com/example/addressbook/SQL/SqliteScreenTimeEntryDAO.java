@@ -388,4 +388,20 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
             pstmt.executeUpdate();
         }
     }
+
+    /**
+     * Get the custom notification by user id
+     *
+     * @param userId The id of the user
+     * @return The custom notification
+     * @throws SQLException If an SQL exception occurs
+     */
+    public void setCustomNotificationTime(int userId, int minutes) throws SQLException {
+        String updateQuery = "UPDATE users SET custom_notification_time_minutes = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+            pstmt.setInt(1, minutes);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        }
+    }
 }
