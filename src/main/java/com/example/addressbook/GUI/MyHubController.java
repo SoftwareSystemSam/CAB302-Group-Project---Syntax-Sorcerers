@@ -5,6 +5,9 @@ import com.example.addressbook.SQL.ActiveWindowTracker;
 import com.example.addressbook.SQL.IScreenTimeEntryDAO;
 import com.example.addressbook.SQL.IUserDAO;
 import com.example.addressbook.SQL.User;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -19,6 +22,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Label;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -35,6 +40,8 @@ public class MyHubController extends Application {
     private IScreenTimeEntryDAO screenTimeEntryDAO;
 
     private IUserDAO userDAO;
+
+    private LocalDateTime lastNotificationTime = null;
 
     private VBox contentArea; // Area to load content
 
@@ -125,23 +132,57 @@ public class MyHubController extends Application {
         stage.setTitle("Combined Charts with Navigation Bar");
         stage.setScene(scene);
         stage.show();
-        scheduler.scheduleAtFixedRate(this::checkScreenTimeAndNotify, 0, 1, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::checkScreenTimeAndNotify, 0, 10, TimeUnit.SECONDS);
     }
 
     private void checkScreenTimeAndNotify() {
+        System.out.println("Running screen time check...");
         try {
             if (userDAO.getUserNotificationEnabled(currentUser.getId())) {
                 long usedTime = screenTimeEntryDAO.getTotalScreenTimeToday(currentUser.getId());
                 int limit = userDAO.getScreenTimeLimit(currentUser.getId());
-                if (usedTime > limit * 60 * 1000) { // Assuming limit is in minutes, and usedTime is in milliseconds
-                    System.out.println(userDAO.getCustomNotificationMessage(currentUser.getId())); // Simulate displaying the notification
-                    // Actual notification display code would go here
+                int userNotificationRate = userDAO.getCustomNotificationTime(currentUser.getId());
 
+                System.out.println("Used time: " + usedTime + ", Limit: " + limit + ", Notification rate: " + userNotificationRate);
+
+                // Check if the current screen time exceeds the limit
+                if (usedTime > limit) { // Limit is in minutes and usedTime is in seconds
+                    System.out.println("User has exceeded the screen time limit.");
+
+                    // Check if enough time has elapsed since the last notification
+                    //https://www.baeldung.com/java-8-date-time-intro
+                    if (lastNotificationTime == null || ChronoUnit.MINUTES.between(lastNotificationTime, LocalDateTime.now()) >= userNotificationRate) {
+                        String message = userDAO.getCustomNotificationMessage(currentUser.getId());
+                        showNotification(message);
+                        lastNotificationTime = LocalDateTime.now(); // Update the last notification time
+                        System.out.println("Notification shown: " + message);
+                    } else {
+                        System.out.println("Notification not shown yet, waiting for the interval to pass.");
+                    }
+                } else {
+                    System.out.println("Screen time is within limits.");
                 }
+            } else {
+                System.out.println("Notifications are disabled.");
             }
         } catch (SQLException e) {
+            System.err.println("SQL error during screen time check: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void showNotification(String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Notification");
+            alert.setHeaderText(null); // No header text
+            alert.setContentText(message);
+
+            ButtonType understoodButton = new ButtonType("Understood");
+            alert.getButtonTypes().setAll(understoodButton);
+
+            alert.showAndWait(); // This will show the dialog and wait for the user to close it
+        });
     }
 
     @Override

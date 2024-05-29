@@ -223,12 +223,12 @@ public class SqliteUserDAO implements IUserDAO {
     }
 
     public int getScreenTimeLimit(int userId) throws SQLException {
-        String query = "SELECT screen_time_limit FROM users WHERE id = ?";
+        String query = "SELECT screen_time_limit_minutes FROM users WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt("screen_time_limit");
+                return rs.getInt("screen_time_limit_minutes");
             }
         }
         return 0;
@@ -244,6 +244,18 @@ public class SqliteUserDAO implements IUserDAO {
             }
         }
         return null;
+    }
+
+    public int getCustomNotificationTime(int userId) throws SQLException {
+        String query = "SELECT custom_notification_time_minutes FROM users WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("custom_notification_time_minutes");
+            }
+        }
+        return 0;
     }
 }
 

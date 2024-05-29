@@ -93,6 +93,14 @@ public interface IUserDAO {
      */
     String getCustomNotificationMessage(int userId) throws SQLException;
 
+    /**
+     * Get the custom notification time by user id
+     * @param userId The id of the user
+     * @return The custom notification time
+     * @throws SQLException If an SQL exception occurs
+     */
+    int getCustomNotificationTime(int userId) throws SQLException;
+
 
 
 }
