@@ -1,6 +1,7 @@
 package com.example.addressbook.GUI;
 
 import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.IUserDAO;
 import com.example.addressbook.SQL.User;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -30,11 +31,11 @@ public class MyNotifications extends Application {
     @FXML private TextField screenTimeLimitMinutes;
     private User currentUser;
 
-    private IScreenTimeEntryDAO screenTimeEntryDAO;
+    private IUserDAO userDAO;
 
-    public MyNotifications(User user, IScreenTimeEntryDAO screenDAO) {
+    public MyNotifications(User user, IUserDAO userDAO) {
         this.currentUser = user;
-        this.screenTimeEntryDAO = screenDAO;
+        this.userDAO = userDAO;
     }
 
     /**
@@ -70,15 +71,15 @@ public class MyNotifications extends Application {
             String message = notificationMessage.getText();
             int frequency = (int) notificationFrequency.getValue();
             int hours = Integer.parseInt(screenTimeLimitHours.getText().isEmpty() ? "0" : screenTimeLimitHours.getText());
-            int minutes = Integer.parseInt(screenTimeLimitMinutes.getText().isEmpty() ? "0" : screenTimeLimitMinutes.getText());
+            int minutes = Integer.parseInt(screenTimeLimitMinutes.getText().isEmpty() ? "60" : screenTimeLimitMinutes.getText());
             int totalMinutes = hours * 60 + minutes;
 
-            screenTimeEntryDAO.enableOrDisableCustomNotification(currentUser.getId(), isEnabled);
+            userDAO.enableOrDisableCustomNotification(currentUser.getId(), isEnabled);
             if (isEnabled) {
-                screenTimeEntryDAO.setCustomNotification(currentUser.getId(), message);
-                screenTimeEntryDAO.setCustomNotificationTime(currentUser.getId(), frequency);
+                userDAO.setCustomNotification(currentUser.getId(), message);
+                userDAO.setCustomNotificationTime(currentUser.getId(), frequency);
             }
-            screenTimeEntryDAO.setScreenTimeLimit(currentUser.getId(), totalMinutes);
+            userDAO.setScreenTimeLimit(currentUser.getId(), totalMinutes);
 
             // Additional logic to handle notifications
         } catch (SQLException e) {

@@ -3,6 +3,7 @@ package com.example.addressbook.GUI;
 
 import com.example.addressbook.SQL.ActiveWindowTracker;
 import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.IUserDAO;
 import com.example.addressbook.SQL.User;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
@@ -30,6 +31,8 @@ public class MyHubController extends Application {
     private User currentUser;
     private IScreenTimeEntryDAO screenTimeEntryDAO;
 
+    private IUserDAO userDAO;
+
     private VBox contentArea; // Area to load content
 
     private Parent root; // Root layout of the scene
@@ -40,10 +43,11 @@ public class MyHubController extends Application {
      * @param screenDAO The screen time entry DAO
      * @param tracker The active window tracker
      */
-    public MyHubController(User user, IScreenTimeEntryDAO screenDAO, ActiveWindowTracker tracker){
+    public MyHubController(User user, IScreenTimeEntryDAO screenDAO, ActiveWindowTracker tracker, IUserDAO userDAO){
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
         this.windowTracker = tracker;
+        this.userDAO = userDAO;
     }
     /**
      * This function is used to start the MyHub controller
@@ -61,7 +65,7 @@ public class MyHubController extends Application {
      * @throws SQLException If an exception occurs
      */
     private void initUI(Stage stage) throws SQLException {
-        Navigation navigationBar = new Navigation(currentUser, screenTimeEntryDAO);
+        Navigation navigationBar = new Navigation(currentUser, screenTimeEntryDAO, userDAO);
 
         contentArea = new VBox();
         contentArea.setPrefSize(1200, 700);

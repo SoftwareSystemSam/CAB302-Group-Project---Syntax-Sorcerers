@@ -93,6 +93,15 @@ public class MyAccount extends Application {
     }
 
     /**
+     * This function is used to initialize the user service
+     */
+    private void initializeUserService() {
+        Connection userConnection = SqliteConnection.getUserDbInstance();
+        IUserDAO userDAO = new SqliteUserDAO(userConnection);
+        this.userService = new UserService(userDAO, userConnection);
+    }
+
+    /**
      * Defines action for the confirm button.
      */
     @FXML
@@ -130,7 +139,7 @@ public class MyAccount extends Application {
                 showAlert("Success", "An email has been sent, confirming your password change");
                 //  Go to my hub
                 Stage stage = (Stage) confirmButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO, tracker);
+                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO, tracker, UserService.getUserDAO());
                 graphsWindow.start(stage);
             } else {
                 showLoginFailedAlert();
@@ -141,14 +150,7 @@ public class MyAccount extends Application {
         }
     }
 
-    /**
-     * This function is used to initialize the user service
-     */
-    private void initializeUserService() {
-        Connection userConnection = SqliteConnection.getUserDbInstance();
-        IUserDAO userDAO = new SqliteUserDAO(userConnection);
-        this.userService = new UserService(userDAO, userConnection);
-    }
+
 
     /**
      * This function is used to handle the reset button click

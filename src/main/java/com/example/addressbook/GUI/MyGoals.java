@@ -90,6 +90,7 @@ public class MyGoals extends Application {
      * Saves the entered goal to the database and adds it to the list view.
      * @param event The action event.
      */
+    @FXML
     private void saveGoal(ActionEvent event)  {
         System.out.println("Save goal button clicked");
         String goal = goalInput.getText();
@@ -109,6 +110,7 @@ public class MyGoals extends Application {
      * Deletes the selected goal from the database and removes it from the list view.
      * @param event The action event.
      */
+    @FXML
     private void deleteGoal(ActionEvent event)  {
         System.out.println("Delete goal button clicked");
         String goal = goalsListView.getSelectionModel().getSelectedItem();

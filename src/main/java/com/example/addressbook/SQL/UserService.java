@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class UserService {
 
-    private IUserDAO userDAO;
+    private static IUserDAO userDAO;
     private Connection connection;
 
     /**
@@ -41,6 +41,12 @@ public class UserService {
             return true;
         }
     }
+    /**
+     *This function is used to get the user data access object
+     */
+    public static IUserDAO getUserDAO() {
+        return userDAO;
+    }
 
     /**
      * This function is used to login a user
@@ -63,6 +69,8 @@ public class UserService {
             return null;
         }
     }
+
+
 
     /**
      * This function is used to reset the password of a user

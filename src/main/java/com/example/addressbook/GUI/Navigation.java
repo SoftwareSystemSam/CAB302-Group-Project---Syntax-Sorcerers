@@ -1,5 +1,6 @@
 package com.example.addressbook.GUI;
 import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.IUserDAO;
 import com.example.addressbook.SQL.User;
 import javafx.scene.control.*;
 
@@ -18,15 +19,18 @@ public class Navigation extends HBox {
     private User currentUser;
     private IScreenTimeEntryDAO screenTimeEntryDAO;
 
+    private IUserDAO userDAO;
+
     /**
      * Constructor for Navigation class.
      * Initializes the navigation bar with the current user and screen time entries DAO.
      * @param user The current user.
      * @param screenDAO The DAO for screen time entries.
      */
-    public Navigation(User user, IScreenTimeEntryDAO screenDAO) {
+    public Navigation(User user, IScreenTimeEntryDAO screenDAO, IUserDAO userDAO) {
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
+        this.userDAO = userDAO;
         setupNavigationBar();
 
     }
@@ -73,7 +77,7 @@ public class Navigation extends HBox {
         myNotificationsB.setOnAction(event -> {
             // Handle My Notifications button click
             // You can switch to My Notifications view here
-            MyNotifications myNotificationsScene = new MyNotifications(currentUser,screenTimeEntryDAO);
+            MyNotifications myNotificationsScene = new MyNotifications(currentUser,userDAO);
             try {
                 myNotificationsScene.start(new Stage());
             } catch (Exception e) {

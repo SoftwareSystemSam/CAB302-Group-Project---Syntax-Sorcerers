@@ -105,7 +105,7 @@ public class ResetPass{
 
                 //  Go to my hub
                 Stage stage = (Stage) resetButton.getScene().getWindow();
-                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO, tracker);
+                MyHubController graphsWindow = new MyHubController(authenticatedUser, screenDAO, tracker, UserService.getUserDAO());
                 graphsWindow.start(stage);
             } else {
                 showLoginFailedAlert();

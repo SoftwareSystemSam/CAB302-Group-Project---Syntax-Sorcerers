@@ -146,6 +146,69 @@ public class SqliteUserDAO implements IUserDAO {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Set the custom notification by user id
+     *
+     * @param userId The id of the user
+     * @param notification The custom notification
+     * @throws SQLException If an SQL exception occurs
+     */
+
+    public void setCustomNotification(int userId, String notification) throws SQLException {
+        String updateQuery = "UPDATE users SET custom_notification_message = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+            pstmt.setString(1, notification);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        }
+    }
+    /**
+     * Get the total screen time by user id
+     *
+     * @param userId The id of the user
+     * @return The total screen time
+     * @throws SQLException If an SQL exception occurs
+     */
+    public void enableOrDisableCustomNotification(int userId, boolean enabled) throws SQLException {
+        String updateQuery = "UPDATE users SET custom_notification_enabled = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+            pstmt.setBoolean(1, enabled);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    /**
+     * Get the custom notification by user id
+     *
+     * @param userId The id of the user
+     * @return The custom notification
+     * @throws SQLException If an SQL exception occurs
+     */
+    public void setCustomNotificationTime(int userId, int minutes) throws SQLException {
+        String updateQuery = "UPDATE users SET custom_notification_time_minutes = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+            pstmt.setInt(1, minutes);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        }
+    }
+    /**
+     * Get the screen time limit by user id
+     *
+     * @param userId The id of the user
+     * @return The screen time limit
+     * @throws SQLException If an SQL exception occurs
+     */
+    public void setScreenTimeLimit(int userId, int minutes) throws SQLException {
+        String updateQuery = "UPDATE users SET screen_time_limit_minutes = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+            pstmt.setInt(1, minutes);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        }
+    }
 }
 
     // The below code shouldn't be needed because the User data will be yoinked via the getUserByEmail, then you can compare user.password to inputPassword

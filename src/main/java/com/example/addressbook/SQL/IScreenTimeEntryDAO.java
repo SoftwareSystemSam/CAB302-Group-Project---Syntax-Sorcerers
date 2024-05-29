@@ -111,36 +111,7 @@ public interface IScreenTimeEntryDAO{
      * @throws SQLException If an SQL exception occurs
      */
     Boolean hasUserSpentMoreThanXMinutesOnComputer(int userId, int hours) throws SQLException;
-/**
-     * Get the total screen time by user id to see if they have spent more than x hours on the computer
-     * @param userId The id of the user
-     * @return The total screen time
-     * @throws SQLException If an SQL exception occurs
-     */
-    void setCustomNotification(int userId, String notification) throws SQLException;
-    /**
-     * Get the custom notification by user id
-     * @param userId The id of the user
-     * @return The custom notification
-     * @throws SQLException If an SQL exception occurs
-     */
-    void enableOrDisableCustomNotification(int userId, boolean enabled) throws SQLException;
 
-    /**
-     * Get the custom notification time by user id
-     * @param userId The id of the user
-     * @return The custom notification time
-     * @throws SQLException If an SQL exception occurs
-     */
-    void setCustomNotificationTime(int userId, int minutes) throws SQLException;
-
-    /**
-     * Get the screen time limit by user id
-     * @param userId The id of the user
-     * @return The screen time limit
-     * @throws SQLException If an SQL exception occurs
-     */
-    void setScreenTimeLimit(int userId, int minutes) throws SQLException;
 
 
     // TODO add aditional methods like getScreenTimeEntries for graphs etc
