@@ -147,6 +147,18 @@ public class SqliteUserDAO implements IUserDAO {
         }
     }
 
+    public Boolean getUserNotificationEnabled(int userId) throws SQLException {
+        String query = "SELECT custom_notification_enabled FROM users WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getBoolean("custom_notification_enabled");
+            }
+        }
+        return false;
+    }
+
     /**
      * Set the custom notification by user id
      *
@@ -208,6 +220,30 @@ public class SqliteUserDAO implements IUserDAO {
             pstmt.setInt(2, userId);
             pstmt.executeUpdate();
         }
+    }
+
+    public int getScreenTimeLimit(int userId) throws SQLException {
+        String query = "SELECT screen_time_limit FROM users WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("screen_time_limit");
+            }
+        }
+        return 0;
+    }
+
+    public String getCustomNotificationMessage(int userId) throws SQLException {
+        String query = "SELECT custom_notification_message FROM users WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("custom_notification_message");
+            }
+        }
+        return null;
     }
 }
 

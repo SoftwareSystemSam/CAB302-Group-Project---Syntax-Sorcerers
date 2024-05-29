@@ -69,4 +69,30 @@ public interface IUserDAO {
     // Shouldn't be needed but leaving here just in case
     //User validateUser(String email, String password);
 
+    /**
+     * Get the custom notification by user id
+     * @param userId The id of the user
+     * @return The custom notification
+     * @throws SQLException If an SQL exception occurs
+     */
+    Boolean getUserNotificationEnabled(int userId) throws SQLException;
+
+    /**
+     * Get the custom notification time by user id
+     * @param userId The id of the user
+     * @return The custom notification time
+     * @throws SQLException If an SQL exception occurs
+     */
+    int getScreenTimeLimit(int userId) throws SQLException;
+
+    /**
+     * Get the custom notification time by user id
+     * @param userId The id of the user
+     * @return The custom notification time
+     * @throws SQLException If an SQL exception occurs
+     */
+    String getCustomNotificationMessage(int userId) throws SQLException;
+
+
+
 }

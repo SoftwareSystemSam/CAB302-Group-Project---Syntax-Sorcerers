@@ -345,6 +345,12 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
     }
 
+    /**
+     * Get the total screen time by user id to see if they have spent more than x minutes on the computer
+     * @param userId The id of the user
+     * @return The total screen time
+     * @throws SQLException If an SQL exception occurs
+     */
     public Boolean hasUserSpentMoreThanXMinutesOnComputer(int userId, int hours) throws SQLException {
         String query = "SELECT SUM(duration) as total_duration FROM screen_time_entries WHERE user_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -357,6 +363,25 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
         return false;
     }
+
+    /**
+     * Get the total screen time by user id
+     * @param userId The id of the user
+     * @return The total screen time
+     * @throws SQLException If an SQL exception occurs
+     */
+    public long getTotalScreenTimeToday(int userId) throws SQLException {
+        String query = "SELECT SUM(duration) as total_duration FROM screen_time_entries WHERE user_id = ? AND date(start_time) = date('now')";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getLong("total_duration");
+            }
+        }
+        return 0;
+    }
+
 
 
 }

@@ -20,6 +20,9 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Handles the password field action.
@@ -37,6 +40,9 @@ public class MyHubController extends Application {
 
     private Parent root; // Root layout of the scene
 
+    // https://docs.oracle.com/javase/8/javafx/api/javafx/concurrent/ScheduledService.html
+    private ScheduledExecutorService scheduler;
+
     /**
      * This function is used to create a new MyHub controller
      * @param user The user
@@ -48,6 +54,7 @@ public class MyHubController extends Application {
         this.screenTimeEntryDAO = screenDAO;
         this.windowTracker = tracker;
         this.userDAO = userDAO;
+        this.scheduler = Executors.newSingleThreadScheduledExecutor();
     }
     /**
      * This function is used to start the MyHub controller
@@ -118,6 +125,29 @@ public class MyHubController extends Application {
         stage.setTitle("Combined Charts with Navigation Bar");
         stage.setScene(scene);
         stage.show();
+        scheduler.scheduleAtFixedRate(this::checkScreenTimeAndNotify, 0, 1, TimeUnit.MINUTES);
+    }
+
+    private void checkScreenTimeAndNotify() {
+        try {
+            if (userDAO.getUserNotificationEnabled(currentUser.getId())) {
+                long usedTime = screenTimeEntryDAO.getTotalScreenTimeToday(currentUser.getId());
+                int limit = userDAO.getScreenTimeLimit(currentUser.getId());
+                if (usedTime > limit * 60 * 1000) { // Assuming limit is in minutes, and usedTime is in milliseconds
+                    System.out.println(userDAO.getCustomNotificationMessage(currentUser.getId())); // Simulate displaying the notification
+                    // Actual notification display code would go here
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        scheduler.shutdownNow(); // Properly shutdown the scheduler when the application stops
     }
     /**
      * The main entry point for all JavaFX applications.
