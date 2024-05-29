@@ -33,6 +33,7 @@ public class SqliteUserDAO implements IUserDAO {
                     + "email VARCHAR NOT NULL UNIQUE,"
                     + "password VARCHAR NOT NULL,"
                     + "custom_notification_enabled BOOLEAN default false,"
+                    + "screen_time_limit_minutes INTEGER default 60,"
                     + "custom_notification_time_minutes INTEGER default 60,"
                     + "custom_notification_message VARCHAR default 'You have been using your computer for a long time'"
                     + ")";

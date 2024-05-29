@@ -345,14 +345,14 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
         }
     }
 
-    public Boolean hasUserSpentMoreThanXHoursOnComputer(int userId, int hours) throws SQLException {
+    public Boolean hasUserSpentMoreThanXMinutesOnComputer(int userId, int hours) throws SQLException {
         String query = "SELECT SUM(duration) as total_duration FROM screen_time_entries WHERE user_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 long totalDuration = rs.getLong("total_duration");
-                return totalDuration >= hours * 3600; // Convert hours to seconds
+                return totalDuration >= hours * 60 * 1000; // Convert hours to minutes
             }
         }
         return false;
@@ -398,6 +398,21 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
      */
     public void setCustomNotificationTime(int userId, int minutes) throws SQLException {
         String updateQuery = "UPDATE users SET custom_notification_time_minutes = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
+            pstmt.setInt(1, minutes);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        }
+    }
+    /**
+     * Get the screen time limit by user id
+     *
+     * @param userId The id of the user
+     * @return The screen time limit
+     * @throws SQLException If an SQL exception occurs
+     */
+    public void setScreenTimeLimit(int userId, int minutes) throws SQLException {
+        String updateQuery = "UPDATE users SET screen_time_limit_minutes = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
             pstmt.setInt(1, minutes);
             pstmt.setInt(2, userId);
