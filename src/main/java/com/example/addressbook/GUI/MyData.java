@@ -29,11 +29,14 @@ public class MyData extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/addressbook/MyData.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/addressbook/MyData.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
         primaryStage.setTitle("MyData");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
+
     /**
      * Shows the privacy policy in an alert dialog.
      */

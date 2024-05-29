@@ -30,11 +30,14 @@ public class MyNotifications extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/addressbook/MyNotifications.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/addressbook/MyNotifications.fxml"));
+        loader.setController(this);
+        Parent root = loader.load();
         primaryStage.setTitle("MyNotifications");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
+
     /**
      * Handles the submit action.
      */

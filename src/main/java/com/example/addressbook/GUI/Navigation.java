@@ -46,7 +46,7 @@ public class Navigation extends HBox {
         Button myStatsB = new Button("My Stats");
         Button myHealthB = new Button("My Health");
         Button myDataB = new Button("My Data");
-        Button myNotificationsB = new Button("My NotificationsB");
+        Button myNotificationsB = new Button("My Notifications");
 
         // Add buttons to the navigation bar
         this.getChildren().addAll(myGoalsB, myStatsB, myHealthB, myNotificationsB, myDataB);
