@@ -73,7 +73,7 @@ public class Navigation extends HBox {
         myNotificationsB.setOnAction(event -> {
             // Handle My Notifications button click
             // You can switch to My Notifications view here
-            MyNotifications myNotificationsScene = new MyNotifications();
+            MyNotifications myNotificationsScene = new MyNotifications(currentUser,screenTimeEntryDAO);
             try {
                 myNotificationsScene.start(new Stage());
             } catch (Exception e) {
@@ -110,7 +110,7 @@ public class Navigation extends HBox {
         myDataB.setOnAction(event -> {
             // Handle My Data button click
             // You can switch to My Data view here
-            MyData MyDataScene = new MyData();
+            MyData MyDataScene = new MyData(currentUser,screenTimeEntryDAO);
             try {
                 MyDataScene.start(new Stage());
             } catch (Exception e) {

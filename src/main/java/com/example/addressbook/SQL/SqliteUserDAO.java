@@ -8,6 +8,8 @@ import java.sql.*;
 public class SqliteUserDAO implements IUserDAO {
     private Connection connection;
 
+
+
     /**
      * Constructor for the SqliteUserDAO
      * @param connection The connection to the database
@@ -31,7 +33,6 @@ public class SqliteUserDAO implements IUserDAO {
                     + "email VARCHAR NOT NULL UNIQUE,"
                     + "password VARCHAR NOT NULL,"
                     + "custom_notification_enabled BOOLEAN default false,"
-                    + "data_storage_time_limit_days INTEGER default 60,"
                     + "custom_notification_time_minutes INTEGER default 60,"
                     + "custom_notification_message VARCHAR default 'You have been using your computer for a long time'"
                     + ")";

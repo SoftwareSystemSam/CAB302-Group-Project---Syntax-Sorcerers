@@ -1,5 +1,7 @@
 package com.example.addressbook.GUI;
 
+import com.example.addressbook.SQL.IScreenTimeEntryDAO;
+import com.example.addressbook.SQL.User;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -23,6 +25,16 @@ public class MyNotifications extends Application {
     private CheckBox Goal4;
     @FXML
     private CheckBox Goal5;
+
+    private User currentUser;
+
+    private IScreenTimeEntryDAO screenTimeEntryDAO;
+
+    public MyNotifications(User user, IScreenTimeEntryDAO screenDAO) {
+        this.currentUser = user;
+        this.screenTimeEntryDAO = screenDAO;
+    }
+
     /**
      * Starts the MyNotifications stage.
      * @param primaryStage The primary stage.

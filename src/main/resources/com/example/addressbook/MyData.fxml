@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?xml version="1.0" encoding="UTF-8"?>
-
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.addressbook.GUI.MyData"
-      alignment="CENTER" spacing="20" padding="20">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER" spacing="20" style="-fx-padding: 20;">
 
     <!-- VBox for storing user data -->
     <VBox alignment="CENTER" spacing="10">
-        <Button text="User Data 1"/>
-        <Button text="User Data 2"/>
-        <Button text="User Data 3"/>
         <!-- Add more user data elements as needed -->
     </VBox>
+
+    <Label text="Select Days for Data Deletion" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+    <ComboBox fx:id="timeFrameComboBox" promptText="Select days for data deletion"/>
+    <Button text="Confirm Deletion" onAction="#handleConfirmDeletion"/>
 
     <!-- Buttons for Delete All Data and Privacy Policy -->
     <VBox alignment="CENTER" spacing="10" style="-fx-padding: 40 0 0 0;">
