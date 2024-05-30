@@ -55,6 +55,7 @@ public class MyHubController extends Application {
      * @param user The user
      * @param screenDAO The screen time entry DAO
      * @param tracker The active window tracker
+     * @param userDAO The user DAO
      */
     public MyHubController(User user, IScreenTimeEntryDAO screenDAO, ActiveWindowTracker tracker, IUserDAO userDAO){
         this.currentUser = user;

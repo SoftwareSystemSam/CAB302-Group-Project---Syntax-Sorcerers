@@ -30,9 +30,17 @@ public class LogIn{
     private TextField passwordField;
      private UserService userService;
 
-
+    /**
+     * The title of the application window.
+     */
     public static final String TITLE = "Screen Tracker";
+    /**
+     * The width of the application window.
+     */
     public static final int WIDTH = 640;
+    /**
+     * The height of the application window.
+     */
     public static final int HEIGHT = 360;
 
     /**
@@ -180,6 +188,10 @@ public class LogIn{
 //        }
 //    }
 
+    /**
+     * Handles the email text field action.
+     * @throws IOException If an input or output exception occurred.
+     */
 
     @FXML
     protected void GetEmailAction() throws IOException {

@@ -18,19 +18,43 @@ import java.sql.SQLException;
  */
 public class MyAccount extends Application {
 
+    /**
+     * The title of the application window.
+     */
     public static final String TITLE = "Screen Tracker";
+    /**
+     * The width of the application window.
+     */
     public static final int WIDTH = 640;
+    /**
+     * The height of the application window.
+     */
     public static final int HEIGHT = 360;
+    /**
+     * The user service.
+     */
     private UserService userService;
 
+    /**
+     * The email text field.
+     */
     @FXML
     private TextField emailTextField;
+    /**
+     * The password text field.
+     */
 
     @FXML
     private PasswordField passwordTextField;
+    /**
+     * The confirm button.
+     */
 
     @FXML
     private Button confirmButton;
+    /**
+     * The back button.
+     */
     @FXML
     private Button backButton;
 

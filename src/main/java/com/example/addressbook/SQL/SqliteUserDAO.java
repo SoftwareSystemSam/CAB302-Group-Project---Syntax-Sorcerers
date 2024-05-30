@@ -133,6 +133,7 @@ public class SqliteUserDAO implements IUserDAO {
     /**
      * Update a user in the database
      * @param user The user to be updated
+     * @param newPassword The new password
      * */
     @Override
     public void updateUser(User user, String newPassword) {
@@ -147,6 +148,12 @@ public class SqliteUserDAO implements IUserDAO {
         }
     }
 
+    /**
+     * Get the boolean of if notification is enabled by user id
+     * @param userId The id of the user
+     * @return If the custom notification is enabled
+     * @throws SQLException If an SQL exception occurs
+     */
     public Boolean getUserNotificationEnabled(int userId) throws SQLException {
         String query = "SELECT custom_notification_enabled FROM users WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -175,11 +182,11 @@ public class SqliteUserDAO implements IUserDAO {
             pstmt.executeUpdate();
         }
     }
+
     /**
-     * Get the total screen time by user id
-     *
+     * Enable or disable custom notification
      * @param userId The id of the user
-     * @return The total screen time
+     * @param enabled The custom notification
      * @throws SQLException If an SQL exception occurs
      */
     public void enableOrDisableCustomNotification(int userId, boolean enabled) throws SQLException {
@@ -192,10 +199,9 @@ public class SqliteUserDAO implements IUserDAO {
     }
 
     /**
-     * Get the custom notification by user id
-     *
+     * Set the custom notification time by user id
      * @param userId The id of the user
-     * @return The custom notification
+     * @param minutes The custom notification time
      * @throws SQLException If an SQL exception occurs
      */
     public void setCustomNotificationTime(int userId, int minutes) throws SQLException {
@@ -206,11 +212,11 @@ public class SqliteUserDAO implements IUserDAO {
             pstmt.executeUpdate();
         }
     }
+
     /**
-     * Get the screen time limit by user id
-     *
+     * Set the screen time limit by user id
      * @param userId The id of the user
-     * @return The screen time limit
+     * @param minutes The screen time limit
      * @throws SQLException If an SQL exception occurs
      */
     public void setScreenTimeLimit(int userId, int minutes) throws SQLException {

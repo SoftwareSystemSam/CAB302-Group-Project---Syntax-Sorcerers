@@ -18,7 +18,8 @@ public interface IScreenTimeEntryDAO{
     void addScreenTimeEntry(ScreenTimeEntry entry) throws SQLException;
     /**
      * Get all screen time entries
-     * @return A list of all screen time entries
+     * @param userId The id of the user
+     * @return A list of screen time entries
      * @throws SQLException If an SQL exception occurs
      */
     List<ScreenTimeEntry> getScreenTimeEntriesByUserId(int userId) throws SQLException;
@@ -29,8 +30,14 @@ public interface IScreenTimeEntryDAO{
      * @return A list of screen time entries
      * @throws SQLException If an SQL exception occurs
      */
-
     List<ScreenTimeEntry> getScreenTimeEntriesByUserIdAndDate(int userId, LocalDate date) throws SQLException;
+
+    /**
+     * Get the most used application for each day of the week
+     * @param userId The id of the user
+     * @return A map of the day of the week and the most used application
+     * @throws SQLException If an SQL exception occurs
+     */
     Map<String, ScreenTimeEntry> getMostUsedAppForEachDayOfWeek(int userId) throws SQLException;
     /**
      * Add or update a screen time entry
@@ -66,9 +73,9 @@ public interface IScreenTimeEntryDAO{
 
     /**
      * Add goal to the database by user id and goal
-     * @param userId
-     * @param goal
-     * @throws SQLException
+     * @param userId The id of the user
+     * @param goal The goal to be added
+     * @throws SQLException If an SQL exception occurs
      */
     void addGoal(int userId, String goal) throws SQLException;
 
@@ -107,6 +114,7 @@ public interface IScreenTimeEntryDAO{
     /**
      * Get the total screen time by user id to see if they have spent more than x minutes on the computer
      * @param userId The id of the user
+     * @param hours The number of hours
      * @return The total screen time
      * @throws SQLException If an SQL exception occurs
      */

@@ -15,6 +15,11 @@ public class ScreenTimeEntry{
     private Long duration;
     private LocalDateTime startTime;
 
+    /**
+     * Constructor for the ScreenTimeEntry
+     * @param applicationName The application name
+     * @param duration The duration
+     */
     public ScreenTimeEntry(String applicationName, long duration) {
     }
 
@@ -78,14 +83,26 @@ public class ScreenTimeEntry{
         this.user = user;
     }
 
+    /**
+     * Set the application name of the screen time entry
+     * @param applicationName The application name of the screen time entry
+     */
     public void setApplicationName(String applicationName){
         this.applicationName = applicationName;
     }
 
+    /**
+     * Set the duration of the screen time entry
+     * @param duration The duration of the screen time entry
+     */
     public void setDuration(long duration){
         this.duration = duration;
     }
 
+    /**
+     * Set the start time of the screen time entry
+     * @param startTime The start time of the screen time entry
+     */
     public void setStartTime(LocalDateTime startTime){
         this.startTime = startTime;
     }

@@ -43,6 +43,7 @@ public class UserService {
     }
     /**
      *This function is used to get the user data access object
+     * @return The user data access object
      */
     public static IUserDAO getUserDAO() {
         return userDAO;
@@ -53,6 +54,7 @@ public class UserService {
      * @param email The email of the user
      * @param password The password of the user
      * @return The user object if the login is successful, null otherwise
+     * @throws SQLException If an SQL exception occurs
     * */
     public User loginUser(String email, String password) throws SQLException {
         User user = userDAO.getUserByEmail(email);
@@ -74,10 +76,10 @@ public class UserService {
 
     /**
      * This function is used to reset the password of a user
-     * @param email
-     * @param newPassword
+     * @param email The email of the user
+     * @param newPassword The new password
      * @return The user object if the password reset is successful, null otherwise
-     * @throws SQLException
+     * @throws SQLException If an SQL exception occurs
      */
     public User resetUserPassword(String email, String newPassword) throws SQLException {
         // Search for the user by email
@@ -100,12 +102,23 @@ public class UserService {
     }
 
     // This function may not be needed. Leaving here just in case
+
+    /**
+     * This function is used to find a user by their id
+     * @param id The id of the user
+     * @return The user object if the user is found, null otherwise
+     */
     public User findUserById(int id){
         return userDAO.getUser(id);
     }
 
 
     // This will be needed later if a user wants to delete themselves from the database.
+
+    /**
+     * This function is used to delete a user
+     * @param id The id of the user
+     */
     public void deleteUser(int id){
         User user = userDAO.getUser(id);
         if(user!= null){

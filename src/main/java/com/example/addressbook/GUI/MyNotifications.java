@@ -21,17 +21,49 @@ import javafx.scene.Parent;
  */
 public class MyNotifications extends Application {
 
+    /**
+     * The title of the application window.
+     */
     @FXML private CheckBox enableNotifications;
+    /**
+     * The notification message text field.
+     */
     @FXML private TextField notificationMessage;
+    /**
+     * The notification frequency slider.
+     */
     @FXML private Slider notificationFrequency;
+    /**
+     * The save settings button.
+     */
     @FXML private Button saveSettingsButton;
+    /**
+     * The frequency value label.
+     */
     @FXML private Label frequencyValue;
+    /**
+     * The screen time limit hours text field.
+     */
 
     @FXML private TextField screenTimeLimitHours;
+    /**
+     * The screen time limit minutes text field.
+     */
     @FXML private TextField screenTimeLimitMinutes;
+    /**
+     * The current user.
+     */
     private User currentUser;
+    /**
+     * The user DAO.
+     */
 
     private IUserDAO userDAO;
+    /**
+     * Initializes the MyNotifications class.
+     * @param user The user
+     * @param userDAO The user DAO
+     */
 
     public MyNotifications(User user, IUserDAO userDAO) {
         this.currentUser = user;

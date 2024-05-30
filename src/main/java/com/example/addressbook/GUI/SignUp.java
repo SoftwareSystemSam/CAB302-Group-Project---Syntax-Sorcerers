@@ -31,8 +31,17 @@ public class SignUp {
 
     private UserService userService;
 
+    /**
+     * The title of the application window.
+     */
     public static final String TITLE = "Screen Tracker";
+    /**
+     * The width of the application window.
+     */
     public static final int WIDTH = 640;
+    /**
+     * The height of the application window.
+     */
     public static final int HEIGHT = 360;
 
     /**

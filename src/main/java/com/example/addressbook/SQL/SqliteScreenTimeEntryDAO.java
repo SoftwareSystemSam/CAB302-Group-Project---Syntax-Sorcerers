@@ -269,9 +269,9 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
     /**
      * Add goal to the database by user id and goal
      *
-     * @param userId
-     * @param goal
-     * @throws SQLException
+     * @param userId The id of the user
+     * @param goal  The goal to be added
+     * @throws SQLException If an SQL exception occurs
      */
     public void addGoal(int userId, String goal) throws SQLException {
         String insertQuery = "INSERT INTO goals (user_id, goal) VALUES (?, ?)";
@@ -287,7 +287,7 @@ public class SqliteScreenTimeEntryDAO implements IScreenTimeEntryDAO {
      *
      * @param userId The id of the user
      * @param goal   The goal to be deleted
-     * @throws SQLException
+     * @throws SQLException If an SQL exception occurs
      */
     public void deleteGoal(int userId, String goal) throws SQLException {
         String deleteQuery = "DELETE FROM goals WHERE user_id = ? AND goal = ?";

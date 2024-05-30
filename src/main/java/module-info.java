@@ -1,3 +1,6 @@
+/**
+ * This module-info.java file is used to define the module and its dependencies.
+ */
 module com.example.addressbook {
     requires javafx.controls;
     requires javafx.fxml;

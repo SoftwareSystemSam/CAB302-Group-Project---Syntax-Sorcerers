@@ -15,19 +15,41 @@ import java.sql.SQLException;
  * This class is used to handle the reset password controller
  */
 public class ResetPass{
+    /**
+     * The reset button
+     */
     @FXML
     private Button resetButton;
+    /**
+     * The back button
+     */
     @FXML
     private Button backButton;
+    /**
+     * The email text field
+     */
     @FXML
     private TextField emailTextField;
+    /**
+     * The password text field
+     */
     @FXML
     private TextField passwordField;
-
+    /**
+     * The user service
+     */
     private UserService userService;
-
+    /**
+     * The title of the application window.
+     */
     public static final String TITLE = "Screen Tracker";
+    /**
+     * The width of the application window.
+     */
     public static final int WIDTH = 640;
+    /**
+     * The height of the application window.
+     */
     public static final int HEIGHT = 360;
 
     /**

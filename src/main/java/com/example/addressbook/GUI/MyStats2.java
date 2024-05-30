@@ -21,26 +21,58 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * MyStats2 class handles the user statistics settings.
+ */
 public class MyStats2 extends Application {
+    /**
+     * The current user.
+     */
     private User currentUser;
+    /**
+     * The screen time entry DAO.
+     */
     private IScreenTimeEntryDAO screenTimeEntryDAO;
+    /**
+     * Constructs a new MyStats2 object.
+     * @param user The current user
+     * @param screenDAO The screen time entry DAO
+     */
     public MyStats2(User user, IScreenTimeEntryDAO screenDAO) {
         this.currentUser = user;
         this.screenTimeEntryDAO = screenDAO;
     }
 
+    /**
+     * The bar chart.
+     */
     @FXML
     private BarChart<String, Number> barChart;
+    /**
+     * The x-axis.
+     */
     @FXML
     private CategoryAxis xAxis;
+    /**
+     * The y-axis.
+     */
     @FXML
     private NumberAxis yAxis;
+    /**
+     * The top apps label.
+     */
     @FXML
     private Label topAppsLabel;
+    /**
+     * The most used apps list.
+     */
 
     private List<String> mostUsedApps = new ArrayList<>();
 
+    /**
+     * Starts the MyStats2 application.
+     * @param primaryStage The primary stage
+     */
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -56,6 +88,9 @@ public class MyStats2 extends Application {
         }
     }
 
+    /**
+     * Initializes the MyStats2 class.
+     */
     @FXML
     public void initialize() {
         barChart.setTitle("Most Used Applications");
@@ -64,7 +99,10 @@ public class MyStats2 extends Application {
         loadChartData();
         loadTopApps();
     }
-
+    /**
+     * Loads the chart data.
+     * @throws SQLException If an exception occurs
+     */
     private void loadChartData() {
         try {
             int userId = currentUser.getId();  // Assuming you have a currentUser object with an ID
@@ -101,6 +139,9 @@ public class MyStats2 extends Application {
         }
     }
 
+    /**
+     * Loads the top apps.
+     */
     private void loadTopApps() {
         StringBuilder labelContent = new StringBuilder("Most Used Applications:\n\n");
         for (String appName : mostUsedApps) {
@@ -109,6 +150,9 @@ public class MyStats2 extends Application {
         topAppsLabel.setText(labelContent.toString());
     }
 
+    /**
+     * Handles the refresh action.
+     */
     @FXML
     private void handleRefresh() {
         barChart.getData().clear();
@@ -116,12 +160,19 @@ public class MyStats2 extends Application {
         loadTopApps();
     }
 
+    /**
+     * Handles the close action.
+     */
     @FXML
     private void handleClose() {
         Stage stage = (Stage) barChart.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * The main method.
+     * @param args The command-line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }

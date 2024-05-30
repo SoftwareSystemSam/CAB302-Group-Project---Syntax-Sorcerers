@@ -26,6 +26,7 @@ public class Navigation extends HBox {
      * Initializes the navigation bar with the current user and screen time entries DAO.
      * @param user The current user.
      * @param screenDAO The DAO for screen time entries.
+     * @param userDAO The DAO for users.
      */
     public Navigation(User user, IScreenTimeEntryDAO screenDAO, IUserDAO userDAO) {
         this.currentUser = user;

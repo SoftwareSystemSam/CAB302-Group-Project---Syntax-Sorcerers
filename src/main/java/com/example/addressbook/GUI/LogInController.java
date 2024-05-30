@@ -18,11 +18,26 @@ import static java.awt.image.ImageObserver.WIDTH;
  */
 public class LogInController extends Application {
 
+    /**
+     * The title of the application window.
+     */
     public static final String TITLE = "Screen Tracker";
+    /**
+     * The width of the application window.
+     */
     public static final int WIDTH = 640;
+    /**
+     * The height of the application window.
+     */
     public static final int HEIGHT = 360;
+    /**
+     * The login button
+     */
     @FXML
     private Button loginButton;
+    /**
+     * The sign up button
+     */
     @FXML
     private Button signupButton;
 

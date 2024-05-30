@@ -24,21 +24,40 @@ import java.util.regex.Pattern;
  * MyData class handles the user's data settings.
  */
 public class MyData extends Application {
+    /**
+     * The privacy policy button.
+     */
     @FXML
     private Button privacyPolicyButton;
 
+    /** The current user. */
     private User currentUser;
+    /**
+     * The screen time entry DAO.
+     */
 
     private IScreenTimeEntryDAO screenTimeEntryDAO;
 
+    /**
+     * The delete data button.
+     */
     @FXML
     private Button deleteDataButton;
 
+    /**
+     * The time frame combo box.
+     */
     @FXML
     private ComboBox<String> timeFrameComboBox;
 
+    /**
+     * The flag to ignore selection changes.
+     */
     private boolean ignoreSelectionChanges = false;
 
+    /**
+     * Initializes the time frame combo box.
+     */
     @FXML
     public void initialize() {
         assert timeFrameComboBox != null : "fx:id=\"timeFrameComboBox\" was not injected: check your FXML file 'MyData.fxml'.";

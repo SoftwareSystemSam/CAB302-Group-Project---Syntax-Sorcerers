@@ -9,6 +9,9 @@ public class UserController {
     private UserService userService;
     private Connection connection;
 
+    /**
+     * Constructor for the UserController
+     */
 
     public UserController(){
         this.connection = SqliteConnection.getUserDbInstance();
