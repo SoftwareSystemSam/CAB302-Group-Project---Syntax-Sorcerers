@@ -73,7 +73,6 @@ public class MyData extends Application {
      * @param currentUser The current user.
      * @param screenTimeEntryDAO The DAO for screen time entries.
      */
-
     public MyData(User currentUser, IScreenTimeEntryDAO screenTimeEntryDAO) {
         this.currentUser = currentUser;
         this.screenTimeEntryDAO = screenTimeEntryDAO;
@@ -85,8 +84,6 @@ public class MyData extends Application {
      * @param primaryStage The primary stage.
      * @throws Exception If an exception occurred.
      */
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/addressbook/MyData.fxml"));
@@ -97,7 +94,10 @@ public class MyData extends Application {
         primaryStage.show();
     }
 
-
+    /**
+     * Handles the delete data button click.
+     * @throws SQLException If an SQL exception occurred.
+     */
     @FXML
     private void handleConfirmDeletion() throws SQLException {
         String selected = timeFrameComboBox.getSelectionModel().getSelectedItem();
@@ -107,6 +107,11 @@ public class MyData extends Application {
         }
     }
 
+    /**
+     * Confirms the deletion of data based on the selected time frame.
+     * @param days The number of days to delete data for.
+     * @throws SQLException If an SQL exception occurred.
+     */
     private void confirmAndDelete(int days) throws SQLException {
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Are you sure you want to delete data from the last " + days + " days?",
@@ -121,7 +126,11 @@ public class MyData extends Application {
         }
     }
 
-
+    /**
+     * Deletes data based on the selected time frame.
+     * @param days The number of days to delete data for.
+     * @throws SQLException If an SQL exception occurred.
+     */
     private void deleteDataBasedOnSelection(int days) throws SQLException {
         screenTimeEntryDAO.deleteUserDataWithinXDays(currentUser.getId(), days);
         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
