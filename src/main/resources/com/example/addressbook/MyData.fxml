@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER" spacing="20" style="-fx-padding: 20;">
+
+    <!-- VBox for storing user data -->
+    <VBox alignment="CENTER" spacing="10">
+        <!-- Add more user data elements as needed -->
+    </VBox>
+
+    <Label text="Select Days for Data Deletion" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+    <ComboBox fx:id="timeFrameComboBox" promptText="Select days for data deletion"/>
+    <Button text="Confirm Deletion" onAction="#handleConfirmDeletion"/>
+
+    <!-- Buttons for Delete All Data and Privacy Policy -->
+    <VBox alignment="CENTER" spacing="10" style="-fx-padding: 40 0 0 0;">
+        <Button fx:id="deleteDataButton" text="Delete All Data" onAction="#deleteAllData"/>
+        <Button fx:id="privacyPolicyButton" text="Privacy Policy" onAction="#showPrivacyPolicy"/>
+    </VBox>
+</VBox>

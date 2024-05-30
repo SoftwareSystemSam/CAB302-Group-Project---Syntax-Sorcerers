@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.3" prefHeight="400.0" prefWidth="600.0"
+           xmlns="http://javafx.com/javafx/16" orientation="HORIZONTAL">
+    <items>
+        <!-- List of Goals on the left -->
+        <VBox fx:id="goalsContainer" VBox.vgrow="ALWAYS">
+            <ListView fx:id="goalsListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+        <!-- Input and buttons on the right -->
+        <VBox fx:id="inputContainer" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <TextArea fx:id="goalInput" promptText="Type your goal here..." VBox.vgrow="ALWAYS"/>
+            <Button fx:id="saveButton" text="Save Goal" onAction="#saveGoal" VBox.vgrow="NEVER"/>
+            <Button fx:id="deleteButton" text="Delete" onAction="#deleteGoal" VBox.vgrow="NEVER"/>
+        </VBox>
+    </items>
+</SplitPane>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER" spacing="10">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <CheckBox fx:id="enableNotifications" text="Enable Screen Time Limits"/>
+    <TextField fx:id="notificationMessage" promptText="Enter custom notification message"/>
+
+    <Label text="Notification Frequency (minutes)"/>
+    <HBox spacing="5">
+        <Slider fx:id="notificationFrequency" min="1" max="120" value="30" showTickLabels="true" showTickMarks="true" majorTickUnit="10" blockIncrement="1"/>
+        <Label fx:id="frequencyValue" text="30"/>
+    </HBox>
+
+    <Label text="Set Screen Time Limit"/>
+    <HBox spacing="5">
+        <TextField fx:id="screenTimeLimitHours" promptText="Hours"/>
+        <TextField fx:id="screenTimeLimitMinutes" promptText="Minutes"/>
+    </HBox>
+
+    <Button text="Save Settings" onAction="#handleSubmit"/>
+</VBox>
